@@ -4,11 +4,14 @@ import Spotify from 'rn-spotify-sdk'
 
 const Player = ({uri, nextSong}) => {
   const [play, setPlay] = useState(false)
-  
+  const [initializing, setInitializing] = useState(true)
   // Will only change the song if the URI changes
   useEffect(() => {
     Spotify.playURI(uri, 0, 0)
-    setPlay(true)
+    if(initializing) {
+      setPlay(false)
+      setInitializing(false)
+    }
   }, [uri])
 
   // Pauses song on the SDK
