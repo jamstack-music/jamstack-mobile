@@ -1,29 +1,28 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import { View, Button, Alert } from 'react-native'
 import Spotify from 'rn-spotify-sdk'
+import Player from '../components/Player'
 
 const Login = ({navigation}) => {
-  const initializeSpotify = async () => {
-    if(!Spotify.isInitialized()) {
-      await Spotify.initialize({
-        'clientID':'0a31a2abfc5945bb9e3b3507e6f8361c',
-        'sessionUserDefaultsKey':'SpotifySession',
-        'redirectURL':'queuehubmobile://auth'
-      })
-    }
-    let loggedIn = await Spotify.login()
-
-    if(loggedIn) {
-      navigation.navigate('Home')
-    } else {
-      Alert('Whoops look like something bad happened')
-    } 
+  const [loggedin, setloggedin] = useState(false)
+  const login = async () => {
+    await Spotify.login()
+    setloggedin(true)
   }
-  return (
-    <View>
-      <Button title="Login with Spotify" onPress={() => initializeSpotify()}/>
-    </View>
-  )
+
+  if(!loggedin) {
+    return ( 
+      <View>
+        <Button title="Login to Spotify" onPress={() => login()} />
+      </View>
+    )
+  } else {
+    return (
+      <View>
+        <Player uri={"spotify:track:0GNOV2aEFqS3qOXfQEhEuq"} />
+      </View>
+    )
+  }
 }
 
 export default Login
