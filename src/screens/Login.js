@@ -5,9 +5,13 @@ import Player from '../components/Player'
 
 const Login = ({navigation}) => {
   const [loggedin, setloggedin] = useState(false)
-  const login = () => {
-    Spotify.login()
-    setloggedin(true)
+  const login = async () => {
+    let loggedIn = await Spotify.login()
+    if(loggedIn) {
+      setloggedin(true)
+    } else {
+      Alert.alert('You gotta log in')
+    }
   }
 
   if(!loggedin) {
