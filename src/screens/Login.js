@@ -5,8 +5,8 @@ import Player from '../components/Player'
 
 const Login = ({navigation}) => {
   const [loggedin, setloggedin] = useState(false)
-  const login = async () => {
-    await Spotify.login()
+  const login = () => {
+    Spotify.login()
     setloggedin(true)
   }
 
@@ -19,7 +19,7 @@ const Login = ({navigation}) => {
   } else {
     return (
       <View>
-        <Player uri={"spotify:track:0GNOV2aEFqS3qOXfQEhEuq"} />
+        <Player nextSong={() => { console.log("skip") }} uri={"spotify:track:0GNOV2aEFqS3qOXfQEhEuq"} />
       </View>
     )
   }
