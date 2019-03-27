@@ -11,4 +11,11 @@ Open up one terminal and run
 yarn
 yarn start
 ```
-Then, in the respective environment IDE, build the application and run it on a simulator
+Then, in the respective environment IDE, build the application and run it on a simulator. Or run 
+```
+react-scripts run-ios
+```
+or
+```
+react-scripts run-android
+```
