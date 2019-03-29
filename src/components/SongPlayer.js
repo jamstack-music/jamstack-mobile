@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react'
 import { Button, View } from 'react-native'
+import PropTypes from 'prop-types'
 
 import SongInfo from './SongInfo'
 import useSpotifyPlayer from '../hooks/useSpotifyPlayer'
@@ -10,9 +11,10 @@ import useSpotifyPlayer from '../hooks/useSpotifyPlayer'
  * SongPlayer Component
  * @author [Zach Banducci](https://github.com/zchbndcc9)
  *
- * This component is used for playing a single song and displaying its information
+ * This component is used for playing a single song from the SDK and displaying its information
+ * 
  */
-const SongPlayer = ({duration, songTitle, artist, albumImg, uri, nextSong}) => {
+const SongPlayer = ({title, artist, albumImg, uri, nextSong}) => {
   const [play, togglePlay, setSong] = useSpotifyPlayer() 
   useEffect(() => {
     setSong(uri)
@@ -21,7 +23,7 @@ const SongPlayer = ({duration, songTitle, artist, albumImg, uri, nextSong}) => {
   return(
     <View>
       <SongInfo
-        songTitle={songTitle}
+        songTitle={title}
         artist={artist}
         albumImg={albumImg}
       />
@@ -31,4 +33,11 @@ const SongPlayer = ({duration, songTitle, artist, albumImg, uri, nextSong}) => {
   )
 }
 
+SongPlayer.propTypes = {
+  uri: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
+  artist: PropTypes.string.isRequired,
+  nextSong: PropTypes.func.isRequired,
+  albumImg: PropTypes.string.isRequired
+}
 export default SongPlayer
