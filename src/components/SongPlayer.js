@@ -4,9 +4,14 @@ import { Button, View } from 'react-native'
 import SongInfo from './SongInfo'
 import useSpotifyPlayer from '../hooks/useSpotifyPlayer'
 
-// TODO: Add stylized buttons
+// TODO: stylize
 // TODO: Keep track of song time and get next song when time is finished
-// TODO: Add validation for uri and next song
+/**
+ * SongPlayer Component
+ * @author [Zach Banducci](https://github.com/zchbndcc9)
+ *
+ * This component is used for playing a single song and displaying its information
+ */
 const SongPlayer = ({duration, songTitle, artist, albumImg, uri, nextSong}) => {
   const [play, togglePlay, setSong] = useSpotifyPlayer() 
   useEffect(() => {
