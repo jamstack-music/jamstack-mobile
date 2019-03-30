@@ -1,18 +1,25 @@
-import { useState, useEffect } from 'react'
+import React, { useEffect } from 'react'
+import { View, Text } from 'react-native'
+import useTimer from '../hooks/useTimer.js'
 
-// Custom timer hook that will keep track of the time elapsed from an initial start point
-const useTimer = (startTime = 0) => {
-  const [timer, setTimer] = useState(startTime)
-  useEffect(() => {
-    let timerID = setInterval(() => tick(), 1000)
-    return function(){
-      clearInterval(timerID)
-    }
-  })
+const Timer = ({end, onEnd, playing}) => {
+  const [timer, toggleTimer] = useTimer()
 
-  const tick = () => setTimer(timer + 1)
+  useEffect(function timeTracker(){ 
+    if(timer == end)
+      onEnd()
+  }, [timer])
 
-  return timer 
+  useEffect(function onPause(){
+    if(!playing)
+      toggleTimer()
+  }, [playing])
+
+  return (
+    <View>
+      <Text>{timer}</Text>
+    </View>
+  )
 }
 
-export default useTimer
+export default Timer
