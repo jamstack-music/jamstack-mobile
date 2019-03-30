@@ -14,7 +14,7 @@ import useSpotifyPlayer from '../hooks/useSpotifyPlayer'
  * This component is used for playing a single song from the SDK and displaying its information
  * 
  */
-const SongPlayer = ({title, artist, albumImg, uri, nextSong}) => {
+const SongPlayer = ({title, artist, album, uri, nextSong}) => {
   const [play, togglePlay, setSong] = useSpotifyPlayer() 
   useEffect(() => {
     setSong(uri)
@@ -25,7 +25,7 @@ const SongPlayer = ({title, artist, albumImg, uri, nextSong}) => {
       <SongInfo
         songTitle={title}
         artist={artist}
-        albumImg={albumImg}
+        album={album}
       />
       <Button title={play ? 'Pause' : 'Play'} onPress={() => togglePlay()} />
       <Button title="Skip" onPress={() => nextSong()} /> 
@@ -38,6 +38,6 @@ SongPlayer.propTypes = {
   title: PropTypes.string.isRequired,
   artist: PropTypes.string.isRequired,
   nextSong: PropTypes.func.isRequired,
-  albumImg: PropTypes.string.isRequired
+  album: PropTypes.obj.isRequired
 }
 export default SongPlayer
