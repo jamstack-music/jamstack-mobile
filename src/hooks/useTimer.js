@@ -5,7 +5,7 @@ function useTimer(startTime = 0) {
   let timerRef = null
   const [timer, setTimer] = useState(startTime)
   useEffect(() => {
-    timerRef = setInterval(() => tick(), 1000)
+    timerRef = setInterval(() => tick(), 100)
     return function(){
       clearInterval(timerRef)
     }
