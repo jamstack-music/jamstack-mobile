@@ -1,10 +1,9 @@
 import React from 'react'
 import { View, Text, Image } from 'react-native'
 
-const SongInfo = ({artist, songTitle, albumImg}) => {
+const SongInfo = ({artist, songTitle, album}) => {
   return (
     <View>
-      <Image src={albumImg} alt={albumImg} />
       <Text>{songTitle}</Text>
       <Text>{artist}</Text>
     </View>
