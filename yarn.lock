@@ -2319,6 +2319,11 @@ eventemitter3@^3.0.0:
   resolved "https://registry.yarnpkg.com/eventemitter3/-/eventemitter3-3.1.0.tgz#090b4d6cdbd645ed10bf750d4b5407942d7ba163"
   integrity sha512-ivIvhpq/Y0uSjcHDcOIccjmYjGLcP09MFGE7ysAwkAvkXfpZlC985pH2/ui64DKazbTW/4kN3yqozUxlXzI6cA==
 
+events@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/events/-/events-1.1.1.tgz#9ebdb7635ad099c70dcc4c2a1f5004288e8bd924"
+  integrity sha1-nr23Y1rQmccNzEwqH1AEKI6L2SQ=
+
 exec-sh@^0.2.0:
   version "0.2.2"
   resolved "https://registry.yarnpkg.com/exec-sh/-/exec-sh-0.2.2.tgz#2a5e7ffcbd7d0ba2755bdecb16e5a427dfbdec36"
@@ -5394,6 +5399,13 @@ react-lifecycles-compat@^3.0.4:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
+react-native-events@^1.0.13:
+  version "1.0.14"
+  resolved "https://registry.yarnpkg.com/react-native-events/-/react-native-events-1.0.14.tgz#0ac08f135ffc1939e3e1b0eedd09509c2750e979"
+  integrity sha512-baW2+c1iKVwQUNqz2iZnsbBf61la6VI+0U4dsJpTBUMQCA1lS2yzNJH+AdlaNAOHoiz8bND9X/dsBt4l0cWbAA==
+  dependencies:
+    events "^1.1.1"
+
 react-native-gesture-handler@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/react-native-gesture-handler/-/react-native-gesture-handler-1.1.0.tgz#2a7d545ad2e0ca23adce22b2af441ad360ecccee"
@@ -5799,6 +5811,13 @@ rimraf@~2.2.6:
   version "2.2.8"
   resolved "https://registry.yarnpkg.com/rimraf/-/rimraf-2.2.8.tgz#e439be2aaee327321952730f99a8929e4fc50582"
   integrity sha1-5Dm+Kq7jJzIZUnMPmaiSnk/FBYI=
+
+rn-spotify-sdk@^1.2.6:
+  version "1.2.6"
+  resolved "https://registry.yarnpkg.com/rn-spotify-sdk/-/rn-spotify-sdk-1.2.6.tgz#4146b2270da05819c494e99c4ea4bdb8a37199ae"
+  integrity sha512-hO5Jm9N1UPfCViO90M4+Q7WWdFNLHj3kdkxog/Othr01bTg7YWQEnBnUia2X0i/UeCHLShKfgJRrZnBkfNs85w==
+  dependencies:
+    react-native-events "^1.0.13"
 
 rsvp@^3.3.3:
   version "3.6.2"

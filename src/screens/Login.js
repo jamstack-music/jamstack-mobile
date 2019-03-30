@@ -1,14 +1,28 @@
-import React, { Component } from 'react'
-import { Text, View } from 'react-native'
+import React, { useState, useEffect } from 'react'
+import { View, Button, Alert } from 'react-native'
+import Spotify from 'rn-spotify-sdk'
+import Player from '../components/Player'
 
-export default class Login extends Component {
-  render() {
+const Login = ({navigation}) => {
+  const [loggedin, setloggedin] = useState(false)
+  const login = async () => {
+    await Spotify.login()
+    setloggedin(true)
+  }
+
+  if(!loggedin) {
+    return ( 
+      <View>
+        <Button title="Login to Spotify" onPress={() => login()} />
+      </View>
+    )
+  } else {
     return (
       <View>
-        <Text>Hello</Text>
-        <Text>Hello</Text>
-        <Text>Hello</Text>
+        <Player uri={"spotify:track:0GNOV2aEFqS3qOXfQEhEuq"} />
       </View>
     )
   }
 }
+
+export default Login
