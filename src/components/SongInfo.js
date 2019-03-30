@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 import AlbumCover from '../components/AlbumCover'
 
 /**
@@ -9,12 +9,26 @@ import AlbumCover from '../components/AlbumCover'
  */
 const SongInfo = ({artist, songTitle, album}) => {
   return (
-    <View>
+    <View style={styles.container}>
       <AlbumCover {...album} />
-      <Text>{songTitle}</Text>
-      <Text>{artist}</Text>
+      <Text style={styles.title} >{songTitle}</Text>
+      <Text style={styles.artist} >{artist}</Text>
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  container: {
+    display: 'flex',
+    alignItems: 'center'
+  },
+  title: {
+    fontSize: 20,
+    fontWeight: 'bold'
+  },
+  artist: {
+    fontSize: 18
+  }
+})
 
 export default SongInfo
