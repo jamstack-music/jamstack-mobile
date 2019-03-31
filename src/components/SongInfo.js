@@ -7,27 +7,34 @@ import AlbumCover from '../components/AlbumCover'
  *
  * @author [Zach Banducci](https://github.com/zchbndcc9)
  */
-const SongInfo = ({artist, songTitle, album}) => {
-  return (
-    <View style={styles.container}>
-      <AlbumCover {...album} />
+const SongInfo = ({artist, songTitle, album}) => (
+  <View style={styles.container}>
+    <AlbumCover {...album} style={styles.album}/>
+    <View style={styles.songInfo}>
       <Text style={styles.title} >{songTitle}</Text>
       <Text style={styles.artist} >{artist}</Text>
     </View>
-  )
+  </View>
+)
+
+SongInfo.defaultProps = {
+  artist: ' ',
+  songTitle: ' '
 }
 
 const styles = StyleSheet.create({
   container: {
-    display: 'flex',
-    alignItems: 'center'
+    flex: 2, 
+    alignItems: 'center',
+    justifyContent: 'space-around'
   },
   title: {
-    fontSize: 20,
-    fontWeight: 'bold'
+    fontSize: 25,
+    fontWeight: 'bold',
+    marginBottom: 10
   },
   artist: {
-    fontSize: 18
+    fontSize: 24,
   }
 })
 
