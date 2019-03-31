@@ -10,7 +10,7 @@ const AlbumCover = ({url}) => {
   const { width } = Dimensions.get('window')
   const dim = width*.80
   return (
-    <View>
+    <View style={styles.container}>
       <Image
         source={{uri: url}}
         style={{width: dim, height: dim, ...styles.image}}
@@ -22,6 +22,15 @@ const AlbumCover = ({url}) => {
 const styles = StyleSheet.create({
   image: {
     borderRadius: 20
+  }, 
+  container: {
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 10
+    },
+    shadowOpacity: 0.2,
+    shadowRadius: 10
   }
 })
 
