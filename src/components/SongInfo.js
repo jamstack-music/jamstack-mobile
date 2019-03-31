@@ -1,13 +1,41 @@
 import React from 'react'
-import { View, Text, Image } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
+import AlbumCover from '../components/AlbumCover'
 
-const SongInfo = ({artist, songTitle, album}) => {
-  return (
-    <View>
-      <Text>{songTitle}</Text>
-      <Text>{artist}</Text>
+/**
+ * SongInfo Component is a presentational component that just displays the the song information
+ *
+ * @author [Zach Banducci](https://github.com/zchbndcc9)
+ */
+const SongInfo = ({artist, songTitle, album}) => (
+  <View style={styles.container}>
+    <AlbumCover {...album} style={styles.album}/>
+    <View style={styles.songInfo}>
+      <Text style={styles.title} >{songTitle}</Text>
+      <Text style={styles.artist} >{artist}</Text>
     </View>
-  )
+  </View>
+)
+
+SongInfo.defaultProps = {
+  artist: ' ',
+  songTitle: ' '
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 2, 
+    alignItems: 'center',
+    justifyContent: 'space-around'
+  },
+  title: {
+    fontSize: 25,
+    fontWeight: 'bold',
+    marginBottom: 10
+  },
+  artist: {
+    fontSize: 24,
+  }
+})
 
 export default SongInfo
