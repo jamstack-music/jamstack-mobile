@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Image, Dimensions } from 'react-native'
+import { View, Image, Dimensions, StyleSheet } from 'react-native'
 import PropTypes from 'prop-types'
 
 /**
@@ -13,10 +13,20 @@ const AlbumCover = ({url}) => {
     <View>
       <Image
         source={{uri: url}}
-        style={{width: dim, height: dim}}
+        style={{width: dim, height: dim, ...styles.image}}
       />
     </View>
   )
+}
+
+const styles = StyleSheet.create({
+  image: {
+    borderRadius: 20
+  }
+})
+
+AlbumCover.defaultProps = {
+  url: 'https://www.indigenousmusicawards.com/img/placeholder-music.png'
 }
 
 AlbumCover.propTypes = {
