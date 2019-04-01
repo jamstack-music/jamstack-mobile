@@ -3,6 +3,7 @@ import { View, Text } from 'react-native'
 
 import ProgressBar from 'react-native-progress/Bar'
 
+// TODO: Style
 const Timer = ({end, onEnd, currentTime}) => { 
   useEffect(() => {
     if(currentTime >= end)
