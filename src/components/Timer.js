@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react'
 import { View, Text } from 'react-native'
 
+import ProgressBar from 'react-native-progress/Bar'
+
 const Timer = ({end, onEnd, currentTime}) => { 
   useEffect(() => {
     if(currentTime >= end)
@@ -20,9 +22,15 @@ const Timer = ({end, onEnd, currentTime}) => {
   let [cMin, cSec] = formatTime(currentTime)
   let [eMin, eSec] = formatTime(end)
 
+  let progress = currentTime / end
   return (
-    <View>
+    <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly' }}>
       <Text>{eMin + ':' + eSec}</Text>
+      <ProgressBar 
+        progress={progress} 
+        width={230}
+        height={10}
+        borderRadius={6} /> 
       <Text>{cMin + ':' + cSec}</Text>
     </View>
   )
