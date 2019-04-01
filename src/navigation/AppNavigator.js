@@ -11,9 +11,10 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 
 import Login from '../screens/Login'
 import Room from '../screens/Room'
-import Auth from '../navigation/Auth'
 import Search from '../screens/Search'
 import Browse from '../screens/Browse'
+
+import Auth from '../navigation/Auth'
 
 const RoomStack = createBottomTabNavigator({
   Search,
