@@ -6,7 +6,7 @@ const Login = ({navigation}) => {
   const login = async () => {
     let loggedIn = await Spotify.login()
     if(loggedIn) {
-      // Navigate to correct screen
+      navigation.navigate('Room')
     } else {
       Alert.alert('You gotta log in')
     }
