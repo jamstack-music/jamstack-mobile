@@ -1,19 +1,19 @@
-import { createAppContainer, createStackNavigator, createSwitchNavigator } from 'react-navigation'
+import { 
+  createAppContainer, 
+  createSwitchNavigator,
+  createBottomTabNavigator
+} from 'react-navigation'
 
 import Login from '../screens/Login'
 import Room from '../screens/Room'
 import Auth from '../navigation/Auth'
 
-const RoomStack = createStackNavigator({
+const RoomStack = createBottomTabNavigator({
   Room
 })
 
-const LoginStack = createStackNavigator({
-  Login
-})
-
 const Application = createSwitchNavigator({
-  Login: LoginStack, 
+  Login,
   Room: RoomStack,
   Auth
 }, {
