@@ -39,6 +39,7 @@ const RoomStack = createBottomTabNavigator({
       return <Ionicons name={iconName} size={20} color={tintColor}/>
     }
   }),
+  initialRouteName: 'Room',
   tabBarOptions: {
     activeTintColor: 'tomato',
     inactiveTintColor: 'grey'
