@@ -1,4 +1,5 @@
 import React from 'react'
+
 import { View } from 'react-native'
 import { Icon } from 'react-native-elements'
 import PropTypes from 'prop-types'
@@ -6,6 +7,7 @@ import PropTypes from 'prop-types'
 import useMusicPlayer from '../hooks/useMusicPlayer'
 
 import SongInfo from './SongInfo'
+import Timer from './Timer'
 import ControlsGroup from './ControlsGroup'
 
 // TODO: Keep track of song time and get next song when time is finished
@@ -17,8 +19,8 @@ import ControlsGroup from './ControlsGroup'
  * 
  */
 const SongPlayer = ({song, nextSong}) => {
-  const [play, setPlay] = useMusicPlayer(song, nextSong)
-  let {title, artist, album} = song 
+  const [play, setPlay, elapsed] = useMusicPlayer(song, nextSong)
+  let {title, artist, album, duration} = song 
 
   return(
     <View style={{flex: 1, flexDirection: 'column'}}>
@@ -26,6 +28,10 @@ const SongPlayer = ({song, nextSong}) => {
         songTitle={title}
         artist={artist}
         album={album} />
+      <Timer 
+        currentTime={elapsed}
+        end={duration}
+        onEnd={() => console.log('hello')} />
       <ControlsGroup style={{flex: 1, justifySelf: 'flex-start'}}>
         <Icon 
           reverse
@@ -47,10 +53,7 @@ const SongPlayer = ({song, nextSong}) => {
 }
 
 SongPlayer.propTypes = {
-  uri: PropTypes.string.isRequired,
-  title: PropTypes.string.isRequired,
-  artist: PropTypes.string.isRequired,
+  song: PropTypes.object.isRequired,
   nextSong: PropTypes.func.isRequired,
-  album: PropTypes.object.isRequired
 }
 export default SongPlayer
