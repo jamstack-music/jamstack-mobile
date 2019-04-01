@@ -1,23 +1,29 @@
 import React, { useEffect } from 'react'
 import { View, Text } from 'react-native'
-import useTimer from '../hooks/useTimer.js'
 
-const Timer = ({end, onEnd, playing}) => {
-  const [timer, toggleTimer] = useTimer()
-
-  useEffect(function timeTracker(){ 
-    if(timer == end)
+const Timer = ({end, onEnd, currentTime}) => { 
+  useEffect(() => {
+    if(currentTime >= end)
       onEnd()
-  }, [timer])
+  }, [currentTime])
 
-  useEffect(function onPause(){
-    if(!playing)
-      toggleTimer()
-  }, [playing])
+  const formatTime = time => {
+    let seconds = Math.floor(time / 1000)
+    let minutes = Math.floor(seconds / 60)
+
+    seconds = (seconds % 60).toString().padStart(2, '0')
+    minutes = (minutes % 60).toString().padStart(2, '0')
+
+    return [minutes, seconds]
+  }
+
+  let [cMin, cSec] = formatTime(currentTime)
+  let [eMin, eSec] = formatTime(end)
 
   return (
     <View>
-      <Text>{timer}</Text>
+      <Text>{eMin + ':' + eSec}</Text>
+      <Text>{cMin + ':' + cSec}</Text>
     </View>
   )
 }
