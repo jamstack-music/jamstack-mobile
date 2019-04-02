@@ -4,8 +4,8 @@ import android.app.Application;
 
 import com.facebook.react.ReactApplication;
 import com.oblador.vectoricons.VectorIconsPackage;
-import com.spotify.sdk.android.authentication.RNSpotifyPackage;
 import com.lufinkey.react.eventemitter.RNEventEmitterPackage;
+import com.lufinkey.react.spotify.RNSpotifyPackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
