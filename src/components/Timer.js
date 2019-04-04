@@ -26,13 +26,15 @@ const Timer = ({end, onEnd, currentTime}) => {
   let progress = currentTime / end
   return (
     <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly' }}>
-      <Text>{eMin + ':' + eSec}</Text>
+      <Text>{cMin + ':' + cSec}</Text>
       <ProgressBar 
         progress={progress} 
         width={230}
-        height={10}
-        borderRadius={6} /> 
-      <Text>{cMin + ':' + cSec}</Text>
+        height={4}
+        unfilledColor='#DDDDDD'
+        borderRadius={0}
+        borderWidth={0}/> 
+      <Text>{eMin + ':' + eSec}</Text>
     </View>
   )
 }
