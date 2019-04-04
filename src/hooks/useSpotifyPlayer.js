@@ -1,8 +1,6 @@
 import { useState, useEffect } from 'react'
 import Spotify from 'rn-spotify-sdk'
 
-const VALID_SPOTIFY_URI = /spotify:track:.*/g
-
 // TODO: Validate that song being passed in is a Spotify URI
 // State hook for keeping playing songs
 function useSpotifyPlayer() {
