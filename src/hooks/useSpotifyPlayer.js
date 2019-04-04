@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import Spotify from 'rn-spotify-sdk'
+
 /**
  * useSpotifyPlayer : State hook for playing songs and listening for when a song is over
  * @author [Zach Banducci](https://github.com/zchbndcc9)
