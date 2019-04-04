@@ -1,10 +1,8 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { View, Text } from 'react-native'
-import RNEvents from 'react-native-events'
 
 import ProgressBar from 'react-native-progress/Bar'
 
-// TODO: Style
 const Timer = ({end, currentTime}) => { 
   const formatTime = time => {
     let seconds = Math.floor(time / 1000)

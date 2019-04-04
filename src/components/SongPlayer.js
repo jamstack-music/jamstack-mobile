@@ -1,15 +1,15 @@
 import React from 'react'
 
-import { View } from 'react-native'
+import { SafeAreaView, View } from 'react-native'
 import { Icon } from 'react-native-elements'
 import PropTypes from 'prop-types'
+import RNEvents from 'react-native-events'
 
 import useMusicPlayer from '../hooks/useMusicPlayer'
 
 import SongInfo from './SongInfo'
 import Timer from './Timer'
 import ControlsGroup from './ControlsGroup'
-
 // TODO: Keep track of song time and get next song when time is finished
 /**
  * SongPlayer Component
@@ -23,37 +23,39 @@ const SongPlayer = ({song, nextSong}) => {
   let {title, artist, album, duration} = song 
 
   return(
-    <View style={{flex: 1, flexDirection: 'column'}}>
-      <SongInfo
-        songTitle={title}
-        artist={artist}
-        album={album} />
-      <Timer 
-        currentTime={elapsed}
-        end={duration}
-        onEnd={() => console.log('hello')} />
-      <ControlsGroup style={{flex: 1, justifySelf: 'flex-start'}}>
-        <Icon 
-          reverse
-          name={play ? 'controller-paus' : 'controller-play'}
-          type='entypo'
-          size={40}
-          color={play ? '#004FCF' : '#0051F7'}
-          onPress={() => setPlay(!play)} />
-        <Icon 
-          reverse
-          name="controller-fast-forward"
-          type='entypo'
-          size={30}
-          color='#00AF66'
-          onPress={() => nextSong()} />
-      </ControlsGroup>
-    </View>
+    <SafeAreaView style={{flex: 1}}>
+      <View style={{flex: 1, flexDirection: 'column'}}>
+        <SongInfo
+          songTitle={title}
+          artist={artist}
+          album={album} />
+        <Timer 
+          currentTime={elapsed}
+          end={duration} /> 
+        <ControlsGroup style={{flex: 1, justifySelf: 'flex-start'}}>
+          <Icon 
+            reverse
+            name={play ? 'controller-paus' : 'controller-play'}
+            type='entypo'
+            size={40}
+            color={play ? '#004FCF' : '#0051F7'}
+            onPress={() => setPlay(!play)} />
+          <Icon 
+            reverse
+            name="controller-fast-forward"
+            type='entypo'
+            size={30}
+            color='#00AF66'
+            onPress={() => nextSong()} />
+        </ControlsGroup>
+      </View>
+    </SafeAreaView>
   )
 }
 
 SongPlayer.propTypes = {
   song: PropTypes.object.isRequired,
-  nextSong: PropTypes.func.isRequired,
+  nextSong: PropTypes.func.isRequired, 
 }
+
 export default SongPlayer
