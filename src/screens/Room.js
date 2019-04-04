@@ -1,5 +1,5 @@
 import React from 'react'
-import { Share, Button, View, Text, StyleSheet } from 'react-native'
+import { Share, Button, SafeAreaView, View, Text, StyleSheet } from 'react-native'
 
 import { Subscribe } from 'unstated'
 import RoomContainer from '../store/store'
@@ -15,20 +15,22 @@ const Room = () => {
   return (
     <Subscribe to={[RoomContainer]}>
       { room => (
-        <View style={styles.container}>
-          <Text style={styles.title}>Placeholder room title</Text>
-          <Button 
-            title='Share Room Code'
-            onPress={() => shareRoom(room.state.name)} />
-          <View>
-            <Text>Total Members</Text>
-            <Text>{room.state.members.length}</Text>
+        <SafeAreaView style={{flex: 1}}>
+          <View style={styles.container}>
+            <Text style={styles.title}>Placeholder room title</Text>
+            <Button 
+              title='Share Room Code'
+              onPress={() => shareRoom(room.state.name)} />
+            <View>
+              <Text>Total Members</Text>
+              <Text>{room.state.members.length}</Text>
+            </View>
+            <View>
+              <Text>Queue</Text>
+              {/* INSERT SONG LIST ITEM HERE */}
+            </View>
           </View>
-          <View>
-            <Text>Queue</Text>
-            {/* INSERT SONG LIST ITEM HERE */}
-          </View>
-        </View>
+        </SafeAreaView>
       )}
     </Subscribe>
   )
