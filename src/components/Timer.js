@@ -1,15 +1,11 @@
 import React, { useEffect } from 'react'
 import { View, Text } from 'react-native'
+import RNEvents from 'react-native-events'
 
 import ProgressBar from 'react-native-progress/Bar'
 
 // TODO: Style
-const Timer = ({end, onEnd, currentTime}) => { 
-  useEffect(() => {
-    if(currentTime >= end)
-      onEnd()
-  }, [currentTime])
-
+const Timer = ({end, currentTime}) => { 
   const formatTime = time => {
     let seconds = Math.floor(time / 1000)
     let minutes = Math.floor(seconds / 60)
@@ -30,7 +26,7 @@ const Timer = ({end, onEnd, currentTime}) => {
       <ProgressBar 
         progress={progress} 
         width={230}
-        height={4}
+        height={5}
         unfilledColor='#DDDDDD'
         borderRadius={0}
         borderWidth={0}/> 
