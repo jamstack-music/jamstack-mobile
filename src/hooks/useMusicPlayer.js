@@ -5,20 +5,8 @@ import useSpotifyPlayer from './useSpotifyPlayer'
 
 function useMusicPlayer({title, artist, album, uri, duration}, nextSong) {
   const [play, setPlay, elapsed] = useSpotifyPlayer(uri)
-  
+
   MusicControl.enableBackgroundMode(true)
-  
-  useEffect(function changeSong() {
-    MusicControl.setNowPlaying({
-      title,
-      artwork: album.url,
-      artist,
-      duration: Math.floor(duration/1000)
-    })
-    MusicControl.updatePlayback({
-      elapsed: 0
-    })
-  }, [uri])
 
   // Control setup for music player
   MusicControl.enableControl('play', true)
@@ -28,7 +16,20 @@ function useMusicPlayer({title, artist, album, uri, duration}, nextSong) {
 
   MusicControl.on('play', () => setPlay(true))
   MusicControl.on('pause', () => setPlay(false))
-  MusicControl.on('skip', () => nextSong())
+  MusicControl.on('nextTrack', () => nextSong())
+
+  MusicControl.setNowPlaying({
+    title,
+    artwork: album.url,
+    artist,
+    duration: Math.floor(duration/1000)
+  })
+  
+  useEffect(function updatePlayhead() {
+    MusicControl.updatePlayback({
+      elapsed
+    })
+  }, [elapsed])
   
   return [play, setPlay, elapsed]
 }
