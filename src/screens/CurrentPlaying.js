@@ -7,7 +7,7 @@ import RoomContainer from '../store/store'
 const CurrentPlaying = () => (
   <Subscribe to={[RoomContainer]}>
     {room => (
-      <SongPlayer {...room.state.currentSong} nextSong={() => room.nextSong()}/>  
+      <SongPlayer song={room.state.currentSong} nextSong={() => room.nextSong()}/>  
     )}
   </Subscribe>
 )

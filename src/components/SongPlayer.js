@@ -1,11 +1,12 @@
-import React, { useEffect } from 'react'
-import { Button, View, StyleSheet } from 'react-native'
+import React from 'react'
+import { View } from 'react-native'
 import { Icon } from 'react-native-elements'
 import PropTypes from 'prop-types'
 
+import useMusicPlayer from '../hooks/useMusicPlayer'
+
 import SongInfo from './SongInfo'
 import ControlsGroup from './ControlsGroup'
-import useSpotifyPlayer from '../hooks/useSpotifyPlayer'
 
 // TODO: Keep track of song time and get next song when time is finished
 /**
@@ -15,11 +16,9 @@ import useSpotifyPlayer from '../hooks/useSpotifyPlayer'
  * This component is used for playing a single song from the SDK and displaying its information
  * 
  */
-const SongPlayer = ({title, artist, album, uri, nextSong}) => {
-  const [play, togglePlay, setSong] = useSpotifyPlayer() 
-  useEffect(() => {
-    setSong(uri)
-  }, [uri])
+const SongPlayer = ({song, nextSong}) => {
+  const [play, togglePlay] = useMusicPlayer(song, nextSong)
+  let {title, artist, album} = song 
 
   return(
     <View style={{flex: 1, flexDirection: 'column'}}>
