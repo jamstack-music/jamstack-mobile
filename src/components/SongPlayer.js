@@ -17,7 +17,7 @@ import ControlsGroup from './ControlsGroup'
  * 
  */
 const SongPlayer = ({song, nextSong}) => {
-  const [play, togglePlay] = useMusicPlayer(song, nextSong)
+  const [play, setPlay] = useMusicPlayer(song, nextSong)
   let {title, artist, album} = song 
 
   return(
@@ -25,8 +25,7 @@ const SongPlayer = ({song, nextSong}) => {
       <SongInfo
         songTitle={title}
         artist={artist}
-        album={album}
-      />
+        album={album} />
       <ControlsGroup style={{flex: 1, justifySelf: 'flex-start'}}>
         <Icon 
           reverse
@@ -34,7 +33,7 @@ const SongPlayer = ({song, nextSong}) => {
           type='entypo'
           size={40}
           color={play ? '#004FCF' : '#0051F7'}
-          onPress={() => togglePlay()} />
+          onPress={() => setPlay(!play)} />
         <Icon 
           reverse
           name="controller-fast-forward"

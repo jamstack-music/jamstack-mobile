@@ -3,23 +3,20 @@ import Spotify from 'rn-spotify-sdk'
 
 // TODO: Validate that song being passed in is a Spotify URI
 // State hook for keeping playing songs
-function useSpotifyPlayer() {
-  // Current song being played
-  const [song, setSong] = useState('')
+function useSpotifyPlayer(uri) {
   // Play status
   const [play, setPlay] = useState(false)
 
   useEffect(function playNewSong() {
-    Spotify.playURI(song, 0, 0)
+    Spotify.playURI(uri, 0, 0)
     setPlay(true)
-  }, [song])
+  }, [uri])
 
   useEffect(function playSong() {
     Spotify.setPlaying(play) 
   }, [play])
 
-  const togglePlay = () => setPlay(!play)
-  return [play, togglePlay, setSong]
+  return [play, setPlay]
 }
 
 export default useSpotifyPlayer
