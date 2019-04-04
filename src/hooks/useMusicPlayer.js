@@ -13,7 +13,7 @@ function useMusicPlayer({title, artist, album, uri, duration}, nextSong) {
       title,
       artwork: album.url,
       artist,
-      duration: 300
+      duration
     })
   }, [uri])
   
