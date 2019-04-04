@@ -144,7 +144,8 @@ android {
 }
 
 dependencies {
-    //implementation project(':react-native-vector-icons')
+    implementation project(':react-native-music-control')
+    implementation project(':react-native-vector-icons')
     implementation project(':rn-spotify-sdk')
     implementation project(':react-native-events')
     implementation project(':react-native-gesture-handler')
