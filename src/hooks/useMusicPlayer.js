@@ -4,7 +4,8 @@ import MusicControl from 'react-native-music-control'
 import useSpotifyPlayer from './useSpotifyPlayer'
 
 function useMusicPlayer({title, artist, album, uri, duration}, nextSong) {
-  const [play, setPlay] = useSpotifyPlayer(uri)
+  const [play, setPlay, elapsed] = useSpotifyPlayer(uri)
+  
   MusicControl.enableBackgroundMode(true)
   
   useEffect(function changeSong() {
@@ -12,10 +13,12 @@ function useMusicPlayer({title, artist, album, uri, duration}, nextSong) {
       title,
       artwork: album.url,
       artist,
-      duration
+      duration: Math.floor(duration/1000)
+    })
+    MusicControl.updatePlayback({
+      elapsed: 0
     })
   }, [uri])
-  
 
   // Control setup for music player
   MusicControl.enableControl('play', true)
@@ -27,7 +30,7 @@ function useMusicPlayer({title, artist, album, uri, duration}, nextSong) {
   MusicControl.on('pause', () => setPlay(false))
   MusicControl.on('skip', () => nextSong())
   
-  return [play, setPlay]
+  return [play, setPlay, elapsed]
 }
 
 export default useMusicPlayer
