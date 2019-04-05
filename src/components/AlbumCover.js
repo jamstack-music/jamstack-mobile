@@ -6,9 +6,9 @@ import PropTypes from 'prop-types'
  * AlbumCover compoenent is a basic presentational component that displays the album cover of a given song
  * @author [Zach Banducci](https://github.com/zchbndcc9)
  */
-const AlbumCover = ({url}) => {
+const AlbumCover = ({url, dim = 250}) => {
   const { width } = Dimensions.get('window')
-  const dim = width*.80
+  //const dim = width*.80
   return (
     <View style={styles.container}>
       <Image
