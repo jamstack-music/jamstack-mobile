@@ -13,16 +13,13 @@ const AlbumCover = ({url, dim = 250}) => {
     <View style={styles.container}>
       <Image
         source={{uri: url}}
-        style={{width: dim, height: dim, ...styles.image}}
+        style={{width: dim, height: dim}}
       />
     </View>
   )
 }
 
 const styles = StyleSheet.create({
-  image: {
-    borderRadius: 20
-  }, 
   container: {
     shadowColor: '#000',
     shadowOffset: {
