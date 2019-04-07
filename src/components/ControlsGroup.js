@@ -7,10 +7,8 @@ import { View } from 'react-native'
  * @author [Zach Banducci](https://github.com/zchbndcc9)
  */
 const ControlsGroup = ({children, style}) => (
-  <View style={style}>
-    <View style={{flexDirection: 'row', justifyContent: 'center', alignItems: 'center'}}>
-      {children}
-    </View>
+  <View style={{flexDirection: 'row', alignItems: 'center'}}>
+    {children}
   </View>
 )
 
