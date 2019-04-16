@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, FlatList } from 'react-native'
-import Song from './Song'
+import SongItem from '../components/SongItem'
 
 const SongList = (props) => {
   const {
@@ -11,7 +11,7 @@ const SongList = (props) => {
     <FlatList
       data={songs}
       keyExtractor={(song) => song.id}
-      renderItem={({item}) => <Song {...item} />} />
+      renderItem={({item}) => <SongItem {...item} />} />
   )
 }
 export default SongList
