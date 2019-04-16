@@ -5,6 +5,7 @@ import SongItem from '../components/SongItem'
 const SongList = (props) => {
   const {
     songs,
+    style,
     ...rest
   } = props
 
@@ -14,6 +15,7 @@ const SongList = (props) => {
       keyExtractor={(song) => song.id}
       renderItem={({item}) => <SongItem {...item} {...rest}/>} 
       ItemSeparatorComponent={() => <View style={styles.seperator} />}
+      style={style}
     />
   )
 }
