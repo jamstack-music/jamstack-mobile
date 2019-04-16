@@ -18,8 +18,8 @@ export class RoomContainer extends Container {
   nextSong = () => {
     if(this.state.queue.length > 0) {
       this.setState(prevState => ({
-        currentSong: prevState.queue[prevState.queue.length - 1], 
-        queue: prevState.queue.slice(0, prevState.queue.length - 1)
+        currentSong: prevState.queue[0], 
+        queue: prevState.queue.slice(1, prevState.queue.length)
       }))
     }
   }
@@ -42,15 +42,11 @@ export const RoomProvider = ({children}) => {
 
   useEffect(function init() {
     async function fetchStore() {
-      const { data } = await joinRoom(100, 'Zach')
-      room.initRoom(data)
+      const { data } = await joinRoom('fun-room', 'Zach')
+      room.initRoom({...data, name: 'fun-room'})
     }
     const eventSource = new RNEventSource('http://34.219.153.198:5000/stream')
     
-    eventSource.addEventListener('greeting', function(event) {
-      room.addMember('new member')
-    }, false)
-
     eventSource.addEventListener('song', function({data}) {
       const { song } = JSON.parse(data)
       room.addtoQueue(song)
@@ -61,7 +57,6 @@ export const RoomProvider = ({children}) => {
     }, false) 
 
     eventSource.addEventListener('error', function() {
-      alert('Failed to connect to event stream. Is Redis running?')
     }, false)
 
     fetchStore()
