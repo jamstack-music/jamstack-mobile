@@ -5,8 +5,13 @@ import Spotify from 'rn-spotify-sdk'
 
 const Auth = ({navigation}) => {
   useEffect(function auth() {
-    const stack = Spotify.isLoggedIn() ? 'Room' : 'Login'
-    navigation.navigate(stack)
+    async function login() {
+      const status = await Spotify.isLoggedInAsync()
+      const stack = status ? 'Room' : 'Login'
+      navigation.navigate(stack)
+    }
+
+    login()
   }, [])
 
   return (

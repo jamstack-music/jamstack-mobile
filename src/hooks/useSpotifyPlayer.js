@@ -15,7 +15,9 @@ function useSpotifyPlayer(uri, nextSong) {
 
   // Event listener to see if the track has finished and if it has it changes to the next song
   useEffect(function init() {
-    Spotify.on('audioDeliveryDone', () => nextSong())
+    Spotify.on('audioDeliveryDone', () => {
+      nextSong()
+    })
   }, [])
 
   useEffect(function playNewSong() {
@@ -34,8 +36,8 @@ function useSpotifyPlayer(uri, nextSong) {
     }
   })
 
-  const timeElapsed = () => {
-    const { position } = Spotify.getPlaybackState()
+  const timeElapsed = async () => {
+    const { position } = await Spotify.getPlaybackStateAsync()
     setElapsed(position * 1000)
   }
 
