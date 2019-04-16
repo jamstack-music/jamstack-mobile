@@ -7,13 +7,10 @@ import AlbumCover from '../components/AlbumCover'
  *
  * @author [Zach Banducci](https://github.com/zchbndcc9)
  */
-const SongInfo = ({artist, songTitle, album}) => (
+const SongInfo = ({artist, songTitle}) => (
   <View style={styles.container}>
-    <AlbumCover {...album} style={styles.album}/>
-    <View style={styles.songInfo}>
-      <Text style={styles.title} >{songTitle}</Text>
-      <Text style={styles.artist} >{artist}</Text>
-    </View>
+    <Text style={styles.title} >{songTitle}</Text>
+    <Text style={styles.artist} >{artist}</Text>
   </View>
 )
 
@@ -23,11 +20,6 @@ SongInfo.defaultProps = {
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 2, 
-    alignItems: 'center',
-    justifyContent: 'space-around'
-  },
   title: {
     fontSize: 25,
     fontWeight: 'bold',

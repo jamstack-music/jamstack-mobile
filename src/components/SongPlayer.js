@@ -9,6 +9,8 @@ import useMusicPlayer from '../hooks/useMusicPlayer'
 import SongInfo from './SongInfo'
 import Timer from './Timer'
 import ControlsGroup from './ControlsGroup'
+import AlbumCover from './AlbumCover'
+
 // TODO: Keep track of song time and get next song when time is finished
 /**
  * SongPlayer Component
@@ -23,7 +25,8 @@ const SongPlayer = ({song, nextSong}) => {
 
   return(
     <SafeAreaView style={{flex: 1}}>
-      <View style={{flex: 1, flexDirection: 'column'}}>
+      <View style={{flex: 1, justifyContent: 'space-around', alignItems: 'center'}}>
+        <AlbumCover {...images} />
         <SongInfo
           songTitle={title}
           artist={artist}
@@ -31,7 +34,7 @@ const SongPlayer = ({song, nextSong}) => {
         <Timer 
           currentTime={elapsed}
           end={duration} /> 
-        <ControlsGroup style={{flex: 1, justifySelf: 'flex-start'}}>
+        <ControlsGroup style={{flex: 1}}>
           <Icon 
             reverse
             name={play ? 'controller-paus' : 'controller-play'}
