@@ -10,11 +10,13 @@
     "lint": "eslint *.js **/*.js"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "prop-types": "^15.7.2",
     "react": "^16.8.3",
     "react-dom": "^16.8.6",
     "react-native": "0.59.1",
     "react-native-elements": "^1.1.0",
+    "react-native-event-source": "^1.0.3",
     "react-native-gesture-handler": "^1.1.0",
     "react-native-music-control": "^0.9.9",
     "react-native-progress": "^3.6.0",
