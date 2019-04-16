@@ -1,40 +1,68 @@
-import React, {Component} from 'react'
-import { View, Text } from 'react-native'
+import React from 'react'
+import { View, Text, StyleSheet } from 'react-native'
 import { Icon } from 'react-native-elements'
 import AlbumCover from './AlbumCover'
 import { Subscribe } from 'unstated'
 import { RoomContainer } from '../store/room'
 
-const SongItem = ({title, artist, uri, album}) => (
-    
-  <View style={{width: 415, height: 90, flexDirection: 'row', borderColor: 'black', borderWidth: 1}}>
+const SongItem = (props) => {
+  const {
+    id,
+    title,
+    artist,
+    images,
+  } = props
+  
+  const thumbnail = images[images.length - 1].url
+  
+  return (
+    <View style={styles.song}>
+      <View>
+        <AlbumCover url={thumbnail} dim={50}></AlbumCover>
+      </View>
+      <View style={styles.details}>
+        <Text style={styles.title}>
+          {title}
+        </Text>
+        <Text style={styles.artist}>
+          {artist}
+        </Text>
+      </View>
+      <View style={styles.add}>
+        <Subscribe to={[RoomContainer]}>
+          { room => 
+            <Icon name='add' onPress={() => room.state.queue.push(props)}/>
+          }
+        </Subscribe>
+      </View>
 
-    <View style={{alignItems: 'center', justifyContent: 'center', width: 90, height: 90}}>
-      <AlbumCover url={album.url} dim={80}></AlbumCover>
     </View>
+  ) 
+}
 
-    <View style={{width: 230, height: 90}}>
-
-      <Text style={{height: 50, fontSize: 20}}>
-        {title}
-      </Text>
-
-      <Text style={{fontSize: 20}}>
-        {artist}
-      </Text>
-
-    </View>
-
-    <View style={{width: 90, height: 90}}>
-      <Subscribe to={[RoomContainer]}>
-        { room => 
-          <Icon name='add' size={80} onPress={() => room.state.queue.push({title, artist, uri, album})}/>
-        }
-      </Subscribe>
-    </View>
-
-  </View>
-
-)
+const styles = StyleSheet.create({
+  song: {
+    display: 'flex',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center', 
+    padding: 10,
+  },
+  title: {
+    fontSize: 16,
+  },
+  artist: {
+    fontSize: 14, 
+    color: '#3C3C3C'
+  },
+  details: {
+    flex: 2,
+    marginHorizontal: 10,
+    textAlign: 'left',
+  }, 
+  add: {
+    marginHorizontal: 10,
+  }
+})
 
 export default SongItem
