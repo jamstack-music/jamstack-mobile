@@ -17,7 +17,7 @@ const Search = () => {
     SongArr = []
     let SongQueue = []
 
-    const callSpotify = async (roomQueue) => {
+    const callSpotify = async () => {
 
       if(query.length == 0){
 
@@ -53,7 +53,7 @@ const Search = () => {
     }
 
     useEffect( () => {
-      //callSpotify()
+      callSpotify()
     }, [query])
       
     return(
@@ -70,12 +70,18 @@ const Search = () => {
               {room => (
                 <TextInput
                 style={{flex:1, flexDirection: 'row', height: 40, borderColor: 'black', borderWidth: 1}}
+                onChangeText={(text) => setQuery(text)}
+                value={this.query}
+              />
+
+                /*<TextInput
+                style={{flex:1, flexDirection: 'row', height: 40, borderColor: 'black', borderWidth: 1}}
                 onChangeText={(text) => {
                   setQuery(text);
                   return callSpotify(room.state.queue);
                 }}
                 value={this.query}
-              />
+              />*/
               )}
             </Subscribe>
 
