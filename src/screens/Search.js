@@ -73,15 +73,7 @@ const Search = () => {
                 onChangeText={(text) => setQuery(text)}
                 value={this.query}
               />
-
-                /*<TextInput
-                style={{flex:1, flexDirection: 'row', height: 40, borderColor: 'black', borderWidth: 1}}
-                onChangeText={(text) => {
-                  setQuery(text);
-                  return callSpotify(room.state.queue);
-                }}
-                value={this.query}
-              />*/
+              
               )}
             </Subscribe>
 
@@ -107,11 +99,3 @@ const Search = () => {
   
 
 export default Search
-
-/*
-<Subscribe to={[RoomContainer]}>
-  {room => (
-    <SongList style={{flex:4}} songs={room.state.queue}/>
-  )}
-</Subscribe>
-*/

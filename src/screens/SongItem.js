@@ -38,22 +38,3 @@ const SongItem = ({title, artist, uri, album}) => (
 )
 
 export default SongItem
-
-
-/*
-<View style={{width: 415, height: 90, flexDirection: 'row', borderColor: 'black', borderWidth: 1}}>
-        <AlbumCover style={{flex:1}} url={album.url} dim={80}></AlbumCover>
-        
-        <View style={{height: 90, width: 200}}>
-            <Text style={{flex:1, color: 'red', borderWidth: 1}}>
-                {name}
-            </Text>
-            <Text style={{flex:1, borderColor: 'blue', borderWidth: 1}}>
-                {artist}
-            </Text>
-        </View>
-        <View style={{flex:1, flexDirection: 'row', alignSelf: 'center'}}>
-            <Icon name='add' size={35}/>
-        </View>
-    </View>
-*/
