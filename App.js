@@ -1,7 +1,7 @@
 import React from 'react'
 import AppContainer from './src/navigation/AppNavigator'
 import Spotify from 'rn-spotify-sdk'
-import { Provider } from 'unstated'
+import { RoomProvider } from './src/store/room'
 
 Spotify.initialize({
   'clientID':'0a31a2abfc5945bb9e3b3507e6f8361c',
@@ -10,9 +10,10 @@ Spotify.initialize({
   'scopes': ['streaming']
 })
 const App = () => (
-  <Provider>
+  
+  <RoomProvider>
     <AppContainer />
-  </Provider>
+  </RoomProvider>
 )
 
 export default App

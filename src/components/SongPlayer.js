@@ -3,7 +3,6 @@ import React from 'react'
 import { SafeAreaView, View } from 'react-native'
 import { Icon } from 'react-native-elements'
 import PropTypes from 'prop-types'
-import RNEvents from 'react-native-events'
 
 import useMusicPlayer from '../hooks/useMusicPlayer'
 
@@ -20,7 +19,7 @@ import ControlsGroup from './ControlsGroup'
  */
 const SongPlayer = ({song, nextSong}) => {
   const [play, setPlay, elapsed] = useMusicPlayer(song, nextSong)
-  let {title, artist, album, duration} = song 
+  let {title, artist, images, duration} = song 
 
   return(
     <SafeAreaView style={{flex: 1}}>
@@ -28,7 +27,7 @@ const SongPlayer = ({song, nextSong}) => {
         <SongInfo
           songTitle={title}
           artist={artist}
-          album={album} />
+          album={images} />
         <Timer 
           currentTime={elapsed}
           end={duration} /> 
