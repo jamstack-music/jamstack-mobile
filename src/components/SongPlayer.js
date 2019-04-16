@@ -26,14 +26,10 @@ const SongPlayer = ({song, nextSong}) => {
   return(
     <SafeAreaView style={{flex: 1}}>
       <View style={{flex: 1, justifyContent: 'space-around', alignItems: 'center'}}>
-        <AlbumCover {...images} />
         <SongInfo
           songTitle={title}
           artist={artist}
-          album={images} />
-        <Timer 
-          currentTime={elapsed}
-          end={duration} /> 
+        />
         <ControlsGroup style={{flex: 1}}>
           <Icon 
             reverse

@@ -1,101 +1,80 @@
 import React, {useState, useEffect} from 'react'
-import {View, Text, TextInput} from 'react-native'
+import { SafeAreaView, View, Text, TextInput} from 'react-native'
 import { Icon } from 'react-native-elements'
 import Spotify from 'rn-spotify-sdk'
-import SongList from './SongList'
+import SongList from '../components/SongList'
 import { ScrollView } from 'react-native-gesture-handler'
-import RoomContainer from '../store/store'
-import { Subscribe } from 'unstated';
+import { RoomContainer } from '../store/room'
+import { Subscribe } from 'unstated'
 
 const Search = () => {
+  const [results, setResults] = useState([])
+  const [query, setQuery] = useState('')
 
-    const [initDone, setInitDone] = useState(0);
-    const [songList, setSongList] = useState([]);
-    const [query, setQuery] = useState("");
-    const [queue, setQueue] = useState([]);
-
-    SongArr = []
-    let SongQueue = []
+  useEffect( () => {
 
     const callSpotify = async () => {
-
       if(query.length == 0){
-
-
-        let result = await Spotify.search(" ", ['track'], {limit: 1})
-  
-        let songQueue = result.tracks.items.map((song, i) => ({
-          title: song.name,
-          artist: song.artists[0].name,
-          url: song.uri,
-          album: song.album.images[0]
-        }));
-
-        setSongList(songQueue)
-        setSongList(roomQueue)
-        
-
+        setResults([])
       } else {
+        let { tracks: { items } } = await Spotify.search(query, ['track'])
 
-        let result = await Spotify.search(query, ['track'], {limit: 5})
-  
-        let songQueue = result.tracks.items.map((song, i) => ({
-          title: song.name,
-          artist: song.artists[0].name,
-          url: song.uri,
-          album: song.album.images[0]
-        }));
+        const searchResults = items.map(({
+         name: title,
+         id,
+         uri,
+         artists: [{
+           name: artist
+         },],
+         album: {
+           name: album,
+           images
+         },
+        }) => ({
+         title,
+         id,
+         uri,
+         artist,
+         album,
+         images,
+        }))
 
-        setSongList(songQueue)
-
+        setResults(searchResults)
       }
-      
     }
-
-    useEffect( () => {
-      callSpotify()
-    }, [query])
+    callSpotify()
+  }, [query])
       
-    return(
+  return(
+    <SafeAreaView style={{ flex: 1 }}>
       <ScrollView style={{flex:1, flexDirection: 'row'}}>
-
         <View style={{height: 50, flexDirection: 'row'}}>
           <View style={{width: 50, height: 50, borderColor: 'black', borderWidth: 1}}>
-
             <Icon name='search' size={40} style={{flex:1, flexDirection: 'row'}}/>
-
           </View>
           <View style={{width:315, height: 50}}>
             <Subscribe to={[RoomContainer]}>
               {room => (
                 <TextInput
-                style={{flex:1, flexDirection: 'row', height: 40, borderColor: 'black', borderWidth: 1}}
-                onChangeText={(text) => setQuery(text)}
-                value={this.query}
-              />
-              
+                  style={{flex:1, flexDirection: 'row', height: 40, borderColor: 'black', borderWidth: 1}}
+                  onChangeText={(text) => setQuery(text)}
+                  value={query}
+                />
               )}
             </Subscribe>
-
-            
-
           </View>
           <View style={{width: 50, height: 50, borderColor: 'black', borderWeight: 1}}>
-
           </View>
-          </View>
-
+        </View>
         <ScrollView style={{flex: 1, flexDirection: 'row'}}>
           <ScrollView style={{flex:1, flexDirection: 'row'}}>
-
-                <SongList style={{flex:4}} songs={songList}/>
-
+            <SongList style={{flex:4}} songs={results}/>
           </ScrollView>
         </ScrollView>
-
       </ScrollView>
-    )
-  }
+    </SafeAreaView>
+  )
+}
   
 
 export default Search

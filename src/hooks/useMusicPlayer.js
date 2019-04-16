@@ -16,9 +16,9 @@ function useMusicPlayer({title, artist, album, uri, duration}, nextSong) {
 
     MusicControl.setNowPlaying({
       title,
-      artwork: album.url,
+      //      artwork: album.url,
       artist,
-      duration: Math.floor(duration/1000)
+      // duration: Math.floor(duration/1000)
     })
 
     // Control setup for music player
