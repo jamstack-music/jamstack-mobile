@@ -1,12 +1,13 @@
 import React from 'react'
 import { Share, Button, SafeAreaView, View, Text, StyleSheet } from 'react-native'
-
 import { Subscribe } from 'unstated'
-import RoomContainer from '../store/store'
+import SongList from '../components/SongList'
+import { RoomContainer } from '../store/room'
 
 const Room = () => { 
+
   const shareRoom = async (roomName) => {
-    const result = await Share.share({
+    await Share.share({
       message: `Join ${roomName} on Queuehub!`,
       url: 'https://google.com'
     }) 
@@ -23,11 +24,11 @@ const Room = () => {
               onPress={() => shareRoom(room.state.name)} />
             <View>
               <Text>Total Members</Text>
-              <Text>{room.state.members.length}</Text>
+              <Text>{room.state.members}</Text>
             </View>
-            <View>
+            <View style={{flex: 0.5}}>
               <Text>Queue</Text>
-              {/* INSERT SONG LIST ITEM HERE */}
+              <SongList songs={room.state.queue} />              
             </View>
           </View>
         </SafeAreaView>
