@@ -12,8 +12,8 @@ const SongList = (props) => {
   return (
     <FlatList
       data={songs}
-      keyExtractor={(song) => song.id}
-      renderItem={({item}) => <SongItem {...item} />} 
+      keyExtractor={(song, i) => song.id + i}
+      renderItem={({item}) => <SongItem {...item} /> }
       ItemSeparatorComponent={() => <View style={styles.seperator} />}
       style={style}
       {...rest}
