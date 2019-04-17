@@ -6,13 +6,17 @@ import PropTypes from 'prop-types'
  * AlbumCover compoenent is a basic presentational component that displays the album cover of a given song
  * @author [Zach Banducci](https://github.com/zchbndcc9)
  */
-const AlbumCover = ({url, dim = 250}) => {
-  const { width } = Dimensions.get('window')
-  //const dim = width*.80
+const AlbumCover = (props) => {
+  const {
+    url,
+    dim = 250,
+    shadow,
+  } = props
+
   return (
-    <View style={styles.container}>
+    <View style={shadow ? styles.shadowContainer : null}>
       <Image
-        source={{uri: url}}
+        source={{uri: url ? url : 'https://www.indigenousmusicawards.com/img/placeholder-music.png'}}
         style={{width: dim, height: dim}}
       />
     </View>
@@ -20,7 +24,7 @@ const AlbumCover = ({url, dim = 250}) => {
 }
 
 const styles = StyleSheet.create({
-  container: {
+  shadowContainer: {
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -30,10 +34,6 @@ const styles = StyleSheet.create({
     shadowRadius: 10
   }
 })
-
-AlbumCover.defaultProps = {
-  url: 'https://www.indigenousmusicawards.com/img/placeholder-music.png'
-}
 
 AlbumCover.propTypes = {
   url: PropTypes.string
