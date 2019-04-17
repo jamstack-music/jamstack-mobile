@@ -26,7 +26,7 @@ const Room = () => {
               <Text>Total Members</Text>
               <Text>{room.state.members}</Text>
             </View>
-            <View style={{flex: 0.5}}>
+            <View style={{width: '100%', flex: 0.5}}>
               <Text>Queue</Text>
               <SongList songs={room.state.queue} />              
             </View>
