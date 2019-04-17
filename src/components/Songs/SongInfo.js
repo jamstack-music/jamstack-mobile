@@ -14,18 +14,18 @@ const SongInfo = ({artist, songTitle}) => (
 )
 
 SongInfo.defaultProps = {
-  artist: ' ',
-  songTitle: ' '
+  artist: '---',
+  songTitle: '---'
 }
 
 const styles = StyleSheet.create({
   title: {
-    fontSize: 25,
+    fontSize: 20,
     fontWeight: 'bold',
-    marginBottom: 10
+    marginVertical: 10
   },
   artist: {
-    fontSize: 24,
+    fontSize: 15,
   }
 })
 
