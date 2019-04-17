@@ -8,7 +8,7 @@ import { nextSong } from '../data/api'
 const CurrentPlaying = () => (
   <Subscribe to={[RoomContainer]}>
     {room => (
-      <SongPlayer song={room.state.currentSong} nextSong={nextSong}/>  
+      <SongPlayer song={room.state.currentSong} nextSong={() => nextSong(room.state.name)}/>  
     )}
   </Subscribe>
 )
