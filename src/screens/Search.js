@@ -55,21 +55,21 @@ const Search = () => {
       {
         room => (
 
-    <SafeAreaView style={styles.header}>
-      <View style={styles.searchBar}>
-        <Icon containerStyle={styles.icon} name='search' size={20}/>
-        <TextInput
-          onChangeText={(text) => setQuery(text)}
-          placeholder='Search...'
-          style={styles.input}
-        />
-      </View>
-      <SearchList
-        songs={results} 
-        onAdd={(song) => addSong(room.state.name, song)}
-        style={{ backgroundColor: 'white' }}
-      />
-    </SafeAreaView>
+          <SafeAreaView style={styles.header}>
+            <View style={styles.searchBar}>
+              <Icon containerStyle={styles.icon} name='search' size={20}/>
+              <TextInput
+                onChangeText={(text) => setQuery(text)}
+                placeholder='Search...'
+                style={styles.input}
+              />
+            </View>
+            <SearchList
+              songs={results} 
+              onAdd={(song) => addSong(room.state.name, song)}
+              style={{ backgroundColor: 'white' }}
+            />
+          </SafeAreaView>
         )
       }
     </Subscribe>
