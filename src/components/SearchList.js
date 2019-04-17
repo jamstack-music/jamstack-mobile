@@ -2,8 +2,6 @@ import React from 'react'
 import { View, StyleSheet } from 'react-native'
 import { Icon } from 'react-native-elements'
 
-import { addSong } from '../data/api'
-
 import SongList from './SongList'
 import SongItem from './SongItem'
 
@@ -11,6 +9,7 @@ const SearchList = (props) => {
   const {
     songs,
     style,
+    onAdd,
     ...rest
   } = props
   
@@ -21,7 +20,7 @@ const SearchList = (props) => {
       renderItem={({item}) => (
         <SongItem {...item}>
           <View style={styles.add}>
-            <Icon name='add' onPress={() => addSong(props)}/>
+            <Icon name='add' onPress={() => onAdd(item)}/>
           </View>
         </SongItem>
       )}
