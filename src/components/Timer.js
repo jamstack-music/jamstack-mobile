@@ -3,21 +3,24 @@ import { View, Text, StyleSheet } from 'react-native'
 
 import ProgressBar from 'react-native-progress/Bar'
 
+const formatTime = time => {
+  let seconds = Math.floor(time / 1000)
+  let minutes = Math.floor(seconds / 60)
+
+  seconds = (seconds % 60).toString().padStart(2, '0')
+  minutes = (minutes % 60).toString().padStart(2, '0')
+
+  return [minutes, seconds]
+}
+
 const Timer = ({end, currentTime}) => { 
-  const formatTime = time => {
-    let seconds = Math.floor(time / 1000)
-    let minutes = Math.floor(seconds / 60)
-
-    seconds = (seconds % 60).toString().padStart(2, '0')
-    minutes = (minutes % 60).toString().padStart(2, '0')
-
-    return [minutes, seconds]
-  }
+  end = end ? end : 0
+  currentTime = currentTime ? currentTime : 0
 
   let [cMin, cSec] = formatTime(currentTime)
   let [eMin, eSec] = formatTime(end)
 
-  let progress = currentTime / end
+  let progress = end === 0 ? 0 : currentTime / end
   return (
     <View style={{ flexDirection: 'row', alignItems: 'center' }}>
       <Text style={styles.time}>{cMin + ':' + cSec}</Text>
