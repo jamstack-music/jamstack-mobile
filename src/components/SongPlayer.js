@@ -23,12 +23,22 @@ const SongPlayer = ({song, nextSong}) => {
   const [play, setPlay, elapsed] = useMusicPlayer(song, nextSong)
   let {title, artist, images, duration} = song 
 
+  const albumImg = images ? images[0].url : null
+  
   return(
     <SafeAreaView style={{flex: 1}}>
       <View style={{flex: 1, justifyContent: 'space-around', alignItems: 'center'}}>
+        <AlbumCover 
+          shadow
+          url={albumImg} 
+        /> 
         <SongInfo
           songTitle={title}
           artist={artist}
+        />
+        <Timer 
+          end={duration}
+          currentTime={elapsed}
         />
         <ControlsGroup style={{flex: 1}}>
           <Icon 
@@ -37,14 +47,16 @@ const SongPlayer = ({song, nextSong}) => {
             type='entypo'
             size={40}
             color={play ? '#004FCF' : '#0051F7'}
-            onPress={() => setPlay(!play)} />
+            onPress={() => setPlay(!play)} 
+          />
           <Icon 
             reverse
             name="controller-fast-forward"
             type='entypo'
             size={30}
             color='#00AF66'
-            onPress={() => nextSong()} />
+            onPress={nextSong} 
+          />
         </ControlsGroup>
       </View>
     </SafeAreaView>
