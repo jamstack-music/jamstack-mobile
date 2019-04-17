@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { SafeAreaView, View } from 'react-native'
+import { View } from 'react-native'
 import { Icon } from 'react-native-elements'
 import PropTypes from 'prop-types'
 
@@ -19,47 +19,51 @@ import AlbumCover from './AlbumCover'
  * This component is used for playing a single song from the SDK and displaying its information
  * 
  */
-const SongPlayer = ({song, nextSong}) => {
+const SongPlayer = (props) => {
+  const {
+    song,
+    nextSong,
+    style,
+  } = props
+
   const [play, setPlay, elapsed] = useMusicPlayer(song, nextSong)
   let {title, artist, images, duration} = song 
 
-  const albumImg = images ? images[0].url : null
+  const albumImg = images[0].url
   
   return(
-    <SafeAreaView style={{flex: 1}}>
-      <View style={{flex: 1, justifyContent: 'space-around', alignItems: 'center'}}>
-        <AlbumCover 
-          shadow
-          url={albumImg} 
-        /> 
-        <SongInfo
-          songTitle={title}
-          artist={artist}
+    <View style={{flex: 1, alignItems: 'center', ...style}}>
+      <AlbumCover 
+        shadow
+        url={albumImg} 
+      /> 
+      <SongInfo
+        songTitle={title}
+        artist={artist}
+      />
+      <Timer 
+        end={duration}
+        currentTime={elapsed}
+      />
+      <ControlsGroup>
+        <Icon 
+          reverse
+          name={play ? 'controller-paus' : 'controller-play'}
+          type='entypo'
+          size={25}
+          color={play ? '#004FCF' : '#0051F7'}
+          onPress={() => setPlay(!play)} 
         />
-        <Timer 
-          end={duration}
-          currentTime={elapsed}
+        <Icon 
+          reverse
+          name="controller-fast-forward"
+          type='entypo'
+          size={20}
+          color='#00AF66'
+          onPress={nextSong} 
         />
-        <ControlsGroup style={{flex: 1}}>
-          <Icon 
-            reverse
-            name={play ? 'controller-paus' : 'controller-play'}
-            type='entypo'
-            size={40}
-            color={play ? '#004FCF' : '#0051F7'}
-            onPress={() => setPlay(!play)} 
-          />
-          <Icon 
-            reverse
-            name="controller-fast-forward"
-            type='entypo'
-            size={30}
-            color='#00AF66'
-            onPress={nextSong} 
-          />
-        </ControlsGroup>
-      </View>
-    </SafeAreaView>
+      </ControlsGroup>
+    </View>
   )
 }
 
