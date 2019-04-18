@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { View } from 'react-native'
+import { SafeAreaView, View } from 'react-native'
 import { Icon } from 'react-native-elements'
 import PropTypes from 'prop-types'
 
@@ -32,38 +32,40 @@ const SongPlayer = (props) => {
   const albumImg = images[0].url
   
   return(
-    <View style={{flex: 1, alignItems: 'center', ...style}}>
-      <AlbumCover 
-        shadow
-        url={albumImg} 
-      /> 
-      <SongInfo
-        songTitle={title}
-        artist={artist}
-      />
-      <Timer 
-        end={duration}
-        currentTime={elapsed}
-      />
-      <ControlsGroup>
-        <Icon 
-          reverse
-          name={play ? 'controller-paus' : 'controller-play'}
-          type='entypo'
-          size={25}
-          color={play ? '#004FCF' : '#0051F7'}
-          onPress={() => setPlay(!play)} 
+    <SafeAreaView style={{flex: 1}}>
+      <View style={{flex: 1, justifyContent: 'space-around', alignItems: 'center'}}>
+        <AlbumCover 
+          shadow
+          url={albumImg} 
+        /> 
+        <SongInfo
+          songTitle={title}
+          artist={artist}
         />
-        <Icon 
-          reverse
-          name="controller-fast-forward"
-          type='entypo'
-          size={20}
-          color='#00AF66'
-          onPress={nextSong} 
+        <Timer 
+          end={duration}
+          currentTime={elapsed}
         />
-      </ControlsGroup>
-    </View>
+        <ControlsGroup>
+          <Icon 
+            reverse
+            name={play ? 'controller-paus' : 'controller-play'}
+            type='entypo'
+            size={25}
+            color={play ? '#004FCF' : '#0051F7'}
+            onPress={() => setPlay(!play)} 
+          />
+          <Icon 
+            reverse
+            name="controller-fast-forward"
+            type='entypo'
+            size={20}
+            color='#00AF66'
+            onPress={nextSong} 
+          />
+        </ControlsGroup>
+      </View>
+    </SafeAreaView>
   )
 }
 
