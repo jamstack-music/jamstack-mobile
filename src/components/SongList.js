@@ -1,10 +1,11 @@
 import React from 'react'
 import { FlatList, View, StyleSheet } from 'react-native'
-import SongItem from '../components/SongItem'
+import SongItem from './SongItem'
 
 const SongList = (props) => {
   const {
     songs,
+    style,
     ...rest
   } = props
 
@@ -12,8 +13,10 @@ const SongList = (props) => {
     <FlatList
       data={songs}
       keyExtractor={(song) => song.id}
-      renderItem={({item}) => <SongItem {...item} {...rest}/>} 
+      renderItem={({item}) => <SongItem {...item} />} 
       ItemSeparatorComponent={() => <View style={styles.seperator} />}
+      style={style}
+      {...rest}
     />
   )
 }

@@ -1,9 +1,6 @@
 import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
-import { Icon } from 'react-native-elements'
 import AlbumCover from './AlbumCover'
-import { Subscribe } from 'unstated'
-import { RoomContainer } from '../store/room'
 
 const SongItem = (props) => {
   const {
@@ -11,6 +8,8 @@ const SongItem = (props) => {
     title,
     artist,
     images,
+    children,
+    ...rest
   } = props
   
   const thumbnail = images[images.length - 1].url
@@ -28,14 +27,7 @@ const SongItem = (props) => {
           {artist}
         </Text>
       </View>
-      <View style={styles.add}>
-        <Subscribe to={[RoomContainer]}>
-          { room => 
-            <Icon name='add' onPress={() => room.state.queue.push(props)}/>
-          }
-        </Subscribe>
-      </View>
-
+      {children}
     </View>
   ) 
 }
@@ -60,9 +52,6 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     textAlign: 'left',
   }, 
-  add: {
-    marginHorizontal: 10,
-  }
 })
 
 export default SongItem
