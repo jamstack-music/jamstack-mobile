@@ -1,8 +1,15 @@
 import React, {useState, useEffect} from 'react'
 import { SafeAreaView, StyleSheet, View, TextInput} from 'react-native'
+
 import { Icon } from 'react-native-elements'
-import Spotify from 'rn-spotify-sdk'
 import SearchList from '../components/SearchList'
+
+import Spotify from 'rn-spotify-sdk'
+
+import { RoomContainer } from '../store/room'
+import { Subscribe } from 'unstated'
+
+import { addSong } from '../data/api'
 
 const Search = () => {
   const [results, setResults] = useState([])
@@ -19,6 +26,7 @@ const Search = () => {
         name: title,
         id,
         uri,
+        duration,
         artists: [{
           name: artist
         },],
@@ -28,6 +36,7 @@ const Search = () => {
         },
       }) => ({
         title,
+        duration,
         id,
         uri,
         artist,
@@ -42,17 +51,28 @@ const Search = () => {
   }, [query])
       
   return(
-    <SafeAreaView style={styles.header}>
-      <View style={styles.searchBar}>
-        <Icon containerStyle={styles.icon} name='search' size={20}/>
-        <TextInput
-          onChangeText={(text) => setQuery(text)}
-          placeholder='Search...'
-          style={styles.input}
-        />
-      </View>
-      <SearchList songs={results} style={{ backgroundColor: 'white' }}/>
-    </SafeAreaView>
+    <Subscribe to={[RoomContainer]}>
+      {
+        room => (
+
+          <SafeAreaView style={styles.header}>
+            <View style={styles.searchBar}>
+              <Icon containerStyle={styles.icon} name='search' size={20}/>
+              <TextInput
+                onChangeText={(text) => setQuery(text)}
+                placeholder='Search...'
+                style={styles.input}
+              />
+            </View>
+            <SearchList
+              songs={results} 
+              onAdd={(song) => addSong(room.state.name, song)}
+              style={{ backgroundColor: 'white' }}
+            />
+          </SafeAreaView>
+        )
+      }
+    </Subscribe>
   )
 }
 

@@ -13,5 +13,6 @@ export const joinRoom = async (room, name) => {
 
 export const nextSong = async (room) => {
   const res = await axios.get(`${BASE}/next/${room}`)
+  console.log(res)
   return res
 }
