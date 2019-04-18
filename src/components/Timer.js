@@ -22,7 +22,7 @@ const Timer = ({end, currentTime}) => {
 
   let progress = end === 0 ? 0 : currentTime / end
   return (
-    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+    <View style={{ flexDirection: 'row', alignItems: 'center'}}>
       <Text style={styles.time}>{cMin + ':' + cSec}</Text>
       <ProgressBar 
         progress={progress} 

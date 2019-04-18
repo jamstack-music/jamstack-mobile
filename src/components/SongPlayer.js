@@ -32,8 +32,8 @@ const SongPlayer = (props) => {
   const albumImg = images[0].url
   
   return(
-    <SafeAreaView style={{flex: 1}}>
-      <View style={{flex: 1, justifyContent: 'space-around', alignItems: 'center'}}>
+    <SafeAreaView style={{ flex: 1 }}>
+      <View style={{flex: 1, alignItems: 'center', ...style}}>
         <AlbumCover 
           shadow
           url={albumImg} 
