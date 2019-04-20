@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react'
 import { SafeAreaView, StyleSheet, View, TextInput} from 'react-native'
 
 import { Icon } from 'react-native-elements'
-import SearchList from '../components/SearchList'
+import AddList from '../components/Songs/AddList'
 
 import Spotify from 'rn-spotify-sdk'
 
@@ -64,7 +64,7 @@ const Search = () => {
                 style={styles.input}
               />
             </View>
-            <SearchList
+            <AddList
               songs={results} 
               onAdd={(song) => addSong(room.state.name, song)}
               style={{ backgroundColor: 'white' }}
