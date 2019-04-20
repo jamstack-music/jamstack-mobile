@@ -1,5 +1,5 @@
 import axios from 'axios'
-const BASE = 'http://34.219.153.198:5000'
+const BASE = 'http://54.191.51.110:5000'
 
 export const addSong = async (room, song) => {
   const res = await axios.post(`${BASE}/add/${room}`, song)

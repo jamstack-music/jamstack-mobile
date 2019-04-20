@@ -13,7 +13,10 @@ export class RoomContainer extends Container {
     password: ''
   }
 
-  initRoom = store => this.setState(prevState => ({...prevState, ...store}))
+  initRoom = store => {
+    const { current_song: currentSong } = store
+    this.setState(prevState => ({...prevState, currentSong, ...store}))
+  }
 
   nextSong = () => {
     if(this.state.queue.length > 0) {
@@ -38,16 +41,17 @@ export class RoomContainer extends Container {
 }
 
 export const RoomProvider = ({children}) => {
-  const room = new RoomContainer()
-
+  const room = new RoomContainer() 
   useEffect(function init() {
     async function fetchStore() {
       const { data } = await joinRoom('fun-room', 'Zach')
       room.initRoom({...data, name: 'fun-room'})
     }
-    const eventSource = new RNEventSource('http://34.219.153.198:5000/stream')
+
+    const eventSource = new RNEventSource(`http://54.191.51.110:5000/stream?channel=fun-room`)
     
     eventSource.addEventListener('song', function({data}) {
+      console.debug('song request received')
       const { song } = JSON.parse(data)
       room.addtoQueue(song)
     }, false)
@@ -56,12 +60,10 @@ export const RoomProvider = ({children}) => {
       room.nextSong()
     }, false) 
 
-    eventSource.addEventListener('error', function() {
-    }, false)
-
     fetchStore()
     return function unMount() {
-      eventSource.removeAllListeners()
+      eventSource.removeEventListeners('song')
+      eventSource.removeEventListeners('next')
       eventSource.close()
     }
   },[])
