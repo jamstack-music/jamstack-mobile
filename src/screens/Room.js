@@ -1,7 +1,7 @@
 import React from 'react'
 import { Share, Button, SafeAreaView, View, Text, StyleSheet } from 'react-native'
 import { Subscribe } from 'unstated'
-import SongList from '../components/SongList'
+import SongList from '../components/Songs/SongList'
 import { RoomContainer } from '../store/room'
 
 const Room = () => { 
