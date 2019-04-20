@@ -6,7 +6,7 @@ import PropTypes from 'prop-types'
 
 import useMusicPlayer from '../hooks/useMusicPlayer'
 
-import SongInfo from './SongInfo'
+import SongInfo from './Songs/SongInfo'
 import Timer from './Timer'
 import ControlsGroup from './ControlsGroup'
 import AlbumCover from './AlbumCover'

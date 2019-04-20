@@ -1,6 +1,5 @@
 import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
-import AlbumCover from '../components/AlbumCover'
 
 /**
  * SongInfo Component is a presentational component that just displays the the song information
