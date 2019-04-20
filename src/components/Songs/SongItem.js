@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, Text, StyleSheet } from 'react-native'
-import AlbumCover from './AlbumCover'
+import AlbumCover from '../AlbumCover'
 
 const SongItem = (props) => {
   const {
