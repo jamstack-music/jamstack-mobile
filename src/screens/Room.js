@@ -1,7 +1,8 @@
 import React from 'react'
 import { Alert, Share, Button, SafeAreaView, AsyncStorage, View, Text, StyleSheet } from 'react-native'
 import { Subscribe } from 'unstated'
-import SongList from '../components/Songs/SongList'
+import { bumpSong } from '../data/api'
+import BumpList from '../components/Songs/BumpList'
 import { RoomContainer } from '../store/room'
 import StoreMiddleware from '../containers/StoreMiddleware'
 
@@ -62,7 +63,10 @@ const Room = (props) => {
                 </View>
                 <View style={{width: '100%', flex: 0.5}}>
                   <Text>Queue</Text>
-                  <SongList songs={room.state.queue} />              
+                  <BumpList
+                    songs={room.state.queue} 
+                    onBump={song => bumpSong(room.state.name, 'Jim', song.id)}
+                  />              
                 </View>
               </View>
             </SafeAreaView>
