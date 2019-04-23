@@ -14,6 +14,7 @@ export default class Createroom extends Component {
   }
 
   updateIndex(selectedIndex) {
+    
     this.setState({ selectedIndex })
   }
   handleNameChange(name) {
