@@ -1,13 +1,20 @@
 import React from 'react'
 import { Container, Provider } from 'unstated'
 
+const superBump = (queue) => {
+  queue.sort((a, b) => b.bumps - a.bumps)
+}
+
+const regularBump = (queue, index) => {
+  if(index !== 0)
+    [queue[index], queue[index - 1]] = [queue[index - 1], queue[index]]
+} 
+
 export class RoomContainer extends Container {
   state = {
     queue: [], 
     currentSong: {},
     members: [],
-    public: true,
-    password: ''
   }
 
   initRoom = store => {
@@ -33,8 +40,7 @@ export class RoomContainer extends Container {
       alreadyBumped: true
     }
 
-    if(index !== 0)
-      [queue[index], queue[index - 1]] = [queue[index - 1], queue[index]]
+    superBump(queue)
 
     this.setState(({
       queue
