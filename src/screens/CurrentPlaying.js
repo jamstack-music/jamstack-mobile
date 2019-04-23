@@ -4,7 +4,7 @@ import BottomDrawer from 'rn-bottom-drawer'
 import { getBottomSpace } from 'react-native-iphone-x-helper'
 
 import SongPlayer from '../components/SongPlayer'
-import SongList from '../components/SongList'
+import SongList from '../components/Songs/SongList'
 
 import { Subscribe } from 'unstated'
 import { RoomContainer } from '../store/room'
