@@ -1,10 +1,60 @@
-import { createAppContainer, createStackNavigator } from 'react-navigation'
+import React from 'react'
+
+import { 
+  createAppContainer, 
+  createStackNavigator,
+  createSwitchNavigator,
+  createBottomTabNavigator
+} from 'react-navigation'
+
+import Ionicons from 'react-native-vector-icons/Ionicons'
 
 import Login from '../screens/Login'
+import Room from '../screens/Room'
+import Search from '../screens/Search'
+import Browse from '../screens/Browse'
+import CurrentPlaying from '../screens/CurrentPlaying'
 
-const AppNavigator = createStackNavigator({
-  Login
+import Auth from '../navigation/Auth'
+
+const RoomStack = createBottomTabNavigator({
+  Search,
+  Room,
+  Browse: CurrentPlaying
+}, {
+  defaultNavigationOptions: ({navigation}) => ({
+    tabBarIcon: ({tintColor}) => {
+      const { routeName } = navigation.state
+      let iconName
+      switch (routeName) {
+      case 'Browse': 
+        iconName = 'md-disc'
+        break
+      case 'Search':
+        iconName = 'md-search'
+        break
+      case 'Room':
+        iconName = 'md-home'
+        break
+      }
+
+      return <Ionicons name={iconName} size={20} color={tintColor}/>
+    }
+  }),
+  initialRouteName: 'Room',
+  tabBarOptions: {
+    activeTintColor: 'tomato',
+    inactiveTintColor: 'grey'
+  }
 })
-const AppContainer = createAppContainer(AppNavigator)
 
-export default AppContainer
+const Application = createSwitchNavigator({
+  Login: createStackNavigator({Login}),
+  Room: RoomStack,
+  Auth
+}, {
+  initialRouteName: 'Auth'
+})
+
+export default createAppContainer(Application)
+

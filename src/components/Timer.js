@@ -1,25 +1,50 @@
-import React, { useEffect } from 'react'
-import { View, Text } from 'react-native'
-import useTimer from '../hooks/useTimer.js'
+import React from 'react'
+import { View, Text, StyleSheet } from 'react-native'
 
-const Timer = ({end, onEnd, playing}) => {
-  const [timer, toggleTimer] = useTimer()
+import ProgressBar from 'react-native-progress/Bar'
 
-  useEffect(function timeTracker(){ 
-    if(timer == end)
-      onEnd()
-  }, [timer])
+const formatTime = time => {
+  let seconds = Math.floor(time / 1000)
+  let minutes = Math.floor(seconds / 60)
 
-  useEffect(function onPause(){
-    if(!playing)
-      toggleTimer()
-  }, [playing])
+  seconds = (seconds % 60).toString().padStart(2, '0')
+  minutes = (minutes % 60).toString().padStart(2, '0')
 
+  return [minutes, seconds]
+}
+
+const Timer = ({end, currentTime}) => { 
+  end = end ? end : 0
+  currentTime = currentTime ? currentTime : 0
+
+  let [cMin, cSec] = formatTime(currentTime)
+  let [eMin, eSec] = formatTime(end)
+
+  let progress = end === 0 ? 0 : currentTime / end
   return (
-    <View>
-      <Text>{timer}</Text>
+    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+      <Text style={styles.time}>{cMin + ':' + cSec}</Text>
+      <ProgressBar 
+        progress={progress} 
+        style={styles.progress}
+        width={230}
+        height={6}
+        unfilledColor='#DDDDDD'
+        borderRadius={0}
+        borderWidth={0}/> 
+      <Text style={styles.time}>{eMin + ':' + eSec}</Text>
     </View>
   )
 }
+
+const styles = StyleSheet.create({
+  progress: {
+    marginLeft: 10,
+    marginRight: 10
+  },
+  time: {
+    fontSize: 16
+  }
+})
 
 export default Timer
