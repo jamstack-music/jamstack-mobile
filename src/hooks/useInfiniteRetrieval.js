@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { getNext } from '../data/spotify'
+import Spotify from 'rn-spotify-sdk'
 
 export default function useInfiniteRetrieval(initial) {
   const [next, setNext] = useState(initial)
@@ -24,7 +24,7 @@ export default function useInfiniteRetrieval(initial) {
 
   useEffect(function fetch() {
     if(loading){
-      getNext(next).then(res => {
+      Spotify.sendRequest(next, 'GET', {}, false).then(res => {
         const { items, next } = res
         const newList = items.map(item => {
           if(item.album) return item.album

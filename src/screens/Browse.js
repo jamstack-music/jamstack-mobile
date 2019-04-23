@@ -1,10 +1,23 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { Button, View, Text } from 'react-native'
 
-const Browse = () => (
-  <View>
-    <Text>Search</Text>
-  </View>
-)
+const Browse = (props) => {
+  const {
+    navigation,
+  } = props
+
+  return(
+    <View>
+      <Button
+        title='Playlists'
+        onPress={() => navigation.navigate('Playlists')}
+      />
+      <Button
+        title='Albums'
+        onPress={() => navigation.navigate('Albums')}
+      />
+    </View>
+  )
+}
 
 export default Browse 

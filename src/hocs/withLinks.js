@@ -1,5 +1,5 @@
 import React from 'react'
-import { View } from 'react-native'
+import { TouchableHighlight } from 'react-native'
 
 const withLinks = (Component, type) => (
   (props) => {
@@ -9,9 +9,9 @@ const withLinks = (Component, type) => (
     } = props
 
     return (
-      <View onPress={() => navigation.push(type, {...rest})}>
+      <TouchableHighlight onPress={() => navigation.push(type, rest)}>
         <Component {...rest} />
-      </View>
+      </TouchableHighlight>
     )
   }
 )

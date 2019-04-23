@@ -12,17 +12,29 @@ import Login from '../screens/Login'
 import Room from '../screens/Room'
 import Search from '../screens/Search'
 import Browse from '../screens/Browse'
+import Playlists from '../screens/Playlists'
+import Playlist from '../screens/Playlist'
+import Album from '../screens/Album'
+import Albums from '../screens/Albums'
 import CurrentPlaying from '../screens/CurrentPlaying'
 
 import CreateRoom from '../screens/Createroom'
 import StoreInit from '../navigation/StoreInit'
 import Auth from '../navigation/Auth'
 
+const BrowseStack = createStackNavigator({
+  Browse,
+  Playlists,
+  Playlist,
+  Albums,
+  Album,
+})
+
 const RoomStack = createBottomTabNavigator({
   Room,
   'Currently Playing': CurrentPlaying,
   Search,
-  Browse,
+  Browse: BrowseStack 
 }, {
   defaultNavigationOptions: ({navigation}) => ({
     tabBarIcon: ({tintColor}) => {

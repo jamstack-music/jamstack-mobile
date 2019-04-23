@@ -20,8 +20,8 @@ const Album = (props) => {
         url={thumbnail}
         dim={50}
       />
-      <Text>name</Text>
-      <Text>artist</Text>
+      <Text>{name}</Text>
+      <Text>{artist}</Text>
     </View>
   )
 }

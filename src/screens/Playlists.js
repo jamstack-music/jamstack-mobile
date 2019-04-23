@@ -1,48 +1,23 @@
 import React from 'react'
-import { View, ScrollView, Text } from 'react-native'
+import { ScrollView } from 'react-native'
 import Playlist from '../components/Playlist'
 import withLinks from '../hocs/withLinks'
 import uuidv4 from 'uuid/v4'
+import useInfiniteRetrieval from '../hooks/useInfiniteRetrieval'
 
 const PlaylistLink = withLinks(Playlist, 'Playlist')
 
 const Playlists = (props) => {
+  const [list,] = useInfiniteRetrieval('v1/me/playlists')
+  
   const {
     navigation,
   } = props
 
-  const playlists = [
-    {
-      id: 2,
-      name: 'hello'
-    },
-
-    {
-      id: 1,
-      name: 'hello'
-    },
-    {
-      id: 4,
-      name: 'hello'
-    },
-    {
-      id: 6,
-      name: 'hello'
-    },
-    {
-      id: 8,
-      name: 'hello'
-    },
-    {
-      id: 0,
-      name: 'hello'
-    },
-  ] 
-
   return (
     <ScrollView>
       {
-        playlists.map(playlist => (
+        list.map(playlist => (
           <PlaylistLink 
             key={uuidv4()}
             navigation={navigation}
@@ -53,3 +28,5 @@ const Playlists = (props) => {
     </ScrollView>
   )
 }
+
+export default Playlists
