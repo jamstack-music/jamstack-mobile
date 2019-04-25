@@ -14,15 +14,14 @@ import Room from '../screens/Room'
 import Search from '../screens/Search'
 import Browse from '../screens/Browse'
 
-import Createroom from '../screens/Createroom'
-
+import CreateRoom from '../screens/Createroom'
+import StoreInit from '../navigation/StoreInit'
 import Auth from '../navigation/Auth'
 
 const RoomStack = createBottomTabNavigator({
   Search,
   Room,
   Browse,
-  Createroom
 }, {
   defaultNavigationOptions: ({navigation}) => ({
     tabBarIcon: ({tintColor}) => {
@@ -38,7 +37,7 @@ const RoomStack = createBottomTabNavigator({
       case 'Room':
         iconName = 'md-home'
         break 
-      case 'Createroom':
+      case 'CreateRoom':
         iconName = 'md-add'
         break
     }
@@ -48,13 +47,15 @@ const RoomStack = createBottomTabNavigator({
   }),
   initialRouteName: 'Room',
   tabBarOptions: {
-    activeTintColor: 'tomato',
+    activeTintColor: '#365dff',
     inactiveTintColor: 'grey'
   }
 })
 
 const Application = createSwitchNavigator({
-  Login: createStackNavigator({Login}),
+  Login,
+  CreateRoom,
+  StoreInit,
   Room: RoomStack,
   Auth
 }, {
