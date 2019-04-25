@@ -29,7 +29,7 @@ const SongPlayer = (props) => {
   const [play, setPlay, elapsed] = useMusicPlayer(song, nextSong)
   let {title, artist, images, duration} = song 
 
-  const albumImg = images[0].url
+  const albumImg = images ? images[0].url : 'https://placholder.com/200'
   
   return(
     <SafeAreaView style={{ flex: 1 }}>
@@ -72,6 +72,16 @@ const SongPlayer = (props) => {
 SongPlayer.propTypes = {
   song: PropTypes.object.isRequired,
   nextSong: PropTypes.func.isRequired, 
+}
+
+SongPlayer.defaultProps = {
+  song: {
+    title: '', 
+    artist: '', 
+    images: [{url: 'https://placeholder.com/200'}], 
+    duration: 0
+  },
+  images: [{url: 'https://placeholder.com/200'}]
 }
 
 export default SongPlayer

@@ -12,7 +12,7 @@ const SongItem = (props) => {
     ...rest
   } = props
   
-  const thumbnail = images[images.length - 1].url
+  const thumbnail = images && images.length !== 0 ? images[images.length - 1].url : 'http://placeholder.com/200'
   
   return (
     <View style={styles.song}>
