@@ -1,5 +1,6 @@
 import React from 'react'
 import { Alert, Share, Button, SafeAreaView, AsyncStorage, View, Text, StyleSheet } from 'react-native'
+import MemberList from '../components/MemberList'
 import { Subscribe } from 'unstated'
 import { bumpSong } from '../data/api'
 import BumpList from '../components/Songs/BumpList'
@@ -32,15 +33,18 @@ const destroyRoom = async (navigation) => {
 const shareRoom = async (roomName) => {
   await Share.share({
     message: `Join ${roomName} on Queuehub!`,
-    url: ''
+    url: 'http://queuehub.club/'
   }) 
 }
+
+const name = AsyncStorage.getItem('name').then(res => res)
 
 const Room = (props) => { 
   const { 
     navigation
   } = props
 
+  
   return (
     <Subscribe to={[RoomContainer]}>
       { 
@@ -48,24 +52,30 @@ const Room = (props) => {
           <StoreMiddleware room={room}>
             <SafeAreaView style={{flex: 1}}>
               <View style={styles.container}>
-                <Text style={styles.title}>{room.state.name}</Text>
-                <Button 
-                  title='Share Room Code'
-                  onPress={() => shareRoom(room.state.name)} 
-                />
-                <Button 
-                  title='Cut the cord'
-                  onPress={() => confirmDelete(navigation)} 
-                />
-                <View>
-                  <Text>Total Members</Text>
-                  <Text>{room.state.members}</Text>
+                <View style={styles.info}>
+                  <Text style={styles.title}>{room.state.name}</Text>
+                  <View style={styles.buttons}>
+                    <Button 
+                      title='Share Room Code'
+                      onPress={() => shareRoom(room.state.name)} 
+                    />
+                    <Button 
+                      title='Cut the cord'
+                      color={'red'}
+                      onPress={() => confirmDelete(navigation)} 
+                    />
+                  </View>
                 </View>
-                <View style={{width: '100%', flex: 0.5}}>
-                  <Text>Queue</Text>
+                <View style={styles.members}>
+                  <Text style={{ fontSize: 20, alignSelf: 'center' }}>Members {`(${room.state.members.length})`}</Text>
+                  <MemberList list={room.state.members}/>
+                </View>
+                <View style={styles.queue}>
+                  <Text style={{ fontSize: 20, alignSelf: 'center' }}>Queue {`(${room.state.queue.length})`}</Text>
+                  { room.state.queue.length === 0  && <View style={{ marginTop: 20 }}><Text style={{ alignSelf: 'center' }}>The queue is empty. Add some songs!</Text></View> }
                   <BumpList
                     songs={room.state.queue} 
-                    onBump={song => bumpSong(room.state.name, 'Jim', song.id)}
+                    onBump={song => bumpSong(room.state.name, song.id)}
                   />              
                 </View>
               </View>
@@ -79,14 +89,33 @@ const Room = (props) => {
 
 const styles = StyleSheet.create({
   container: {
+    marginTop: 20,
     flex: 1,
     flexDirection: 'column',
-    justifyContent: 'space-around',
+    justifyContent: 'center',
     alignItems: 'center'
+  },
+  buttons: {
+    flexDirection: 'row'
   },
   title: {
     fontSize: 30,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    alignSelf: 'center'
+  },
+  info: {
+    flex: 1,
+    justifyContent: 'center'
+  },
+  members: {
+    flex: 2,
+    width: '100%',
+    justifyContent: 'center',
+  },
+  queue: {
+    flex: 3,
+    width: '100%',
+    justifyContent: 'center'
   }
 })
 

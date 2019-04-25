@@ -2,6 +2,7 @@ import React from 'react'
 
 import { 
   createAppContainer, 
+  createStackNavigator,
   createSwitchNavigator,
   createBottomTabNavigator
 } from 'react-navigation'
@@ -19,7 +20,6 @@ import Albums from '../screens/Albums'
 import CurrentPlaying from '../screens/CurrentPlaying'
 
 import CreateRoom from '../screens/Createroom'
-import StoreInit from '../navigation/StoreInit'
 import Auth from '../navigation/Auth'
 
 const BrowseStack = createStackNavigator({
@@ -67,7 +67,6 @@ const RoomStack = createBottomTabNavigator({
 const Application = createSwitchNavigator({
   Login,
   CreateRoom,
-  StoreInit,
   Room: RoomStack,
   Auth
 }, {

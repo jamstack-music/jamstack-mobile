@@ -16,9 +16,8 @@ function useMusicPlayer({title, artist, album, uri, duration}, nextSong) {
 
     MusicControl.setNowPlaying({
       title,
-      //      artwork: album.url,
+      artwork: album ? album[album.length - 1].url : 'http://placeholder.com/200',
       artist,
-      // duration: Math.floor(duration/1000)
     })
 
     // Control setup for music player
@@ -35,6 +34,12 @@ function useMusicPlayer({title, artist, album, uri, duration}, nextSong) {
   return [play, setPlay, elapsed]
 }
 
+
+useMusicPlayer.defaultProps = {
+  song: {
+
+  }
+}
 useMusicPlayer.propTypes = {
   song: PropTypes.object.isRequired,
   nextSong: PropTypes.func.isRequired

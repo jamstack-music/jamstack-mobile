@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 import AlbumCover from './AlbumCover'
 
 /**
@@ -12,18 +12,26 @@ const Playlist = (props) => {
   const {
     name,
     images,
+    dim = 50
   } = props
 
   const thumbnail = images[0].url
   return (
-    <View>
+    <View style={styles.playlist}>
       <AlbumCover
         url={thumbnail}
-        dim={50}
+        dim={dim}
       />
       <Text>{name}</Text>
     </View>
   )
 }
 
+const styles = StyleSheet.create({
+  playlist: {
+    flexDirection: 'column',
+    alignItems: 'center',
+    justifyContent: 'center',
+  }
+})
 export default Playlist

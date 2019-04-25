@@ -15,12 +15,13 @@ const AddList = (props) => {
   
   return (
     <SongList
+      {...rest}
       songs={songs}
       style={style}
       renderItem={({item}) => (
         <SongItem {...item}>
           <View style={styles.add}>
-            <Icon name='add' onPress={() => onAdd(item)}/>
+            <Icon reverse color={'#3963FB'} size={15} name='add' onPress={() => onAdd(item)}/>
           </View>
         </SongItem>
       )}

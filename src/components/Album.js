@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text } from 'react-native'
+import { View, Text, StyleSheet } from 'react-native'
 import AlbumCover from './AlbumCover'
 /**
  * Album Component
@@ -11,19 +11,31 @@ const Album = (props) => {
     name,
     artist,
     images,
+    style,
+    dim = 50,
   } = props
 
   const thumbnail = images[0].url
   return (
-    <View>
+    <View style={{...styles.album, ...style}}>
       <AlbumCover 
         url={thumbnail}
-        dim={50}
+        dim={dim}
       />
-      <Text>{name}</Text>
-      <Text>{artist}</Text>
+      <Text style={styles.name}>{name}</Text>
+      <Text style={styles.artist}>{artist}</Text>
     </View>
   )
 }
 
+const styles = StyleSheet.create({
+  album: {
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  name: {
+    fontWeight: 'bold',
+    fontSize: 16
+  }
+})
 export default Album

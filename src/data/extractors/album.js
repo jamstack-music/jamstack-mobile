@@ -1,7 +1,6 @@
 import extractSong from './song'
 
 const extractAlbum = (album) => {
-  console.log('hello')
   const {
     id,
     artists: [{

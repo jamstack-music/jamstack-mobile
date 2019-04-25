@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import { SafeAreaView, StyleSheet, View, TextInput} from 'react-native'
+import extractSong from '../data/extractors/song'
 
 import { Icon } from 'react-native-elements'
 import AddList from '../components/Songs/AddList'
@@ -9,45 +10,42 @@ import Spotify from 'rn-spotify-sdk'
 import { RoomContainer } from '../store/room'
 import { Subscribe } from 'unstated'
 
-import { addSong } from '../data/api'
+import { addSong as addSongRemote } from '../data/api'
+import { showMessage } from 'react-native-flash-message'
+
+const callSpotify = async (query, setResults) => { 
+  if(query.length == 0){
+    setResults([])
+  } else {
+    let { tracks: { items } } = await Spotify.search(query, ['track'], { market: 'US' })
+
+    const searchResults = items.map(song => extractSong(song))
+
+    setResults(searchResults)
+  }
+}
+
+const addSong = (room, song) => {
+  if(room.state.queue.find(({id}) => song.id === id)) {
+    showMessage({
+      message: 'Song already in the queue',
+      type: 'warning'
+    })
+  } else {
+    addSongRemote(room.state.name, song)
+    showMessage({
+      message: 'Song added to the queue!',
+      type: 'success'
+    })
+  }
+}
 
 const Search = () => {
   const [results, setResults] = useState([])
   const [query, setQuery] = useState('')
 
   useEffect( () => {
-
-    const callSpotify = async () => { if(query.length == 0){
-      setResults([])
-    } else {
-      let { tracks: { items } } = await Spotify.search(query, ['track'])
-
-      const searchResults = items.map(({
-        name: title,
-        id,
-        uri,
-        duration,
-        artists: [{
-          name: artist
-        },],
-        album: {
-          name: album,
-          images
-        },
-      }) => ({
-        title,
-        duration,
-        id,
-        uri,
-        artist,
-        album,
-        images,
-      }))
-
-      setResults(searchResults)
-    }
-    }
-    callSpotify()
+    callSpotify(query, setResults)
   }, [query])
       
   return(
@@ -66,7 +64,7 @@ const Search = () => {
             </View>
             <AddList
               songs={results} 
-              onAdd={(song) => addSong(room.state.name, song)}
+              onAdd={(song) => addSong(room, song)}
               style={{ backgroundColor: 'white' }}
             />
           </SafeAreaView>

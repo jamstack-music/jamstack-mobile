@@ -9,10 +9,11 @@ const withLinks = (Component, type) => (
     } = props
 
     return (
-      <TouchableHighlight onPress={() => navigation.push(type, rest)}>
+      <TouchableHighlight activeOpacity={0.01} underlayColor={'white'} onPress={() => navigation.push(type, rest)}>
         <Component {...rest} />
       </TouchableHighlight>
     )
   }
 )
+
 export default withLinks

@@ -22,7 +22,7 @@ const CreateRoom = (props) => {
       alert('Whoops looks like an error occured')
     } else { 
       await AsyncStorage.multiSet([['roomName', formInputs.roomName], ['name', formInputs.name]])
-      navigation.navigate('StoreInit')
+      navigation.navigate('Room')
     }
   }
 

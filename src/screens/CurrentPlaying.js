@@ -4,12 +4,12 @@ import BottomDrawer from 'rn-bottom-drawer'
 import { getBottomSpace } from 'react-native-iphone-x-helper'
 
 import SongPlayer from '../components/SongPlayer'
-import SongList from '../components/Songs/SongList'
+import BumpList from '../components/Songs/BumpList'
 
 import { Subscribe } from 'unstated'
 import { RoomContainer } from '../store/room'
 
-import { nextSong } from '../data/api'
+import { bumpSong, nextSong } from '../data/api'
 
 const { height: HEIGHT } = Dimensions.get('window')
 const XOFFSET = getBottomSpace()
@@ -50,7 +50,8 @@ const CurrentPlaying = () => {
                   scrollEnabled={scrollable}
                 >
                   <TouchableOpacity activeOpacity={1}>
-                    <SongList
+                    <BumpList
+                      onBump={song => bumpSong(room.state.name, song.id)}
                       songs={room.state.queue}
                       style={{ marginBottom: 100+XOFFSET }}
                     />

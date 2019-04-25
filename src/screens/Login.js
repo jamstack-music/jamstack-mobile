@@ -12,7 +12,7 @@ const Login = ({navigation}) => {
   const login = async () => {
     let loggedIn = await Spotify.login()
     if(loggedIn) {
-      navigation.navigate('Room')
+      navigation.navigate('Auth')
     } else {
       Alert.alert('You gotta log in')
     }
@@ -23,18 +23,20 @@ const Login = ({navigation}) => {
       <View style={styles.header}>
         <Text style={styles.title}>QueueHub</Text>
       </View>
-      <Button 
-        title="Login with Spotify" 
-        buttonStyle={{width: dim, ...styles.button}}
-        icon={
-          <Icon
-            name='spotify'
-            color='white'
-            size={30} />
-        }
-        titleStyle={styles.buttonTitle}
-        onPress={() => login()} 
-      />
+      <View style={styles.footer}>
+        <Button 
+          title="Login with Spotify" 
+          buttonStyle={{width: dim, ...styles.button}}
+          icon={
+            <Icon
+              name='spotify'
+              color='white'
+              size={30} />
+          }
+          titleStyle={styles.buttonTitle}
+          onPress={() => login()} 
+        />
+      </View>
     </SafeAreaView> 
   )
 }
@@ -42,17 +44,25 @@ const Login = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#ECFFFF',
     flexDirection: 'column',
     alignItems: 'center',
   }, 
   header: {
-    flex: 2,
+    width: '100%',
+    flex: 3,
     alignItems: 'center',
-    justifyContent: 'center'
+    justifyContent: 'center',
+    backgroundColor: '#1F85FF'
   },
   title: {
+    color: 'white',
     fontSize: 50,
+  },
+  footer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'white',
   },
   buttonTitle: {
     fontSize: 25
@@ -63,7 +73,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#1DB954',
     borderRadius: 50,
-    height: 60
+    height: 50
   },
 })
 

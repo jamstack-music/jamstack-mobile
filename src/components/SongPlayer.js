@@ -46,7 +46,7 @@ const SongPlayer = (props) => {
           end={duration}
           currentTime={elapsed}
         />
-        <ControlsGroup>
+        <ControlsGroup style={{ margin: 10 }}>
           <Icon 
             reverse
             name={play ? 'controller-paus' : 'controller-play'}

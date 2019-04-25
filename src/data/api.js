@@ -1,4 +1,6 @@
 import axios from 'axios'
+import { AsyncStorage } from 'react-native'
+
 const BASE = 'http://52.42.15.3:5000'
 
 export const createRoom = async(id) => {
@@ -6,7 +8,8 @@ export const createRoom = async(id) => {
   return res
 }
 export const addSong = async (room, song) => {
-  const res = await axios.post(`${BASE}/add/${room}`, {...song, bumps: 0})
+  const addedBy = await AsyncStorage.getItem('name')
+  const res = await axios.post(`${BASE}/add/${room}`, {...song, addedBy, bumps: 0})
   return res
 }
 
@@ -15,7 +18,13 @@ export const joinRoom = async (room, name) => {
   return res
 }
 
-export const bumpSong = async (room, name, song) => {
+export const bumpSong = async (room, song) => {
+  const name = await AsyncStorage.getItem('name')
+  let jsonMap = await AsyncStorage.getItem('alreadyBumped') || '{}'
+  let map = JSON.parse(jsonMap)
+  map[song] = true
+  AsyncStorage.setItem('alreadyBumped', JSON.stringify(map))
+
   const res = await axios.get(`${BASE}/${room}/${name}/bump/${song}`)
   return res
 }

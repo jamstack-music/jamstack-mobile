@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react'
-import { ScrollView } from 'react-native'
-import extractSong from '../data/extractors/song'
+import Grid from '../components/Grid'
+import extractAlbum from '../data/extractors/album'
 
 import Spotify from 'rn-spotify-sdk'
 import uuidv4 from 'uuid/v4'
 
-import extractAlbum from '../data/api'
 import withLinks from '../hocs/withLinks'
 import Album from '../components/Album'
 
@@ -20,52 +19,24 @@ const Albums = (props) => {
   useEffect(() => {
     Spotify.sendRequest('v1/me/albums', 'GET', {}, false).then(res => {
       const { items } = res
-      const albums = items.map(({album}) => {
-        const {
-          id,
-          artists: [{
-            name: artist
-          }],
-          images,
-          name,
-          tracks: {
-            items
-          },
-        } = album 
-
-        const songs = items.map(track => extractSong({
-          ...track,
-          album: {
-            images,
-            name
-          }
-        }))
-
-        return {
-          id,
-          artist,
-          images,
-          name,
-          songs,
-        }
-      })
+      const albums = items.map(({album}) => extractAlbum(album))
       setList(albums)
     })
   }, [])
   
-  console.log(list)
   return (
-    <ScrollView>
+    <Grid>
       {
         list.map(album => (
           <AlbumLink
+            dim={150}
             key={uuidv4()}
             navigation={navigation}
             {...album}
           />
         ))
       }
-    </ScrollView>
+    </Grid>
   )
 }
 

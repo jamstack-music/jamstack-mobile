@@ -17,6 +17,7 @@ const BumpList = (props) => {
       renderItem={({item}) => (
         <SongItem {...item}>
           <Button
+            disabled={item.alreadyBumped}
             title={item.bumps.toString()}
             onPress={() => onBump(item)}
           />
