@@ -1,26 +1,24 @@
-import React, { useEffect } from 'react'
-import { View, AsyncStorage } from 'react-native'
+import React, { useEffect } from 'react';
+import { View, AsyncStorage } from 'react-native';
 
-import Spotify from 'rn-spotify-sdk'
+import Spotify from 'rn-spotify-sdk';
 
-const Auth = ({navigation}) => {
+const Auth = ({ navigation }) => {
   useEffect(function auth() {
     async function login() {
-      const status = await Spotify.isLoggedInAsync()
-      let stack = status ? 'CreateRoom' : 'Login'
-      let name = await AsyncStorage.getItem('roomName')
-      if(stack === 'CreateRoom' && name) {
-        stack = 'Room'
+      const status = await Spotify.isLoggedInAsync();
+      let stack = status ? 'CreateRoom' : 'Login';
+      const name = await AsyncStorage.getItem('roomName');
+      if (stack === 'CreateRoom' && name) {
+        stack = 'Room';
       }
-      navigation.navigate(stack)
+      navigation.navigate(stack);
     }
 
-    login()
-  }, [])
+    login();
+  }, []);
 
-  return (
-    <View></View>
-  )
-}
+  return <View />;
+};
 
-export default Auth
+export default Auth;

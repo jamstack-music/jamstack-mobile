@@ -1,25 +1,23 @@
-import extractSong from './song'
+import extractSong from './song';
 
-const extractPlaylist = (playlist) => {
+const extractPlaylist = playlist => {
   const {
     id,
     description,
     images,
     name,
-    tracks: {
-      items
-    },
-  } = playlist
+    tracks: { items }
+  } = playlist;
 
-  const songs = items.filter(({ is_local }) => !is_local).map(({track}) => extractSong(track)) 
+  const songs = items.filter(({ is_local }) => !is_local).map(({ track }) => extractSong(track));
 
   return {
     id,
     description,
     images,
     name,
-    songs,
-  }
-}
+    songs
+  };
+};
 
-export default extractPlaylist
+export default extractPlaylist;

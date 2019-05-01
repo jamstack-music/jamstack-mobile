@@ -1,18 +1,12 @@
-const extractSong = (song) => {
-  
+const extractSong = song => {
   const {
     name: title,
     id,
     uri,
     duration_ms: duration,
-    artists: [{
-      name: artist 
-    },],
-    album: {
-      name: album,
-      images
-    },  
-  } = song
+    artists: [{ name: artist }],
+    album: { name: album, images }
+  } = song;
 
   return {
     title,
@@ -21,8 +15,8 @@ const extractSong = (song) => {
     uri,
     artist,
     album,
-    images,
-  }
-}
+    images
+  };
+};
 
-export default extractSong
+export default extractSong;
