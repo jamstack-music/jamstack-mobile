@@ -29,6 +29,7 @@
   "rules": {
     "object-property-newline": 1,
     "no-use-before-define": 0, 
+    "react/jsx-filename-extension": ["error", { "extensions": [".js", ".jsx"] }],
     "prettier/prettier": ["error"]
   }
 }

@@ -17,6 +17,11 @@ Member.propTypes = {
   member: PropTypes.string.isRequired,
 };
 
+const renderSeperator = () => <View style={styles.seperator} />;
+
+// eslint-disable-next-line
+const renderItem = ({ item }) => <Member member={item} />
+
 const MemberList = props => {
   const { list } = props;
 
@@ -24,8 +29,8 @@ const MemberList = props => {
     <FlatList
       data={list}
       keyExtractor={uuidv4}
-      renderItem={({ item }) => <Member member={item} />}
-      ItemSeparatorComponent={() => <View style={styles.seperator} />}
+      renderItem={renderItem}
+      ItemSeparatorComponent={renderSeperator}
     />
   );
 };
