@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Image, Dimensions, StyleSheet } from 'react-native';
+import { View, Image, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
 
 /**
@@ -11,12 +11,7 @@ const AlbumCover = props => {
 
   return (
     <View style={shadow ? styles.shadowContainer : null}>
-      <Image
-        source={{
-          uri: url || 'https://www.indigenousmusicawards.com/img/placeholder-music.png'
-        }}
-        style={{ width: dim, height: dim }}
-      />
+      <Image source={{ uri: url }} style={{ width: dim, height: dim }} />
     </View>
   );
 };
@@ -26,15 +21,23 @@ const styles = StyleSheet.create({
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
-      height: 10
+      height: 10,
     },
     shadowOpacity: 0.2,
-    shadowRadius: 10
-  }
+    shadowRadius: 10,
+  },
 });
 
 AlbumCover.propTypes = {
-  url: PropTypes.string
+  url: PropTypes.string,
+  dim: PropTypes.number,
+  shadow: PropTypes.bool,
+};
+
+AlbumCover.defaultProps = {
+  url: 'https://placeholder.com/200',
+  dim: 250,
+  shadow: false,
 };
 
 export default AlbumCover;

@@ -13,11 +13,11 @@ import { RoomContainer } from '../store/room';
 import { addSong as addSongRemote } from '../data/api';
 
 const callSpotify = async (query, setResults) => {
-  if (query.length == 0) {
+  if (query.length === 0) {
     setResults([]);
   } else {
     const {
-      tracks: { items }
+      tracks: { items },
     } = await Spotify.search(query, ['track'], { market: 'US' });
 
     const searchResults = items.map(song => extractSong(song));
@@ -30,13 +30,13 @@ const addSong = (room, song) => {
   if (room.state.queue.find(({ id }) => song.id === id)) {
     showMessage({
       message: 'Song already in the queue',
-      type: 'warning'
+      type: 'warning',
     });
   } else {
     addSongRemote(room.state.name, song);
     showMessage({
       message: 'Song added to the queue!',
-      type: 'success'
+      type: 'success',
     });
   }
 };
@@ -75,15 +75,15 @@ const Search = () => {
 const styles = StyleSheet.create({
   header: {
     flex: 1,
-    backgroundColor: '#E6E6E6'
+    backgroundColor: '#E6E6E6',
   },
   icon: {
-    marginLeft: 10
+    marginLeft: 10,
   },
   searchBar: {
     flexDirection: 'row',
     alignItems: 'center',
-    height: 50
+    height: 50,
   },
   input: {
     backgroundColor: 'white',
@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 20,
     borderColor: '#D6D6D6',
-    marginHorizontal: 10
-  }
+    marginHorizontal: 10,
+  },
 });
 export default Search;

@@ -3,8 +3,11 @@ import { SafeAreaView, Text, View, StyleSheet, Alert, Dimensions } from 'react-n
 import { Button } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/Entypo';
 import Spotify from 'rn-spotify-sdk';
+import PropTypes from 'prop-types';
 
-const Login = ({ navigation }) => {
+const Login = props => {
+  const { navigation } = props;
+
   const { width } = Dimensions.get('window');
   const dim = width * 0.8;
 
@@ -39,27 +42,27 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   header: {
     width: '100%',
     flex: 3,
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor: '#1F85FF'
+    backgroundColor: '#1F85FF',
   },
   title: {
     color: 'white',
-    fontSize: 50
+    fontSize: 50,
   },
   footer: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'white'
+    backgroundColor: 'white',
   },
   buttonTitle: {
-    fontSize: 25
+    fontSize: 25,
   },
   button: {
     flexDirection: 'row',
@@ -67,11 +70,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#1DB954',
     borderRadius: 50,
-    height: 50
-  }
+    height: 50,
+  },
 });
 
 Login.navigationOptions = {
-  header: null
+  header: null,
 };
+
+Login.propTypes = {
+  navigation: PropTypes.objectOf(PropTypes.any).isRequired,
+};
+
 export default Login;

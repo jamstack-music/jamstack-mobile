@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { View, StyleSheet } from 'react-native';
 import { Icon } from 'react-native-elements';
 
@@ -24,10 +25,20 @@ const AddList = props => {
   );
 };
 
-export default AddList;
-
 const styles = StyleSheet.create({
   add: {
-    marginHorizontal: 10
-  }
+    marginHorizontal: 10,
+  },
 });
+
+AddList.propTypes = {
+  songs: PropTypes.arrayOf(PropTypes.node).isRequired,
+  onAdd: PropTypes.func.isRequired,
+  style: PropTypes.objectOf(PropTypes.node),
+};
+
+AddList.defaultProps = {
+  style: {},
+};
+
+export default AddList;

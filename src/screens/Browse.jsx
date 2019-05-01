@@ -1,5 +1,6 @@
 import React from 'react';
-import { Button, View, Text } from 'react-native';
+import { Button, View } from 'react-native';
+import PropTypes from 'prop-types';
 
 const Browse = props => {
   const { navigation } = props;
@@ -10,6 +11,10 @@ const Browse = props => {
       <Button title="Albums" onPress={() => navigation.navigate('Albums')} />
     </View>
   );
+};
+
+Browse.propTypes = {
+  navigation: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export default Browse;

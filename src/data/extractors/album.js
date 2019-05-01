@@ -6,7 +6,7 @@ const extractAlbum = album => {
     artists: [{ name: artist }],
     images,
     name,
-    tracks: { items }
+    tracks: { items },
   } = album;
 
   const songs = items.map(track =>
@@ -14,9 +14,9 @@ const extractAlbum = album => {
       ...track,
       album: {
         images,
-        name
-      }
-    })
+        name,
+      },
+    }),
   );
 
   return {
@@ -24,7 +24,7 @@ const extractAlbum = album => {
     artist,
     images,
     name,
-    songs
+    songs,
   };
 };
 

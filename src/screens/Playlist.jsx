@@ -3,6 +3,8 @@ import { View, Text } from 'react-native';
 import Spotify from 'rn-spotify-sdk';
 import { Subscribe } from 'unstated';
 import { showMessage } from 'react-native-flash-message';
+import PropTypes from 'prop-types';
+
 import { addSong as addSongRemote } from '../data/api';
 import AlbumCover from '../components/AlbumCover';
 import AddList from '../components/Songs/AddList';
@@ -13,13 +15,13 @@ const addSong = (room, song) => {
   if (room.state.queue.find(({ id }) => song.id === id)) {
     showMessage({
       message: 'Song already in the queue',
-      type: 'warning'
+      type: 'warning',
     });
   } else {
     addSongRemote(room.state.name, song);
     showMessage({
       message: 'Song added to the queue!',
-      type: 'success'
+      type: 'success',
     });
   }
 };
@@ -27,8 +29,8 @@ const addSong = (room, song) => {
 const Playlist = props => {
   const {
     navigation: {
-      state: { params }
-    }
+      state: { params },
+    },
   } = props;
 
   const { id, images, name } = params;
@@ -37,7 +39,7 @@ const Playlist = props => {
   useEffect(() => {
     Spotify.sendRequest(`v1/playlists/${id}`, 'GET', {}, false).then(res => {
       const {
-        tracks: { items }
+        tracks: { items },
       } = res;
       const playlist = items.map(({ track }) => extractSong(track));
       setList(playlist);
@@ -62,6 +64,10 @@ const Playlist = props => {
       )}
     </Subscribe>
   );
+};
+
+Playlist.propTypes = {
+  navigation: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export default Playlist;

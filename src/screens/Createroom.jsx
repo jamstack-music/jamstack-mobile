@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from 'react';
-import { Keyboard, SafeAreaView, StyleSheet, Text, View, AsyncStorage } from 'react-native';
+import React, { useState } from 'react';
+import { Alert, Keyboard, SafeAreaView, StyleSheet, Text, View, AsyncStorage } from 'react-native';
 import { Button, Input } from 'react-native-elements';
+import PropTypes from 'prop-types';
+
 import { createRoom as remoteCreateRoom } from '../data/api';
 
 const initialInputs = {
   name: '',
   roomName: '',
-  password: ''
+  password: '',
 };
 
 const CreateRoom = props => {
@@ -17,7 +19,7 @@ const CreateRoom = props => {
   const createRoom = async () => {
     const { status } = await remoteCreateRoom(formInputs.roomName);
     if (status !== 200) {
-      alert('Whoops looks like an error occured');
+      Alert.alert('Whoops looks like an error occured');
     } else {
       await AsyncStorage.multiSet([['roomName', formInputs.roomName], ['name', formInputs.name]]);
       navigation.navigate('Room');
@@ -25,10 +27,7 @@ const CreateRoom = props => {
   };
 
   const setInput = (key, value) => {
-    setFormInputs(f => {
-      f[key] = value;
-      return f;
-    });
+    setFormInputs(f => ({ ...f, [key]: value }));
   };
 
   return (
@@ -67,25 +66,29 @@ const CreateRoom = props => {
 
 const styles = StyleSheet.create({
   title: {
-    fontSize: 20
+    fontSize: 20,
   },
   passwordTitle: {
     ...this.title,
     fontSize: 16,
-    fontStyle: 'italic'
+    fontStyle: 'italic',
   },
   container: {
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'space-evenly',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   formInput: {
-    width: '80%'
+    width: '80%',
   },
   button: {
-    width: '60%'
-  }
+    width: '60%',
+  },
 });
+
+CreateRoom.propTypes = {
+  navigation: PropTypes.objectOf(PropTypes.any).isRequired,
+};
 
 export default CreateRoom;

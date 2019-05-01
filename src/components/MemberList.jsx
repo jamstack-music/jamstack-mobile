@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { View, FlatList, StyleSheet, Text } from 'react-native';
 import uuidv4 from 'uuid/v4';
 
@@ -10,6 +11,10 @@ const Member = props => {
       <Text>{member}</Text>
     </View>
   );
+};
+
+Member.propTypes = {
+  member: PropTypes.string.isRequired,
 };
 
 const MemberList = props => {
@@ -29,8 +34,12 @@ const styles = StyleSheet.create({
   seperator: {
     height: 1,
     width: '100%',
-    backgroundColor: '#D7D7E7'
-  }
+    backgroundColor: '#D7D7E7',
+  },
 });
+
+MemberList.propTypes = {
+  list: PropTypes.arrayOf(PropTypes.node).isRequired,
+};
 
 export default MemberList;

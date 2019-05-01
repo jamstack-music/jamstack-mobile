@@ -4,7 +4,7 @@ import {
   createAppContainer,
   createStackNavigator,
   createSwitchNavigator,
-  createBottomTabNavigator
+  createBottomTabNavigator,
 } from 'react-navigation';
 
 import Ionicons from 'react-native-vector-icons/Ionicons';
@@ -27,7 +27,7 @@ const BrowseStack = createStackNavigator({
   Playlists,
   Playlist,
   Albums,
-  Album
+  Album,
 });
 
 const RoomStack = createBottomTabNavigator(
@@ -35,10 +35,11 @@ const RoomStack = createBottomTabNavigator(
     Room,
     'Currently Playing': CurrentPlaying,
     Search,
-    Browse: BrowseStack
+    Browse: BrowseStack,
   },
   {
     defaultNavigationOptions: ({ navigation }) => ({
+      // eslint-disable-next-line
       tabBarIcon: ({ tintColor }) => {
         const { routeName } = navigation.state;
         let iconName;
@@ -55,16 +56,18 @@ const RoomStack = createBottomTabNavigator(
           case 'Room':
             iconName = 'md-home';
             break;
+          default:
+            break;
         }
         return <Ionicons name={iconName} size={20} color={tintColor} />;
-      }
+      },
     }),
     initialRouteName: 'Room',
     tabBarOptions: {
       activeTintColor: '#365dff',
-      inactiveTintColor: 'grey'
-    }
-  }
+      inactiveTintColor: 'grey',
+    },
+  },
 );
 
 const Application = createSwitchNavigator(
@@ -72,11 +75,11 @@ const Application = createSwitchNavigator(
     Login,
     CreateRoom,
     Room: RoomStack,
-    Auth
+    Auth,
   },
   {
-    initialRouteName: 'Auth'
-  }
+    initialRouteName: 'Auth',
+  },
 );
 
 export default createAppContainer(Application);

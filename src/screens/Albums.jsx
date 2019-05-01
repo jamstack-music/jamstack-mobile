@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import Spotify from 'rn-spotify-sdk';
 import uuidv4 from 'uuid/v4';
+
 import Grid from '../components/Grid';
 import extractAlbum from '../data/extractors/album';
-
 import withLinks from '../hocs/withLinks';
 import Album from '../components/Album';
 
@@ -28,6 +29,10 @@ const Albums = props => {
       ))}
     </Grid>
   );
+};
+
+Albums.propTypes = {
+  navigation: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export default Albums;

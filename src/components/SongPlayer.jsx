@@ -20,7 +20,7 @@ import AlbumCover from './AlbumCover';
  *
  */
 const SongPlayer = props => {
-  const { song, nextSong, style } = props;
+  const { song, nextSong } = props;
 
   const [play, setPlay, elapsed] = useMusicPlayer(song, nextSong);
   const { title, artist, images, duration } = song;
@@ -29,7 +29,7 @@ const SongPlayer = props => {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <View style={{ flex: 1, alignItems: 'center', ...style }}>
+      <View style={{ flex: 1, alignItems: 'center' }}>
         <AlbumCover shadow url={albumImg} />
         <SongInfo songTitle={title} artist={artist} />
         <Timer end={duration} currentTime={elapsed} />
@@ -57,8 +57,8 @@ const SongPlayer = props => {
 };
 
 SongPlayer.propTypes = {
-  song: PropTypes.object.isRequired,
-  nextSong: PropTypes.func.isRequired
+  song: PropTypes.objectOf(PropTypes.any),
+  nextSong: PropTypes.func.isRequired,
 };
 
 SongPlayer.defaultProps = {
@@ -66,9 +66,8 @@ SongPlayer.defaultProps = {
     title: '',
     artist: '',
     images: [{ url: 'https://placeholder.com/200' }],
-    duration: 0
+    duration: 0,
   },
-  images: [{ url: 'https://placeholder.com/200' }]
 };
 
 export default SongPlayer;

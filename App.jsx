@@ -8,7 +8,7 @@ Spotify.initialize({
   clientID: '0a31a2abfc5945bb9e3b3507e6f8361c',
   sessionUserDefaultsKey: 'SpotifySession',
   redirectURL: 'queuehubmobile://auth',
-  scopes: ['streaming']
+  scopes: ['streaming'],
 });
 const App = () => (
   <RoomProvider>

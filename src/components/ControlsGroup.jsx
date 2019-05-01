@@ -1,5 +1,6 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, StyleSheet } from 'react-native';
+import PropTypes from 'prop-types';
 
 /**
  * ControlsGroup Component
@@ -7,9 +8,23 @@ import { View } from 'react-native';
  * @author [Zach Banducci](https://github.com/zchbndcc9)
  */
 const ControlsGroup = props => {
-  const { children, style, ...rest } = props;
+  const { children, style } = props;
 
-  return <View style={{ flexDirection: 'row', alignItems: 'center', ...style }}>{children}</View>;
+  return <View style={{ ...styles.controls, ...style }}>{children}</View>;
 };
 
+const styles = StyleSheet.create({
+  flexDirection: 'row',
+  alignItems: 'center',
+});
+
+ControlsGroup.propTypes = {
+  style: PropTypes.objectOf(PropTypes.node),
+  children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
+};
+
+ControlsGroup.defaultProps = {
+  style: {},
+  children: null,
+};
 export default ControlsGroup;

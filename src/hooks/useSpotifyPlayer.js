@@ -25,19 +25,19 @@ function useSpotifyPlayer(uri, nextSong) {
       Spotify.playURI(uri, 0, 0);
       setPlay(true);
     },
-    [uri]
+    [uri],
   );
 
   useEffect(
     function playSong() {
       Spotify.setPlaying(play);
     },
-    [play]
+    [play],
   );
 
   useEffect(function songTimer() {
     timerRef = setInterval(() => timeElapsed(), 100);
-    return function() {
+    return function unMount() {
       clearInterval(timerRef);
     };
   });
@@ -52,7 +52,7 @@ function useSpotifyPlayer(uri, nextSong) {
 
 useSpotifyPlayer.propTypes = {
   uri: PropTypes.string.isRequired,
-  nextSong: PropTypes.func.isRequired
+  nextSong: PropTypes.func.isRequired,
 };
 
 export default useSpotifyPlayer;

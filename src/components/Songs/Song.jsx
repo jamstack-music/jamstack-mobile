@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { View, Text, Image } from 'react-native';
 
 const Song = props => {
@@ -10,6 +11,18 @@ const Song = props => {
       <Text>{artist}</Text>
     </View>
   );
+};
+
+Song.propTypes = {
+  title: PropTypes.string,
+  artist: PropTypes.string,
+  images: PropTypes.objectOf(PropTypes.arrayOf(PropTypes.string)),
+};
+
+Song.defaultProps = {
+  title: '---',
+  artist: '---',
+  images: [{ url: 'http://placeholder.com/200' }],
 };
 
 export default Song;

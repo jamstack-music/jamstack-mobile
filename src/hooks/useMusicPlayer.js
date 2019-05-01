@@ -8,7 +8,8 @@ import useSpotifyPlayer from './useSpotifyPlayer';
  * useMusicPlayer: Generic music player hook that updates currently playing information
  * @author [Zach Banducci](https://github.com/zchbndcc9)
  */
-function useMusicPlayer({ title, artist, album, uri, duration }, nextSong) {
+function useMusicPlayer(song, nextSong) {
+  const { title, artist, album, uri, duration } = song;
   const [play, setPlay, elapsed] = useSpotifyPlayer(uri, nextSong);
 
   useEffect(
@@ -18,7 +19,8 @@ function useMusicPlayer({ title, artist, album, uri, duration }, nextSong) {
       MusicControl.setNowPlaying({
         title,
         artwork: album ? album[album.length - 1].url : 'http://placeholder.com/200',
-        artist
+        artist,
+        duration,
       });
 
       // Control setup for music player
@@ -27,7 +29,7 @@ function useMusicPlayer({ title, artist, album, uri, duration }, nextSong) {
       MusicControl.enableControl('nextTrack', true);
       MusicControl.enableControl('prevTrack', false);
     },
-    [uri]
+    [uri],
   );
 
   MusicControl.on('play', () => setPlay(true));
@@ -37,11 +39,9 @@ function useMusicPlayer({ title, artist, album, uri, duration }, nextSong) {
   return [play, setPlay, elapsed];
 }
 
-useMusicPlayer.defaultProps = {
-  song: {}
-};
 useMusicPlayer.propTypes = {
-  song: PropTypes.object.isRequired,
-  nextSong: PropTypes.func.isRequired
+  song: PropTypes.objectOf(PropTypes.node).isRequired,
+  nextSong: PropTypes.func.isRequired,
 };
+
 export default useMusicPlayer;

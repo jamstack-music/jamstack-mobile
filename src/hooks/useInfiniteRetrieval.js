@@ -35,7 +35,7 @@ export default function useInfiniteRetrieval(initial) {
         });
       }
     },
-    [loading]
+    [loading],
   );
 
   return [list, loading];

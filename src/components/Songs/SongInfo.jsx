@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import PropTypes from 'prop-types';
 
 /**
  * SongInfo Component is a presentational component that just displays the the song information
@@ -13,20 +14,25 @@ const SongInfo = ({ artist, songTitle }) => (
   </View>
 );
 
-SongInfo.defaultProps = {
-  artist: '---',
-  songTitle: '---'
-};
-
 const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: 'bold',
-    marginVertical: 10
+    marginVertical: 10,
   },
   artist: {
-    fontSize: 15
-  }
+    fontSize: 15,
+  },
 });
+
+SongInfo.propTypes = {
+  artist: PropTypes.string,
+  songTitle: PropTypes.string,
+};
+
+SongInfo.defaultProps = {
+  artist: '---',
+  songTitle: '---',
+};
 
 export default SongInfo;

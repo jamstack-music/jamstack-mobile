@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import PropTypes from 'prop-types';
 
 import ProgressBar from 'react-native-progress/Bar';
 
@@ -13,9 +14,8 @@ const formatTime = time => {
   return [minutes, seconds];
 };
 
-const Timer = ({ end, currentTime }) => {
-  end = end || 0;
-  currentTime = currentTime || 0;
+const Timer = props => {
+  const { end, currentTime } = props;
 
   const [cMin, cSec] = formatTime(currentTime);
   const [eMin, eSec] = formatTime(end);
@@ -41,11 +41,21 @@ const Timer = ({ end, currentTime }) => {
 const styles = StyleSheet.create({
   progress: {
     marginLeft: 10,
-    marginRight: 10
+    marginRight: 10,
   },
   time: {
-    fontSize: 16
-  }
+    fontSize: 16,
+  },
 });
+
+Timer.propTypes = {
+  currentTime: PropTypes.number,
+  end: PropTypes.number,
+};
+
+Timer.defaultProps = {
+  currentTime: 0,
+  end: 0,
+};
 
 export default Timer;

@@ -1,5 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import PropTypes from 'prop-types';
+
 import AlbumCover from './AlbumCover';
 
 /**
@@ -9,7 +11,7 @@ import AlbumCover from './AlbumCover';
  */
 
 const Playlist = props => {
-  const { name, images, dim = 50 } = props;
+  const { name, images, dim } = props;
 
   const thumbnail = images[0].url;
   return (
@@ -24,7 +26,19 @@ const styles = StyleSheet.create({
   playlist: {
     flexDirection: 'column',
     alignItems: 'center',
-    justifyContent: 'center'
-  }
+    justifyContent: 'center',
+  },
 });
+
+Playlist.propTypes = {
+  name: PropTypes.string.isRequired,
+  images: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
+  dim: PropTypes.number,
+};
+
+Playlist.defaultProps = {
+  images: [{ url: 'http://placeholder.com/200' }],
+  dim: 50,
+};
+
 export default Playlist;

@@ -7,9 +7,11 @@ import {
   AsyncStorage,
   View,
   Text,
-  StyleSheet
+  StyleSheet,
 } from 'react-native';
 import { Subscribe } from 'unstated';
+import PropTypes from 'prop-types';
+
 import MemberList from '../components/MemberList';
 import { bumpSong } from '../data/api';
 import BumpList from '../components/Songs/BumpList';
@@ -20,13 +22,13 @@ const confirmDelete = navigation => {
   Alert.alert('Are you sure you want to delete the room?', '', [
     {
       text: 'Cancel',
-      onPress: () => console.log('Cancel Pressed'),
-      style: 'cancel'
+      onPress: () => null,
+      style: 'cancel',
     },
     {
       text: 'Delete room',
-      onPress: () => destroyRoom(navigation)
-    }
+      onPress: () => destroyRoom(navigation),
+    },
   ]);
 };
 
@@ -38,11 +40,9 @@ const destroyRoom = async navigation => {
 const shareRoom = async roomName => {
   await Share.share({
     message: `Join ${roomName} on Queuehub!`,
-    url: 'http://queuehub.club/'
+    url: 'http://queuehub.club/',
   });
 };
-
-const name = AsyncStorage.getItem('name').then(res => res);
 
 const Room = props => {
   const { navigation } = props;
@@ -98,30 +98,34 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'center',
-    alignItems: 'center'
+    alignItems: 'center',
   },
   buttons: {
-    flexDirection: 'row'
+    flexDirection: 'row',
   },
   title: {
     fontSize: 30,
     fontWeight: 'bold',
-    alignSelf: 'center'
+    alignSelf: 'center',
   },
   info: {
     flex: 1,
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   members: {
     flex: 2,
     width: '100%',
-    justifyContent: 'center'
+    justifyContent: 'center',
   },
   queue: {
     flex: 3,
     width: '100%',
-    justifyContent: 'center'
-  }
+    justifyContent: 'center',
+  },
 });
+
+Room.propTypes = {
+  navigation: PropTypes.objectOf(PropTypes.any).isRequired,
+};
 
 export default Room;

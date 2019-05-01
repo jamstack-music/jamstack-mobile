@@ -6,7 +6,7 @@ const extractPlaylist = playlist => {
     description,
     images,
     name,
-    tracks: { items }
+    tracks: { items },
   } = playlist;
 
   const songs = items.filter(({ is_local }) => !is_local).map(({ track }) => extractSong(track));
@@ -16,7 +16,7 @@ const extractPlaylist = playlist => {
     description,
     images,
     name,
-    songs
+    songs,
   };
 };
 

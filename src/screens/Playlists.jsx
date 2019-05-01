@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import Spotify from 'rn-spotify-sdk';
 import uuidv4 from 'uuid/v4';
+import PropTypes from 'prop-types';
+
 import Grid from '../components/Grid';
 import Playlist from '../components/Playlist';
-import extractSong from '../data/extractors/song';
 import withLinks from '../hocs/withLinks';
 
 const PlaylistLink = withLinks(Playlist, 'Playlist');
 
 const Playlists = props => {
+  const { navigation } = props;
+
   const [list, setList] = useState([]);
   useEffect(() => {
     Spotify.sendRequest('v1/me/playlists/', 'GET', {}, false).then(res => {
@@ -16,7 +19,6 @@ const Playlists = props => {
       setList(items);
     });
   }, []);
-  const { navigation } = props;
 
   return (
     <Grid>
@@ -25,6 +27,10 @@ const Playlists = props => {
       ))}
     </Grid>
   );
+};
+
+Playlists.propTypes = {
+  navigation: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export default Playlists;

@@ -2,6 +2,8 @@ import React from 'react';
 import { View } from 'react-native';
 import { Subscribe } from 'unstated';
 import { showMessage } from 'react-native-flash-message';
+import PropTypes from 'prop-types';
+
 import AddList from '../components/Songs/AddList';
 import { addSong as addSongRemote } from '../data/api';
 import AlbumInfo from '../components/Album';
@@ -11,13 +13,13 @@ const addSong = (room, song) => {
   if (room.state.queue.find(({ id }) => song.id === id)) {
     showMessage({
       message: 'Song already in the queue',
-      type: 'warning'
+      type: 'warning',
     });
   } else {
     addSongRemote(room.state.name, song);
     showMessage({
       message: 'Song added to the queue!',
-      type: 'success'
+      type: 'success',
     });
   }
 };
@@ -25,8 +27,8 @@ const addSong = (room, song) => {
 const Album = props => {
   const {
     navigation: {
-      state: { params }
-    }
+      state: { params },
+    },
   } = props;
 
   const { name, images, artist, songs } = params;
@@ -51,6 +53,10 @@ const Album = props => {
       )}
     </Subscribe>
   );
+};
+
+Album.propTypes = {
+  navigation: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export default Album;

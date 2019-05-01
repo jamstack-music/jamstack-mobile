@@ -5,7 +5,7 @@ const extractSong = song => {
     uri,
     duration_ms: duration,
     artists: [{ name: artist }],
-    album: { name: album, images }
+    album: { name: album, images },
   } = song;
 
   return {
@@ -15,7 +15,7 @@ const extractSong = song => {
     uri,
     artist,
     album,
-    images
+    images,
   };
 };
 

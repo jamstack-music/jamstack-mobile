@@ -3,6 +3,7 @@ import { View, AsyncStorage } from 'react-native';
 
 import Spotify from 'rn-spotify-sdk';
 
+// eslint-disable-next-line
 const Auth = ({ navigation }) => {
   useEffect(function auth() {
     async function login() {

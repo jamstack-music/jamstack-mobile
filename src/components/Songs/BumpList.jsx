@@ -1,5 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Button } from 'react-native';
+
 import SongList from './SongList';
 import SongItem from './SongItem';
 
@@ -21,6 +23,16 @@ const BumpList = props => {
       )}
     />
   );
+};
+
+BumpList.propTypes = {
+  songs: PropTypes.arrayOf(PropTypes.node).isRequired,
+  onBump: PropTypes.func.isRequired,
+  style: PropTypes.objectOf(PropTypes.node),
+};
+
+BumpList.defaultProps = {
+  style: {},
 };
 
 export default BumpList;

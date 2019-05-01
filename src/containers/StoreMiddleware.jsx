@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import RNEventSource from 'react-native-event-source';
 import { View, Text, AsyncStorage } from 'react-native';
+import PropTypes from 'prop-types';
+
 import { joinRoom } from '../data/api';
 
 const init = async (room, setLoading) => {
@@ -20,45 +22,44 @@ const StoreMiddleware = props => {
   }, []);
 
   useEffect(
-    function init() {
+    function initStore() {
       if (!loading) {
         const eventSource = new RNEventSource(
-          `http://52.42.15.3:5000/stream?channel=${room.state.name}`
+          `http://52.42.15.3:5000/stream?channel=${room.state.name}`,
         );
 
         eventSource.addEventListener(
           'song',
-          function({ data }) {
+          ({ data }) => {
             const { song } = JSON.parse(data);
             room.addtoQueue(song);
           },
-          false
+          false,
         );
 
         eventSource.addEventListener(
           'join',
-          function({ data }) {
+          ({ data }) => {
             const { user } = JSON.parse(data);
-            console.log(user);
             room.addMember(user);
           },
-          false
+          false,
         );
 
         eventSource.addEventListener(
           'bump',
-          function({ data }) {
+          ({ data }) => {
             room.bumpSong(data);
           },
-          false
+          false,
         );
 
         eventSource.addEventListener(
           'next',
-          function() {
+          () => {
             room.nextSong();
           },
-          false
+          false,
         );
 
         return function unMount() {
@@ -66,8 +67,10 @@ const StoreMiddleware = props => {
           eventSource.close();
         };
       }
+
+      return null;
     },
-    [loading]
+    [loading],
   );
 
   if (!loading) return children;
@@ -77,6 +80,11 @@ const StoreMiddleware = props => {
       <Text>Loading...</Text>
     </View>
   );
+};
+
+StoreMiddleware.propTypes = {
+  room: PropTypes.objectOf(PropTypes.any).isRequired,
+  children: PropTypes.arrayOf(PropTypes.any).isRequired,
 };
 
 export default StoreMiddleware;
