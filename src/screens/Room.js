@@ -50,7 +50,7 @@ const Room = props => {
   return (
     <Subscribe to={[RoomContainer]}>
       {room => (
-        <StoreMiddleware room={room}>
+        <StoreMiddleware room={room} navigation={navigation}>
           <SafeAreaView style={{ flex: 1 }}>
             <View style={styles.container}>
               <View style={styles.info}>

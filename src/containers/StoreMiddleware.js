@@ -5,23 +5,27 @@ import PropTypes from 'prop-types';
 
 import { joinRoom } from '../data/api';
 
-const init = async (room, setLoading) => {
-  const roomName = await AsyncStorage.getItem('roomName');
-  const name = await AsyncStorage.getItem('name');
-  const { data } = await joinRoom(roomName, name);
-  room.initRoom({ ...data, name: roomName });
-  setLoading(false);
+const init = async (room, setLoading, navigation) => {
+  try {
+    const roomName = await AsyncStorage.getItem('roomName');
+    const name = await AsyncStorage.getItem('name');
+    const { data } = await joinRoom(roomName, name);
+    room.initRoom({ ...data, name: roomName });
+    setLoading(false);
+  } catch (err) {
+    navigation.navigate('CreateRoom');
+  }
 };
 
 const StoreMiddleware = props => {
-  const { room, children } = props;
+  const { room, children, navigation } = props;
 
   const eventSource = useRef(null);
 
   const [loading, setLoading] = useState(true);
   useEffect(() => {
-    init(room, setLoading);
-  }, [room]);
+    init(room, setLoading, navigation);
+  }, [room, navigation]);
 
   useEffect(
     function initStore() {
@@ -82,7 +86,11 @@ const StoreMiddleware = props => {
 
 StoreMiddleware.propTypes = {
   room: PropTypes.objectOf(PropTypes.any).isRequired,
-  children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.any), PropTypes.objectOf(PropTypes.any)]).isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.any),
+    PropTypes.objectOf(PropTypes.any),
+  ]).isRequired,
+  navigation: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export default StoreMiddleware;
