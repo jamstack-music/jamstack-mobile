@@ -15,7 +15,7 @@ Grid.propTypes = {
 };
 
 Grid.defaultProps = {
-  children: null,
+  children: [],
 };
 
 export default Grid;
