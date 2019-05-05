@@ -16,6 +16,7 @@ const init = async (room, setLoading) => {
 const StoreMiddleware = props => {
   const { room, children } = props;
 
+  console.log(children);
   const eventSource = useRef(null);
 
   const [loading, setLoading] = useState(true);
@@ -82,7 +83,7 @@ const StoreMiddleware = props => {
 
 StoreMiddleware.propTypes = {
   room: PropTypes.objectOf(PropTypes.any).isRequired,
-  children: PropTypes.arrayOf(PropTypes.any).isRequired,
+  children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.any), PropTypes.objectOf(PropTypes.any)]).isRequired,
 };
 
 export default StoreMiddleware;
