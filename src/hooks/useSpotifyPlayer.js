@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import Spotify from 'rn-spotify-sdk';
 
@@ -7,18 +7,21 @@ import Spotify from 'rn-spotify-sdk';
  * @author [Zach Banducci](https://github.com/zchbndcc9)
  */
 function useSpotifyPlayer(uri, nextSong) {
-  let timerRef = null;
+  const timerRef = useRef(null);
   // Play status
   const [play, setPlay] = useState(false);
   // Playback status of song (in ms)
   const [elapsed, setElapsed] = useState(0);
 
   // Event listener to see if the track has finished and if it has it changes to the next song
-  useEffect(function init() {
-    Spotify.on('audioDeliveryDone', () => {
-      nextSong();
-    });
-  }, []);
+  useEffect(
+    function init() {
+      Spotify.on('audioDeliveryDone', () => {
+        nextSong();
+      });
+    },
+    [nextSong],
+  );
 
   useEffect(
     function playNewSong() {
@@ -36,7 +39,7 @@ function useSpotifyPlayer(uri, nextSong) {
   );
 
   useEffect(function songTimer() {
-    timerRef = setInterval(() => timeElapsed(), 100);
+    timerRef.current = setInterval(() => timeElapsed(), 100);
     return function unMount() {
       clearInterval(timerRef);
     };
