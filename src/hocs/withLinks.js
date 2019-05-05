@@ -20,6 +20,8 @@ const withLinks = (Component, type) => {
   Sub.propTypes = {
     navigation: PropTypes.func.isRequired,
   };
+
+  return Sub;
 };
 
 export default withLinks;
