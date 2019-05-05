@@ -14,8 +14,10 @@ const ControlsGroup = props => {
 };
 
 const styles = StyleSheet.create({
-  flexDirection: 'row',
-  alignItems: 'center',
+  controls: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  }
 });
 
 ControlsGroup.propTypes = {
