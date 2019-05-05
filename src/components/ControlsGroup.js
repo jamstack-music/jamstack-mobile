@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
   controls: {
     flexDirection: 'row',
     alignItems: 'center',
-  }
+  },
 });
 
 ControlsGroup.propTypes = {
