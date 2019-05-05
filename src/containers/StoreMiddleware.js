@@ -82,7 +82,7 @@ const StoreMiddleware = props => {
 
 StoreMiddleware.propTypes = {
   room: PropTypes.objectOf(PropTypes.any).isRequired,
-  children: PropTypes.arrayOf(PropTypes.any).isRequired,
+  children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.any), PropTypes.objectOf(PropTypes.any)]).isRequired,
 };
 
 export default StoreMiddleware;
