@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import RNEventSource from 'react-native-event-source';
 import { View, Text, AsyncStorage } from 'react-native';
 import PropTypes from 'prop-types';
@@ -16,61 +16,59 @@ const init = async (room, setLoading) => {
 const StoreMiddleware = props => {
   const { room, children } = props;
 
+  const eventSource = useRef(null);
+
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     init(room, setLoading);
-  }, []);
+  }, [room]);
 
   useEffect(
     function initStore() {
-      if (!loading) {
-        const eventSource = new RNEventSource(
-          `http://52.42.15.3:5000/stream?channel=${room.state.name}`,
-        );
+      eventSource.current = new RNEventSource(
+        `http://52.42.15.3:5000/stream?channel=${room.state.name}`,
+      );
 
-        eventSource.addEventListener(
-          'song',
-          ({ data }) => {
-            const { song } = JSON.parse(data);
-            room.addtoQueue(song);
-          },
-          false,
-        );
+      eventSource.current.addEventListener(
+        'song',
+        ({ data }) => {
+          const { song } = JSON.parse(data);
+          room.addtoQueue(song);
+        },
+        false,
+      );
 
-        eventSource.addEventListener(
-          'join',
-          ({ data }) => {
-            const { user } = JSON.parse(data);
-            room.addMember(user);
-          },
-          false,
-        );
+      eventSource.current.addEventListener(
+        'join',
+        ({ data }) => {
+          const { user } = JSON.parse(data);
+          room.addMember(user);
+        },
+        false,
+      );
 
-        eventSource.addEventListener(
-          'bump',
-          ({ data }) => {
-            room.bumpSong(data);
-          },
-          false,
-        );
+      eventSource.current.addEventListener(
+        'bump',
+        ({ data }) => {
+          room.bumpSong(data);
+        },
+        false,
+      );
 
-        eventSource.addEventListener(
-          'next',
-          () => {
-            room.nextSong();
-          },
-          false,
-        );
+      eventSource.current.addEventListener(
+        'next',
+        () => {
+          room.nextSong();
+        },
+        false,
+      );
 
-        return function unMount() {
-          eventSource.removeAllListeners();
-          eventSource.close();
-        };
-      }
-
-      return null;
+      return function unMount() {
+        eventSource.current.removeAllListeners();
+        eventSource.current.close();
+      };
     },
-    [loading],
+    [loading, room],
   );
 
   if (!loading) return children;
