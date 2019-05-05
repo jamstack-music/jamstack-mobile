@@ -14,13 +14,17 @@ const AddList = props => {
       {...rest}
       songs={songs}
       style={style}
-      renderItem={({ item }) => (
-        <SongItem {...item}>
-          <View style={styles.add}>
-            <Icon reverse color="#3963FB" size={15} name="add" onPress={() => onAdd(item)} />
-          </View>
-        </SongItem>
-      )}
+      renderItem={({ item }) => {
+        const handleAdd = () => onAdd(item);
+
+        return (
+          <SongItem {...item}>
+            <View style={styles.add}>
+              <Icon reverse color="#3963FB" size={15} name="add" onPress={handleAdd} />
+            </View>
+          </SongItem>
+        );
+      }}
     />
   );
 };

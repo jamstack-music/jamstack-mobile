@@ -3,6 +3,11 @@ import { FlatList, View, StyleSheet } from 'react-native';
 import PropTypes from 'prop-types';
 import SongItem from './SongItem';
 
+// eslint-disable-next-line
+const renderItem = ({ item }) => <SongItem {...item} />;
+
+const renderSeperator = () => <View style={styles.seperator} />;
+
 const SongList = props => {
   const { songs, style, ...rest } = props;
 
@@ -10,8 +15,8 @@ const SongList = props => {
     <FlatList
       data={songs}
       keyExtractor={(song, i) => song.id + i}
-      renderItem={({ item }) => <SongItem {...item} />}
-      ItemSeparatorComponent={() => <View style={styles.seperator} />}
+      renderItem={renderItem}
+      ItemSeparatorComponent={renderSeperator}
       style={style}
       {...rest}
     />
