@@ -9,7 +9,9 @@ const extractPlaylist = playlist => {
     tracks: { items },
   } = playlist;
 
-  const songs = items.filter(({ is_local }) => !is_local).map(({ track }) => extractSong(track));
+  const songs = items
+    .filter(({ is_local: isLocal }) => !isLocal)
+    .map(({ track }) => extractSong(track));
 
   return {
     id,

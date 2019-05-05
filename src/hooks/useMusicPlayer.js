@@ -29,7 +29,7 @@ function useMusicPlayer(song, nextSong) {
       MusicControl.enableControl('nextTrack', true);
       MusicControl.enableControl('prevTrack', false);
     },
-    [uri],
+    [album, artist, duration, title, uri],
   );
 
   MusicControl.on('play', () => setPlay(true));

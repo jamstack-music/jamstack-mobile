@@ -5,19 +5,22 @@ import Spotify from 'rn-spotify-sdk';
 
 // eslint-disable-next-line
 const Auth = ({ navigation }) => {
-  useEffect(function auth() {
-    async function login() {
-      const status = await Spotify.isLoggedInAsync();
-      let stack = status ? 'CreateRoom' : 'Login';
-      const name = await AsyncStorage.getItem('roomName');
-      if (stack === 'CreateRoom' && name) {
-        stack = 'Room';
+  useEffect(
+    function auth() {
+      async function login() {
+        const status = await Spotify.isLoggedInAsync();
+        let stack = status ? 'CreateRoom' : 'Login';
+        const name = await AsyncStorage.getItem('roomName');
+        if (stack === 'CreateRoom' && name) {
+          stack = 'Room';
+        }
+        navigation.navigate(stack);
       }
-      navigation.navigate(stack);
-    }
 
-    login();
-  }, []);
+      login();
+    },
+    [navigation],
+  );
 
   return <View />;
 };

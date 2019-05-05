@@ -44,7 +44,7 @@ const Playlist = props => {
       const playlist = items.map(({ track }) => extractSong(track));
       setList(playlist);
     });
-  }, []);
+  }, [id]);
 
   const playlistImg = images[0].url;
   return (
