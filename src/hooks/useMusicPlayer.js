@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useCallback } from 'react';
 import PropTypes from 'prop-types';
 
 import MusicControl from 'react-native-music-control';
@@ -11,6 +11,10 @@ import useSpotifyPlayer from './useSpotifyPlayer';
 function useMusicPlayer(song, nextSong) {
   const { title, artist, album, uri, duration } = song;
   const [play, setPlay, elapsed] = useSpotifyPlayer(uri, nextSong);
+
+  const handlePlay = useCallback(() => setPlay(true), [setPlay]);
+  const handlePause = useCallback(() => setPlay(false), [setPlay]);
+  const handleNext = useCallback(() => nextSong(), [nextSong]);
 
   useEffect(
     function updatePlayback() {
@@ -28,13 +32,13 @@ function useMusicPlayer(song, nextSong) {
       MusicControl.enableControl('pause', true);
       MusicControl.enableControl('nextTrack', true);
       MusicControl.enableControl('prevTrack', false);
-    },
-    [album, artist, duration, title, uri],
-  );
 
-  MusicControl.on('play', () => setPlay(true));
-  MusicControl.on('pause', () => setPlay(false));
-  MusicControl.on('nextTrack', () => nextSong());
+      MusicControl.on('play', handlePlay);
+      MusicControl.on('pause', handlePause);
+      MusicControl.on('nextTrack', handleNext);
+    },
+    [album, artist, duration, handleNext, handlePause, handlePlay, title, uri],
+  );
 
   return [play, setPlay, elapsed];
 }
