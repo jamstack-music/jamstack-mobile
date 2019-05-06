@@ -7,16 +7,17 @@ const superBump = queue => {
   queue.sort((a, b) => b.bumps - a.bumps);
 };
 
+const initializeState = () => ({
+  queue: [],
+  currentSong: {},
+  members: [],
+});
+
 export class RoomContainer extends Container {
-  state = {
-    queue: [],
-    currentSong: {},
-    members: [],
-  };
+  state = initializeState();
 
   initRoom = async store => {
-    // eslint-disable-next-line
-    const { current_song, ...rest } = store;
+    const { current_song: currentSong, ...rest } = store;
     const jsonMap = (await AsyncStorage.getItem('alreadyBumped')) || '{}';
     const alreadyBumped = JSON.parse(jsonMap);
     const queue = store.queue.map(song => ({
@@ -24,8 +25,8 @@ export class RoomContainer extends Container {
       alreadyBumped: alreadyBumped[song.id] || false,
     }));
 
-    // eslint-disable-next-line
-    this.setState(prevState => ({ ...prevState, ...rest, queue, currentSong: current_song }));
+    const song = typeof currentSong === 'string' ? {} : currentSong;
+    this.setState(prevState => ({ ...prevState, ...rest, queue, currentSong: song }));
   };
 
   setName = name => this.setState({ name });
@@ -77,6 +78,10 @@ export class RoomContainer extends Container {
         members: [...prevState.members, member],
       }));
     }
+  };
+
+  clearRoom = () => {
+    this.setState(initializeState());
   };
 }
 
