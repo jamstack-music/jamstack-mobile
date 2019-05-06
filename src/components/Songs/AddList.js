@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
 });
 
 AddList.propTypes = {
-  songs: PropTypes.arrayOf(PropTypes.node).isRequired,
+  songs: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)).isRequired,
   onAdd: PropTypes.func.isRequired,
   style: PropTypes.objectOf(PropTypes.node),
 };

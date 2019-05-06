@@ -49,7 +49,9 @@ const styles = StyleSheet.create({
 SongItem.propTypes = {
   title: PropTypes.string.isRequired,
   artist: PropTypes.string.isRequired,
-  images: PropTypes.string,
+  images: PropTypes.arrayOf(
+    PropTypes.objectOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
+  ),
   children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
 };
 

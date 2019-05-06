@@ -30,7 +30,7 @@ const BumpList = props => {
 };
 
 BumpList.propTypes = {
-  songs: PropTypes.arrayOf(PropTypes.node).isRequired,
+  songs: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.any)).isRequired,
   onBump: PropTypes.func.isRequired,
   style: PropTypes.objectOf(PropTypes.node),
 };
