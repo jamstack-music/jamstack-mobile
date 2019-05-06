@@ -1,13 +1,5 @@
 import React from 'react';
-import {
-  Alert,
-  Share,
-  Button,
-  SafeAreaView,
-  View,
-  Text,
-  StyleSheet,
-} from 'react-native';
+import { Alert, Share, Button, SafeAreaView, View, Text, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import { Subscribe } from 'unstated';
 import PropTypes from 'prop-types';
