@@ -32,7 +32,9 @@ const styles = StyleSheet.create({
 
 Playlist.propTypes = {
   name: PropTypes.string.isRequired,
-  images: PropTypes.arrayOf(PropTypes.objectOf(PropTypes.string)),
+  images: PropTypes.arrayOf(
+    PropTypes.objectOf(PropTypes.oneOfType([PropTypes.string, PropTypes.number])),
+  ),
   dim: PropTypes.number,
 };
 

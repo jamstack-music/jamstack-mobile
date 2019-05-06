@@ -11,7 +11,6 @@ import Timer from './Timer';
 import ControlsGroup from './ControlsGroup';
 import AlbumCover from './AlbumCover';
 
-// TODO: Keep track of song time and get next song when time is finished
 /**
  * SongPlayer Component
  * @author [Zach Banducci](https://github.com/zchbndcc9)
@@ -57,17 +56,8 @@ const SongPlayer = props => {
 };
 
 SongPlayer.propTypes = {
-  song: PropTypes.objectOf(PropTypes.any),
+  song: PropTypes.objectOf(PropTypes.any).isRequired,
   nextSong: PropTypes.func.isRequired,
-};
-
-SongPlayer.defaultProps = {
-  song: {
-    title: '',
-    artist: '',
-    images: [{ url: 'https://placeholder.com/200' }],
-    duration: 0,
-  },
 };
 
 export default SongPlayer;

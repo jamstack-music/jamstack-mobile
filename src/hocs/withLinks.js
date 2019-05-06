@@ -18,7 +18,7 @@ const withLinks = (Component, type) => {
   };
 
   Sub.propTypes = {
-    navigation: PropTypes.func.isRequired,
+    navigation: PropTypes.objectOf(PropTypes.any).isRequired,
   };
 
   return Sub;
