@@ -1,76 +1,100 @@
-import React, { useEffect } from 'react'
-import { Container, Provider } from 'unstated'
-import { joinRoom } from '../data/api'
+import React from 'react';
+import AsyncStorage from '@react-native-community/async-storage';
+import PropTypes from 'prop-types';
+import { Container, Provider } from 'unstated';
 
-import RNEventSource from 'react-native-event-source'
+const superBump = queue => {
+  queue.sort((a, b) => b.bumps - a.bumps);
+};
+
+const initializeState = () => ({
+  queue: [],
+  currentSong: {},
+  members: [],
+});
 
 export class RoomContainer extends Container {
-  state = {
-    queue: [], 
-    currentSong: {},
-    members: [],
-    public: true,
-    password: ''
-  }
+  state = initializeState();
 
-  initRoom = store => {
-    const { current_song: currentSong } = store
-    this.setState(prevState => ({...prevState, currentSong, ...store}))
-  }
+  initRoom = async store => {
+    const { current_song: currentSong, ...rest } = store;
+    const jsonMap = (await AsyncStorage.getItem('alreadyBumped')) || '{}';
+    const alreadyBumped = JSON.parse(jsonMap);
+    const queue = store.queue.map(song => ({
+      ...song,
+      alreadyBumped: alreadyBumped[song.id] || false,
+    }));
 
-  nextSong = () => {
-    if(this.state.queue.length > 0) {
-      this.setState(prevState => ({
-        currentSong: prevState.queue[0], 
-        queue: prevState.queue.slice(1, prevState.queue.length)
-      }))
-    }
-  }
+    const song = typeof currentSong === 'string' ? {} : currentSong;
+    this.setState(prevState => ({ ...prevState, ...rest, queue, currentSong: song }));
+  };
+
+  setName = name => this.setState({ name });
 
   addtoQueue = song => {
-    this.setState(prevState => ({
-      queue: [...prevState.queue, song]
-    }))
-  }
+    if (this.state.queue.length === 0 && !this.state.currentSong.uri) {
+      this.setState({ currentSong: song });
+    } else {
+      this.setState(prevState => ({
+        queue: [...prevState.queue, song],
+      }));
+    }
+  };
+
+  nextSong = async () => {
+    if (this.state.queue.length > 0) {
+      const jsonMap = (await AsyncStorage.getItem('alreadyBumped')) || '{}';
+      const alreadyBumped = JSON.parse(jsonMap);
+      delete alreadyBumped[this.state.queue[0].id];
+      AsyncStorage.setItem('alreadyBumped', JSON.stringify(alreadyBumped));
+
+      this.setState(prevState => ({
+        currentSong: prevState.queue[0],
+        queue: prevState.queue.slice(1, prevState.queue.length),
+      }));
+    }
+  };
+
+  bumpSong = async id => {
+    const index = this.state.queue.findIndex(song => song.id === id);
+    const { queue } = this.state;
+    const jsonMap = (await AsyncStorage.getItem('alreadyBumped')) || '{}';
+    const alreadyBumped = JSON.parse(jsonMap);
+
+    queue[index] = {
+      ...queue[index],
+      bumps: queue[index].bumps + 1,
+      alreadyBumped: alreadyBumped[id] || false,
+    };
+
+    superBump(queue);
+
+    this.setState({ queue });
+  };
 
   addMember = member => {
-    this.setState(prevState => ({
-      members: [...prevState.members, member]
-    }))
-  }
+    if (!this.state.members.find(el => el === member)) {
+      this.setState(prevState => ({
+        members: [...prevState.members, member],
+      }));
+    }
+  };
+
+  clearRoom = () => {
+    this.setState(initializeState());
+  };
 }
 
-export const RoomProvider = ({children}) => {
-  const room = new RoomContainer() 
-  useEffect(function init() {
-    async function fetchStore() {
-      const { data } = await joinRoom('fun-room', 'Zach')
-      room.initRoom({...data, name: 'fun-room'})
-    }
+export const RoomProvider = ({ children }) => {
+  const room = new RoomContainer();
 
-    const eventSource = new RNEventSource(`http://54.191.51.110:5000/stream?channel=fun-room`)
-    
-    eventSource.addEventListener('song', function({data}) {
-      console.debug('song request received')
-      const { song } = JSON.parse(data)
-      room.addtoQueue(song)
-    }, false)
+  return <Provider inject={[room]}>{children}</Provider>;
+};
 
-    eventSource.addEventListener('next', function() {
-      room.nextSong()
-    }, false) 
+RoomProvider.propTypes = {
+  children: PropTypes.arrayOf(PropTypes.any),
+};
 
-    fetchStore()
-    return function unMount() {
-      eventSource.removeEventListeners('song')
-      eventSource.removeEventListeners('next')
-      eventSource.close()
-    }
-  },[])
-
-  return (
-    <Provider inject={[room]}>
-      {children}
-    </Provider>
-  )
-}
+RoomProvider.defaultProps = {
+  children: {},
+};

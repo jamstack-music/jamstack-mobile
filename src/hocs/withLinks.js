@@ -1,18 +1,27 @@
-import React from 'react'
-import { View } from 'react-native'
+import React from 'react';
+import { TouchableHighlight } from 'react-native';
+import PropTypes from 'prop-types';
 
-const withLinks = (Component, type) => (
-  (props) => {
-    const {
-      navigation,
-      ...rest
-    } = props
+const withLinks = (Component, type) => {
+  const Sub = props => {
+    const { navigation, ...rest } = props;
 
     return (
-      <View onPress={() => navigation.push(type, {...rest})}>
+      <TouchableHighlight
+        activeOpacity={0.01}
+        underlayColor="white"
+        onPress={() => navigation.push(type, rest)}
+      >
         <Component {...rest} />
-      </View>
-    )
-  }
-)
-export default withLinks
+      </TouchableHighlight>
+    );
+  };
+
+  Sub.propTypes = {
+    navigation: PropTypes.objectOf(PropTypes.any).isRequired,
+  };
+
+  return Sub;
+};
+
+export default withLinks;

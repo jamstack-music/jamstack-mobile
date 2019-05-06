@@ -1,10 +1,20 @@
-import React from 'react'
-import { View, Text } from 'react-native'
+import React from 'react';
+import { Button, View } from 'react-native';
+import PropTypes from 'prop-types';
 
-const Browse = () => (
-  <View>
-    <Text>Search</Text>
-  </View>
-)
+const Browse = props => {
+  const { navigation } = props;
 
-export default Browse 
+  return (
+    <View>
+      <Button title="Playlists" onPress={() => navigation.navigate('Playlists')} />
+      <Button title="Albums" onPress={() => navigation.navigate('Albums')} />
+    </View>
+  );
+};
+
+Browse.propTypes = {
+  navigation: PropTypes.objectOf(PropTypes.any).isRequired,
+};
+
+export default Browse;
