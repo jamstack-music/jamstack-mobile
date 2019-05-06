@@ -9,7 +9,7 @@ import useSpotifyPlayer from './useSpotifyPlayer';
  * @author [Zach Banducci](https://github.com/zchbndcc9)
  */
 function useMusicPlayer(song, nextSong) {
-  const { title, artist, album, uri, duration } = song;
+  const { title, artist, images, uri, duration } = song;
   const [play, setPlay, elapsed] = useSpotifyPlayer(uri, nextSong);
 
   const handlePlay = useCallback(() => setPlay(true), [setPlay]);
@@ -22,9 +22,9 @@ function useMusicPlayer(song, nextSong) {
 
       MusicControl.setNowPlaying({
         title,
-        artwork: album ? album[album.length - 1].url : 'http://placeholder.com/200',
+        artwork: images ? images[images.length - 1].url : 'http://placeholder.com/200',
         artist,
-        duration,
+        duration: Math.floor(duration / 1000),
       });
 
       // Control setup for music player
@@ -37,7 +37,7 @@ function useMusicPlayer(song, nextSong) {
       MusicControl.on('pause', handlePause);
       MusicControl.on('nextTrack', handleNext);
     },
-    [album, artist, duration, handleNext, handlePause, handlePlay, title, uri],
+    [artist, duration, handleNext, handlePause, handlePlay, images, title, uri],
   );
 
   return [play, setPlay, elapsed];

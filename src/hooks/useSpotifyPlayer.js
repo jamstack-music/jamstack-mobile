@@ -30,18 +30,24 @@ function useSpotifyPlayer(uri, nextSong) {
   );
 
   useEffect(
-    function playSong() {
-      Spotify.setPlaying(play);
+    function playNewSong() {
+      if (uri) {
+        Spotify.playURI(uri, 0, 0);
+        setPlay(true);
+      }
+      return function stopSong() {
+        Spotify.setPlaying(false);
+        clearInterval(timerRef.current);
+      };
     },
-    [play],
+    [uri],
   );
 
   useEffect(
-    function playNewSong() {
-      Spotify.playURI(uri, 0, 0);
-      setPlay(true);
+    function playSong() {
+      Spotify.setPlaying(play).catch(() => null);
     },
-    [uri],
+    [play],
   );
 
   const handleInterval = useCallback(() => timeElapsed(setElapsed), []);
