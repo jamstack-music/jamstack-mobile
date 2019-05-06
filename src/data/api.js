@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { AsyncStorage } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const BASE = 'http://52.42.15.3:5000';
 

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import RNEventSource from 'react-native-event-source';
-import { View, Text, AsyncStorage } from 'react-native';
+import { View, Text } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import PropTypes from 'prop-types';
 
 import { joinRoom } from '../data/api';

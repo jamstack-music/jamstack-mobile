@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Alert, Keyboard, SafeAreaView, StyleSheet, Text, View, AsyncStorage } from 'react-native';
+import { Alert, Keyboard, SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import { Button, Input } from 'react-native-elements';
 import PropTypes from 'prop-types';
 

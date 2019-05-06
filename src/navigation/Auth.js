@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
-import { View, AsyncStorage } from 'react-native';
-
+import { View } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import Spotify from 'rn-spotify-sdk';
 
 // eslint-disable-next-line

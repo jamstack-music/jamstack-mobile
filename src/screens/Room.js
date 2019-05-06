@@ -4,11 +4,11 @@ import {
   Share,
   Button,
   SafeAreaView,
-  AsyncStorage,
   View,
   Text,
   StyleSheet,
 } from 'react-native';
+import AsyncStorage from '@react-native-community/async-storage';
 import { Subscribe } from 'unstated';
 import PropTypes from 'prop-types';
 
