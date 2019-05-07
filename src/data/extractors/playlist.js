@@ -1,4 +1,4 @@
-import extractSong from './song';
+import { extractSong } from './song';
 
 const extractPlaylist = playlist => {
   const {

@@ -1,4 +1,4 @@
-const extractSong = song => {
+export const extractSong = song => {
   const {
     name: title,
     id,
@@ -19,4 +19,4 @@ const extractSong = song => {
   };
 };
 
-export default extractSong;
+export const asyncExtractSong = async song => extractSong(song);

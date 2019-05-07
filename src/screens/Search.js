@@ -4,7 +4,7 @@ import { Icon } from 'react-native-elements';
 import Spotify from 'rn-spotify-sdk';
 import { Subscribe } from 'unstated';
 import { showMessage } from 'react-native-flash-message';
-import extractSong from '../data/extractors/song';
+import { asyncExtractSong } from '../data/extractors/song';
 
 import AddList from '../components/Songs/AddList';
 
@@ -20,7 +20,7 @@ const callSpotify = async (query, setResults) => {
       tracks: { items },
     } = await Spotify.search(query, ['track'], { market: 'US' });
 
-    const searchResults = items.map(song => extractSong(song));
+    const searchResults = await Promise.all(items.map(song => asyncExtractSong(song)));
 
     setResults(searchResults);
   }

@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 import { addSong as addSongRemote } from '../data/api';
 import AlbumCover from '../components/AlbumCover';
 import AddList from '../components/Songs/AddList';
-import extractSong from '../data/extractors/song';
+import { extractSong } from '../data/extractors/song';
 import { RoomContainer } from '../store/room';
 
 const addSong = (room, song) => {
