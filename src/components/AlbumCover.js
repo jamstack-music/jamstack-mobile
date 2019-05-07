@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
  * @author [Zach Banducci](https://github.com/zchbndcc9)
  */
 const AlbumCover = props => {
-  const { url, dim = 250, shadow } = props;
+  const { url, dim, shadow } = props;
 
   return (
     <View style={shadow ? styles.shadowContainer : null}>
@@ -35,7 +35,7 @@ AlbumCover.propTypes = {
 };
 
 AlbumCover.defaultProps = {
-  url: 'https://placeholder.com/200',
+  url: 'https://placeholder.com/250',
   dim: 250,
   shadow: false,
 };

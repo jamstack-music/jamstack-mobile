@@ -22,9 +22,9 @@ const SongPlayer = props => {
   const { song, nextSong } = props;
 
   const [play, setPlay, elapsed] = useMusicPlayer(song, nextSong);
-  const { title, artist, images, duration } = song;
 
-  const albumImg = images ? images[0].url : 'https://placholder.com/200';
+  const { title, artist, images, duration } = song;
+  const albumImg = images ? images[0].url : 'https://via.placeholder.com/200';
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
