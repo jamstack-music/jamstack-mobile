@@ -1,0 +1,6 @@
+framework module Pods_queuehubMobile {
+  umbrella header "Pods-queuehubMobile-umbrella.h"
+
+  export *
+  module * { export * }
+}
