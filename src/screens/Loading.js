@@ -1,10 +1,10 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 
-const CreateRoom = () => (
+const Loading = () => (
   <View>
-    <Text>CreateRoom</Text>
+    <Text>Loading</Text>
   </View>
 );
 
-export default CreateRoom;
+export default Loading;

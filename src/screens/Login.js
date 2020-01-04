@@ -1,9 +1,7 @@
 import React from 'react';
-import { SafeAreaView, Text, View, StyleSheet, Alert, Dimensions } from 'react-native';
-import { Button } from 'react-native-elements';
+import { Button, SafeAreaView, Text, View, StyleSheet, Alert, Dimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
 import Spotify from 'rn-spotify-sdk';
-import PropTypes from 'prop-types';
 
 const Login = props => {
   const { navigation } = props;
@@ -76,10 +74,6 @@ const styles = StyleSheet.create({
 
 Login.navigationOptions = {
   header: null,
-};
-
-Login.propTypes = {
-  navigation: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
 export default Login;

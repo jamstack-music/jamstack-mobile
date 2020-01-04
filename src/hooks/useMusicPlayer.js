@@ -1,5 +1,4 @@
 import { useEffect, useCallback } from 'react';
-import PropTypes from 'prop-types';
 
 import MusicControl from 'react-native-music-control';
 import useSpotifyPlayer from './useSpotifyPlayer';
@@ -42,10 +41,5 @@ function useMusicPlayer(song, nextSong) {
 
   return [play, setPlay, elapsed];
 }
-
-useMusicPlayer.propTypes = {
-  song: PropTypes.objectOf(PropTypes.node).isRequired,
-  nextSong: PropTypes.func.isRequired,
-};
 
 export default useMusicPlayer;

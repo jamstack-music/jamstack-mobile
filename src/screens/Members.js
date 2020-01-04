@@ -1,10 +1,10 @@
 import React from 'react';
 import { View, Text } from 'react-native';
 
-export default function Room() {
+export default function Members() {
   return (
     <View>
-      <Text>Room</Text>
+      <Text>Members</Text>
     </View>
   );
 }
