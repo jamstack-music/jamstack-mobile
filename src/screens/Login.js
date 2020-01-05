@@ -2,9 +2,13 @@ import React from 'react';
 import { Button, SafeAreaView, Text, View, StyleSheet, Alert, Dimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
 import Spotify from 'rn-spotify-sdk';
+import { useDispatch } from 'jamstate';
 
-const Login = props => {
-  const { navigation } = props;
+import { useAuth } from 'Components/Auth';
+
+const Login = () => {
+  const { setTokens } = useAuth();
+  const dispatch = useDispatch();
 
   const { width } = Dimensions.get('window');
   const dim = width * 0.8;
@@ -12,7 +16,13 @@ const Login = props => {
   const login = async () => {
     const loggedIn = await Spotify.login();
     if (loggedIn) {
-      navigation.navigate('Auth');
+      const {
+        expireTime,
+        accessToken: spotifyToken,
+        refreshToken,
+      } = await Spotify.getSessionAsync();
+      dispatch({ type: 'setRoomCode', payload: 'deep-society' });
+      setTokens({ spotifyToken, refreshToken, expireTime });
     } else {
       Alert.alert('You gotta log in');
     }
