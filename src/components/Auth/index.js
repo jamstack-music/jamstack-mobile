@@ -1,35 +1,75 @@
-import React, { useMemo, useReducer, createContext, useContext } from 'react';
-import Spotify from 'rn-spotify-sdk';
+import React, { useMemo, useEffect, useReducer, createContext, useContext } from 'react';
+import AsyncStorage from '@react-native-community/async-storage';
+import Loading from 'Screens/Loading';
+
 import useInterval from '../../hooks/useInterval';
 
 const AuthContext = createContext(null);
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case 'setTokens':
+    case 'init':
       return {
-        refreshToken: action.payload.refreshToken,
-        spotifyToken: action.payload.spotifyToken,
+        ...action.payload,
+        isLoading: false,
       };
     default:
       return state;
   }
 };
 
+
+const INIT_STATE = {
+  refreshToken: null,
+  spotifyToken: null,
+  expireTime: null,
+  isLoading: true,
+};
+
+async function setTokens(tokens, dispatch) {
+  const { expireTime, spotifyToken, refreshToken } = tokens;
+
+  if (refreshToken) await AsyncStorage.setItem('refreshToken', refreshToken);
+
+  await AsyncStorage.multiSet([
+    ['expireTime', expireTime.toString()],
+    ['spotifyToken', spotifyToken],
+  ]);
+
+  dispatch({ type: 'init', payload: tokens });
+}
+
 export default function AuthProvider(props) {
   const { children } = props;
 
-  const [state, dispatch] = useReducer(reducer, {
-    spotifyToken: null,
-    refreshToken: null,
-  });
+  const [state, dispatch] = useReducer(reducer, INIT_STATE);
+
+  useEffect(() => {
+    async function initAuthStore() {
+      const [[, refreshToken], [, spotifyToken], [, expireTime]] = await AsyncStorage.multiGet([
+        'refreshToken',
+        'spotifyToken',
+        'expireTime',
+      ]);
+
+      const newState = {
+        refreshToken,
+        spotifyToken,
+        expireTime: +expireTime,
+      };
+
+      dispatch({ type: 'init', payload: newState });
+    }
+
+    initAuthStore();
+  }, [dispatch]);
 
   // Poll session to ensure that token is still valid
   useInterval(() => {
     async function session() {
-      const { expireTime } = await Spotify.getSessionAsync();
+      const { expireTime } = state;
       if (Date.now() >= expireTime) {
-        dispatch({ type: 'setTokens', payload: { refreshTokens: null, spotifyToken: null } });
+        dispatch({ type: 'init', payload: { refreshTokens: null, spotifyToken: null } });
       }
     }
 
@@ -38,13 +78,17 @@ export default function AuthProvider(props) {
 
   const contextState = useMemo(
     () => ({
-      setTokens: tokens => dispatch({ type: 'setTokens', payload: tokens }),
+      setTokens: tokens => setTokens(tokens, dispatch),
       state,
     }),
     [state, dispatch],
   );
 
-  return <AuthContext.Provider value={contextState}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={contextState}>
+      {state.isLoading ? <Loading /> : children}
+    </AuthContext.Provider>
+  );
 }
 
 export function useAuth() {
