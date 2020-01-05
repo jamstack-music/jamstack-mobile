@@ -1,4 +1,6 @@
 import React, { useMemo, useReducer, createContext, useContext } from 'react';
+import Spotify from 'rn-spotify-sdk';
+import useInterval from '../../hooks/useInterval';
 
 const AuthContext = createContext(null);
 
@@ -21,6 +23,18 @@ export default function AuthProvider(props) {
     spotifyToken: null,
     refreshToken: null,
   });
+
+  // Poll session to ensure that token is still valid
+  useInterval(() => {
+    async function session() {
+      const { expireTime } = await Spotify.getSessionAsync();
+      if (Date.now() >= expireTime) {
+        dispatch({ type: 'setTokens', payload: { refreshTokens: null, spotifyToken: null } });
+      }
+    }
+
+    session();
+  }, 60000);
 
   const contextState = useMemo(
     () => ({
