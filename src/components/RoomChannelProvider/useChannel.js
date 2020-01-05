@@ -10,9 +10,9 @@ export default function useChannel(socketURL, channelId) {
     newChannel.join();
 
     return newChannel;
-  }, [socketURL, channelId]);
+  }, [channelId, socketURL]);
 
-  useEffect(() => () => channel.leave(), [channel]);
+  useEffect(() => () => channel.leave(), []);
 
   return channel;
 }

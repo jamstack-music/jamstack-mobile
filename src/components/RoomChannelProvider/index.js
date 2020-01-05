@@ -9,7 +9,8 @@ const RoomChannelContext = createContext(null);
 export default function RoomChannelProvider(props) {
   const { children } = props;
   const dispatch = useDispatch();
-  const roomId = useSelector(s => s.room.id);
+
+  const roomId = useSelector(s => s.room.code);
   const channel = useChannel(SOCKET_URL, `room:${roomId}`);
 
   useEffect(() => {
@@ -30,7 +31,7 @@ export default function RoomChannelProvider(props) {
     };
   }, [channel, dispatch]);
 
-  return <RoomChannelProvider value={channel}>{children}</RoomChannelProvider>;
+  return <RoomChannelContext.Provider value={channel}>{children}</RoomChannelContext.Provider>;
 }
 
 export function useRoomChannel() {
