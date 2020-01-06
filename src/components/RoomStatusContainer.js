@@ -10,35 +10,47 @@ export default function RoomStatusContainer(props) {
   const { children } = props;
 
   const dispatch = useDispatch();
-  const [roomActive, setRoomActive] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [state, setState] = useState({ roomActive: false, isLoading: true });
 
   useEffect(() => {
+    let isSubscribed = true;
     async function getRoom() {
       const [[, name], [, code]] = await AsyncStorage.multiGet(['@RoomName', '@RoomCode']);
 
-      if (code) {
-        dispatch({ type: 'initRoom', payload: { name, code } });
-        setRoomActive(true);
+      if (isSubscribed) {
+        if (code) {
+          dispatch({ type: 'initRoom', payload: { name, code } });
+          setState(() => ({
+            isLoading: false,
+            roomActive: true,
+          }));
+        } else {
+          setState(s => ({
+            ...s,
+            isLoading: false,
+          }));
+        }
       }
-      setIsLoading(false);
     }
 
     getRoom();
+    return () => {
+      isSubscribed = false;
+    };
   }, [dispatch]);
 
   const contextState = useMemo(
     () => ({
-      setRoomAsActive: () => setRoomActive(true),
-      setRoomAsInactive: () => setRoomActive(false),
-      roomActive,
+      setRoomAsActive: () => setState(s => ({ ...s, roomActive: true })),
+      setRoomAsInactive: () => setState(s => ({ ...s, roomActive: false })),
+      roomActive: state.roomActive,
     }),
-    [roomActive],
+    [state.roomActive],
   );
 
   return (
     <RoomStatusContext.Provider value={contextState}>
-      {isLoading ? <Loading /> : children}
+      {state.isLoading ? <Loading /> : children}
     </RoomStatusContext.Provider>
   );
 }
