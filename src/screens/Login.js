@@ -1,32 +1,14 @@
 import React from 'react';
-import { Button, SafeAreaView, Text, View, StyleSheet, Alert, Dimensions } from 'react-native';
+import { Button, SafeAreaView, Text, View, StyleSheet, Dimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
-import Spotify from 'rn-spotify-sdk';
-import { useDispatch } from 'jamstate';
 
 import { useAuth } from 'Components/Auth';
 
 const Login = () => {
-  const { setTokens } = useAuth();
-  const dispatch = useDispatch();
+  const { login } = useAuth();
 
   const { width } = Dimensions.get('window');
   const dim = width * 0.8;
-
-  const login = async () => {
-    const loggedIn = await Spotify.login();
-    if (loggedIn) {
-      const {
-        expireTime,
-        accessToken: spotifyToken,
-        refreshToken,
-      } = await Spotify.getSessionAsync();
-      dispatch({ type: 'setRoomCode', payload: 'deep-society' });
-      setTokens({ spotifyToken, refreshToken, expireTime });
-    } else {
-      Alert.alert('You gotta log in');
-    }
-  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -39,7 +21,7 @@ const Login = () => {
           buttonStyle={{ width: dim, ...styles.button }}
           icon={<Icon name="spotify" color="white" size={30} />}
           titleStyle={styles.buttonTitle}
-          onPress={() => login()}
+          onPress={login}
         />
       </View>
     </SafeAreaView>
