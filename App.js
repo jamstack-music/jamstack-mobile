@@ -3,6 +3,7 @@ import Spotify from 'rn-spotify-sdk';
 import { NavigationNativeContainer } from '@react-navigation/native';
 import { ReduxContainer } from 'jamstate';
 import AuthProvider from 'Components/Auth';
+import RoomStatusContainer from 'Components/RoomStatusContainer';
 
 import AppNavigation from './src/navigation';
 
@@ -22,16 +23,18 @@ const App = () => {
         });
       }
     }
-    
+
     initSpotify();
   }, []);
 
   return (
     <ReduxContainer>
       <AuthProvider>
-        <NavigationNativeContainer>
-          <AppNavigation />
-        </NavigationNativeContainer>
+        <RoomStatusContainer>
+          <NavigationNativeContainer>
+            <AppNavigation />
+          </NavigationNativeContainer>
+        </RoomStatusContainer>
       </AuthProvider>
     </ReduxContainer>
   );
