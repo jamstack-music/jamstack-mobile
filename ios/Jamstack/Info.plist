@@ -24,12 +24,12 @@
 	<array>
 		<dict>
 			<key>CFBundleTypeRole</key>
-			<string>Viewer</string>
+			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string>org.reactjs.native.example.Jamstack</string>
+			<string>Jamstack</string>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>Jamstack</string>
+				<string>org.jamstack</string>
 			</array>
 		</dict>
 	</array>
@@ -51,7 +51,7 @@
 		</dict>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string/>
+	<string></string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>AntDesign.ttf</string>
