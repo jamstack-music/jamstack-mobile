@@ -1,6 +1,8 @@
 import React, { useMemo, useEffect, useReducer, createContext, useContext } from 'react';
+import { Alert } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 import Loading from 'Screens/Loading';
+import Spotify from 'rn-spotify-sdk';
 
 import useInterval from '../../hooks/useInterval';
 
@@ -13,31 +15,24 @@ const reducer = (state, action) => {
         ...action.payload,
         isLoading: false,
       };
+    case 'beginLoading':
+      return {
+        ...state,
+        isLoading: true,
+      };
+    case 'reset':
+      return INIT_STATE;
     default:
       return state;
   }
 };
 
-
 const INIT_STATE = {
   refreshToken: null,
   spotifyToken: null,
   expireTime: null,
-  isLoading: true,
+  isLoading: false,
 };
-
-async function setTokens(tokens, dispatch) {
-  const { expireTime, spotifyToken, refreshToken } = tokens;
-
-  if (refreshToken) await AsyncStorage.setItem('refreshToken', refreshToken);
-
-  await AsyncStorage.multiSet([
-    ['expireTime', expireTime.toString()],
-    ['spotifyToken', spotifyToken],
-  ]);
-
-  dispatch({ type: 'init', payload: tokens });
-}
 
 export default function AuthProvider(props) {
   const { children } = props;
@@ -47,9 +42,9 @@ export default function AuthProvider(props) {
   useEffect(() => {
     async function initAuthStore() {
       const [[, refreshToken], [, spotifyToken], [, expireTime]] = await AsyncStorage.multiGet([
-        'refreshToken',
-        'spotifyToken',
-        'expireTime',
+        '@RefreshToken',
+        '@SpotifyToken',
+        '@ExpireTime',
       ]);
 
       const newState = {
@@ -61,6 +56,7 @@ export default function AuthProvider(props) {
       dispatch({ type: 'init', payload: newState });
     }
 
+    dispatch({ type: 'beginLoading' });
     initAuthStore();
   }, [dispatch]);
 
@@ -69,7 +65,7 @@ export default function AuthProvider(props) {
     async function session() {
       const { expireTime } = state;
       if (Date.now() >= expireTime) {
-        dispatch({ type: 'init', payload: { refreshTokens: null, spotifyToken: null } });
+        Spotify.renewSession();
       }
     }
 
@@ -78,7 +74,39 @@ export default function AuthProvider(props) {
 
   const contextState = useMemo(
     () => ({
-      setTokens: tokens => setTokens(tokens, dispatch),
+      async login() {
+        const session = await Spotify.getSessionAsync();
+        if (session) {
+          Spotify.loginWithSession({
+            accessToken: state.accessToken,
+            expireTime: state.expireTime,
+            refreshToken: state.refreshToken,
+          });
+        } else {
+          const loggedIn = await Spotify.login();
+          if (loggedIn) {
+            const newSession = await Spotify.getSessionAsync();
+            const { expireTime, accessToken: spotifyToken, refreshToken } = newSession;
+
+            AsyncStorage.multiSet([
+              ['@ExpireTime', expireTime.toString()],
+              ['@SpotifyToken', spotifyToken],
+              ['@RefreshToken', refreshToken],
+            ]);
+
+            dispatch({ type: 'init', payload: { expireTime, spotifyToken, refreshToken } });
+          } else {
+            Alert.alert('Unable to login');
+          }
+        }
+      },
+      async logout() {
+        const loggedOut = await Spotify.logout();
+        if (loggedOut) {
+          await AsyncStorage.multiRemove(['@SpotifyToken', '@RefreshToken', '@ExpireTime']);
+          dispatch({ type: 'reset' });
+        }
+      },
       state,
     }),
     [state, dispatch],
