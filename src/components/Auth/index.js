@@ -101,11 +101,9 @@ export default function AuthProvider(props) {
         }
       },
       async logout() {
-        const loggedOut = await Spotify.logout();
-        if (loggedOut) {
-          await AsyncStorage.multiRemove(['@SpotifyToken', '@RefreshToken', '@ExpireTime']);
-          dispatch({ type: 'reset' });
-        }
+        await Spotify.logout();
+        await AsyncStorage.multiRemove(['@SpotifyToken', '@RefreshToken', '@ExpireTime']);
+        dispatch({ type: 'reset' });
       },
       state,
     }),
