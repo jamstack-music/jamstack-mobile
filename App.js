@@ -9,8 +9,10 @@ import AppNavigation from './src/navigation';
 Spotify.initialize({
   clientID: '0a31a2abfc5945bb9e3b3507e6f8361c',
   sessionUserDefaultsKey: 'SpotifySession',
-  redirectURL: 'http://localhost:4000/v1/authenticate',
+  redirectURL: 'jamstack://auth',
   scopes: ['streaming'],
+  tokenSwapURL: 'http://localhost:4000/v1/spotify/tokens/swap',
+  tokenRefreshURL: 'http://localhost:4000/v1/spotify/tokens/refresh',
 });
 
 const App = () => (
