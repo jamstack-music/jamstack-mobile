@@ -1,26 +1,16 @@
-import React from 'react';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import React, { useMemo } from 'react';
+import { useRoomStatus } from 'Components/RoomStatusContainer';
+import CurrentRoomNavigator from './CurrentRoom';
+import RoomCreationNavigator from './RoomCreation';
 
-import RoomChannelProvider from 'Components/RoomChannelProvider';
+export default function RoomNavigator() {
+  const { roomActive } = useRoomStatus();
 
-import CurrentPlaying from 'Screens/CurrentPlaying';
-import Search from 'Screens/Search';
-import Members from 'Screens/Members';
+  return useMemo(() => {
+    if (roomActive) {
+      return <CurrentRoomNavigator />;
+    }
 
-import BrowseStack from './Browse';
-
-const Tab = createBottomTabNavigator();
-
-const RoomNavigator = () => {
-  return (
-    <RoomChannelProvider>
-      <Tab.Navigator>
-        <Tab.Screen name="Currently Playing" component={CurrentPlaying} />
-        <Tab.Screen name="Browse" component={BrowseStack} />
-        <Tab.Screen name="Search" component={Search} />
-        <Tab.Screen name="Members" component={Members} />
-      </Tab.Navigator>
-    </RoomChannelProvider>
-  );
-};
-export default RoomNavigator;
+    return <RoomCreationNavigator />;
+  }, [roomActive]);
+}

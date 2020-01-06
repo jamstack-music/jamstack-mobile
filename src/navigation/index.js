@@ -11,15 +11,17 @@ const Stack = createStackNavigator();
 const AppNavigator = () => {
   const { state } = useAuth();
 
-  const renderedNavigators = useMemo(() => {
+  return useMemo(() => {
     if (!state.spotifyToken) {
-      return <Stack.Screen name="Login" component={Login} />;
+      return (
+        <Stack.Navigator>
+          <Stack.Screen name="Login" component={Login} />
+        </Stack.Navigator>
+      );
     }
 
-    return <Stack.Screen name="Room" component={RoomNavigator} />;
+    return <RoomNavigator />;
   }, [state.spotifyToken]);
-
-  return <Stack.Navigator>{renderedNavigators}</Stack.Navigator>;
 };
 
 export default AppNavigator;
