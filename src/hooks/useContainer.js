@@ -21,6 +21,6 @@ export function createContainer(useHook, displayName = null) {
   };
 }
 
-export function useContainer(Container) {
+export default function useContainer(Container) {
   return useContext(Container);
 }

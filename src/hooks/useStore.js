@@ -1,5 +1,5 @@
 import { useMemo, useReducer } from 'react';
-import { useContainer, createContainer } from './useContainer';
+import useContainer, { createContainer } from './useContainer';
 
 export function createStore(reducer, INIT_STATE) {
   function useLocalReducer() {
@@ -16,7 +16,7 @@ export function createStore(reducer, INIT_STATE) {
   };
 }
 
-export function useSelector(StoreContext, selector) {
+export default function useSelector(StoreContext, selector) {
   const { state } = useContainer(StoreContext);
 
   const selectedVal = useMemo(() => selector(state), [selector, state]);

@@ -10,7 +10,7 @@ const timeElapsed = async setElapsed => {
  * useSpotifyPlayer : State hook for playing songs and listening for when a song is over
  * @author [Zach Banducci](https://github.com/zchbndcc9)
  */
-function useSpotifyPlayer(uri, nextSong) {
+export default function useSpotifyPlayer(uri, nextSong) {
   const timerRef = useRef(null);
   const nextSongCB = useCallback(() => nextSong(), [nextSong]);
   // Play status
@@ -60,5 +60,3 @@ function useSpotifyPlayer(uri, nextSong) {
 
   return [play, setPlay, elapsed];
 }
-
-export default useSpotifyPlayer;

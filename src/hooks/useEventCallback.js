@@ -7,5 +7,5 @@ export default function useEventCallback(fn) {
     ref.current = fn;
   });
 
-  return useCallback((...args) => ref.current.apply(void 0, args), []);
+  return useCallback((...args) => ref.current.apply(0, args), []);
 }
