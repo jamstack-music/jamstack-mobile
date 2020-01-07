@@ -1,20 +1,20 @@
 import { useState, useEffect, useCallback } from 'react';
 import Spotify from 'rn-spotify-sdk';
-import { useInterval, useEventCallback } from 'Hooks';
-import { useSelector } from 'jamstate';
+import { useInterval } from 'Hooks';
+import { useDispatch, useSelector } from 'jamstate';
 
 /**
  * useSpotifyPlayer : State hook for playing songs and listening for when a song is over
  * @author [Zach Banducci](https://github.com/zchbndcc9)
  */
 
-export default function useSpotifyPlayer(nextSong) {
-  const nextSongCB = useEventCallback(nextSong);
+export default function useSpotifyPlayer() {
+  const dispatch = useDispatch();
   const currentSongUri = useSelector(s => s.songs.current.uri);
   const [isPlaying, setIsPlaying] = useState(false);
   const [elapsed, setElapsed] = useState(0);
 
-  const [start, stop] = useInterval(() => {
+  const [startTimer, stopTimer] = useInterval(() => {
     async function getElapsedTime() {
       const { position } = await Spotify.getPlaybackStateAsync();
       setElapsed(position * 1000);
@@ -25,13 +25,13 @@ export default function useSpotifyPlayer(nextSong) {
 
   const pauseInternal = useCallback(() => {
     setIsPlaying(false);
-    stop();
-  }, [stop]);
+    stopTimer();
+  }, [stopTimer]);
 
   const playInternal = useCallback(() => {
     setIsPlaying(true);
-    start();
-  }, [start]);
+    startTimer();
+  }, [startTimer]);
 
   useEffect(() => {
     if (currentSongUri) {
@@ -43,17 +43,19 @@ export default function useSpotifyPlayer(nextSong) {
     };
   }, [currentSongUri, pause, play]);
 
+  const nextSong = useCallback(() => dispatch({ type: 'nextSong' }), [dispatch]);
+
   // Event listener to see if the track has finished and if it has it changes to the next song
   useEffect(() => {
-    Spotify.on('audioDeliveryDone', nextSongCB);
+    Spotify.on('audioDeliveryDone', nextSong);
     Spotify.on('pause', pauseInternal);
     Spotify.on('play', playInternal);
     return () => {
-      Spotify.removeListener('audioDeliveryDone', nextSongCB);
+      Spotify.removeListener('audioDeliveryDone', nextSong);
       Spotify.removeListener('pause', pauseInternal);
       Spotify.removeListener('play', playInternal);
     };
-  }, [nextSongCB, pauseInternal, playInternal]);
+  }, [nextSong, pauseInternal, playInternal]);
 
   const play = useCallback(() => Spotify.setPlaying(true), []);
   const pause = useCallback(() => Spotify.setPlaying(false), []);

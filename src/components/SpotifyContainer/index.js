@@ -1,4 +1,11 @@
 import { createContainer } from 'Hooks/useContainer';
 import useSpotifyPlayer from './useSpotifyPlayer';
+import useMusicControls from './useMusicControls'
 
-export default createContainer(useSpotifyPlayer);
+function useSpotifyContainer() {
+  // useMusicControls();
+
+  return useSpotifyPlayer();
+}
+
+export default createContainer(useSpotifyContainer, 'SpotifyContainer');
