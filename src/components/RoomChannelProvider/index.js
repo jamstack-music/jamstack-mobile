@@ -55,7 +55,7 @@ export default function RoomChannelProvider(props) {
       },
       pauseSong: () => {
         dispatch({ type: 'pauseSong' });
-        channel.emit('pasue_song');
+        channel.emit('pause_song');
       },
     }),
     [channel, dispatch],
