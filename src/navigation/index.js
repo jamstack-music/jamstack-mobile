@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import { useAuth } from 'Components/Auth';
+import { useAuth } from 'Containers/Auth';
 import Login from 'Screens/Login';
 
 import RoomNavigator from './Room';

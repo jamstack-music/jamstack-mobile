@@ -6,7 +6,7 @@ import useChannel from './useChannel';
 
 const RoomChannelContext = createContext(null);
 
-export default function RoomChannelProvider(props) {
+export default function RoomChannelContainer(props) {
   const { children } = props;
   const dispatch = useDispatch();
 

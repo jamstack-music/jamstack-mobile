@@ -34,7 +34,7 @@ const INIT_STATE = {
   isLoading: false,
 };
 
-export default function AuthProvider(props) {
+export default function AuthContainer(props) {
   const { children } = props;
 
   const [state, dispatch] = useReducer(reducer, INIT_STATE);

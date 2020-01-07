@@ -3,7 +3,7 @@ import Spotify from 'rn-spotify-sdk';
 import { useInterval } from 'Hooks';
 import { useSelector } from 'jamstate';
 
-import { useRoomChannel } from 'Components/RoomChannelProvider';
+import { useRoomChannel } from 'Containers/RoomChannel';
 
 /**
  * useSpotifyPlayer : State hook for playing songs and listening for when a song is over

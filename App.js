@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import Spotify from 'rn-spotify-sdk';
 import { NavigationNativeContainer } from '@react-navigation/native';
 import { ReduxContainer } from 'jamstate';
-import AuthProvider from 'Components/Auth';
-import RoomStatusContainer from 'Components/RoomStatusContainer';
+import AuthContainer from 'Containers/Auth';
+import RoomStatusContainer from 'Containers/RoomStatus';
 
 import AppNavigation from './src/navigation';
 
@@ -29,13 +29,13 @@ const App = () => {
 
   return (
     <ReduxContainer>
-      <AuthProvider>
+      <AuthContainer>
         <RoomStatusContainer>
           <NavigationNativeContainer>
             <AppNavigation />
           </NavigationNativeContainer>
         </RoomStatusContainer>
-      </AuthProvider>
+      </AuthContainer>
     </ReduxContainer>
   );
 };
