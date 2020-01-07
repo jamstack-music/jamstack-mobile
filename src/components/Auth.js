@@ -4,7 +4,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import Loading from 'Screens/Loading';
 import Spotify from 'rn-spotify-sdk';
 
-import { useInterval } from 'Hooks';
+import { useInfiniteInterval } from 'Hooks';
 
 const AuthContext = createContext(null);
 
@@ -61,7 +61,7 @@ export default function AuthProvider(props) {
   }, [dispatch]);
 
   // Poll session to ensure that token is still valid
-  useInterval(() => {
+  useInfiniteInterval(() => {
     async function session() {
       const { expireTime } = state;
       if (Date.now() >= expireTime) {
