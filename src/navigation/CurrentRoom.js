@@ -4,9 +4,9 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import RoomChannelContainer from 'Containers/RoomChannel';
 import SpotifyPlayerContainer from 'Containers/SpotifyPlayer';
 
-import CurrentPlaying from 'Screens/CurrentPlaying';
-import Search from 'Screens/Search';
-import Members from 'Screens/Members';
+import CurrentPlaying from 'Screens/CurrentRoom/CurrentPlaying';
+import Search from 'Screens/CurrentRoom/Search';
+import Members from 'Screens/CurrentRoom/Members';
 
 import BrowseStack from './Browse';
 
