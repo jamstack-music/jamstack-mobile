@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useEffect } from 'react';
+import React, { createContext, useContext, useEffect, useMemo } from 'react';
 import { useSelector, useDispatch } from 'jamstate';
 import { SOCKET_URL } from 'react-native-dotenv';
 
@@ -31,7 +31,27 @@ export default function RoomChannelProvider(props) {
     };
   }, [channel, dispatch]);
 
-  return <RoomChannelContext.Provider value={channel}>{children}</RoomChannelContext.Provider>;
+  const channelContext = useMemo(
+    () => ({
+      addSong: song => {
+        dispatch({ type: 'addSong', payload: song });
+        channel.emit('add_song', { data: song });
+      },
+      bumpSong: songId => {
+        dispatch({ type: 'bumpSong', payload: songId });
+        channel.emit('bump_song', { data: songId });
+      },
+      nextSong: () => {
+        dispatch({ type: 'nextSong' });
+        channel.emit('next_song');
+      },
+    }),
+    [channel, dispatch],
+  );
+
+  return (
+    <RoomChannelContext.Provider value={channelContext}>{children}</RoomChannelContext.Provider>
+  );
 }
 
 export function useRoomChannel() {
