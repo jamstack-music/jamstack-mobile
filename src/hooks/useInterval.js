@@ -1,9 +1,12 @@
-import { useRef, useCallback } from 'react';
-import useEventCallback from './useEventCallback';
+import { useEffect, useRef, useCallback } from 'react';
 
 export default function useInterval(callback, delay) {
-  const savedCallback = useEventCallback(callback);
+  const savedCallback = useRef(callback);
   const timerRef = useRef(null);
+
+  useEffect(() => {
+    savedCallback.current = callback;
+  });
 
   const stop = useCallback(() => {
     if (timerRef.current) {
@@ -13,7 +16,7 @@ export default function useInterval(callback, delay) {
 
   const start = useCallback(() => {
     function tick() {
-      savedCallback();
+      savedCallback.current();
     }
 
     if (!timerRef.current) {
