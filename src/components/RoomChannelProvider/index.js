@@ -22,12 +22,16 @@ export default function RoomChannelProvider(props) {
       dispatch({ type: 'addMember', payload: member }),
     );
     const skippedRef = channel.on('song_skipped', () => dispatch({ type: 'nextSong' }));
+    const playedRef = channel.on('song_played', () => dispatch({ type: 'playSong' }));
+    const pausedRef = channel.on('song_paused', () => dispatch({ type: 'pauseSong' }));
 
     return () => {
       channel.off('song_added', addedRef);
       channel.off('song_bumped', bumpedRef);
-      channel.off('memberRef', memberRef);
-      channel.off('skippedRef', skippedRef);
+      channel.off('member_added', memberRef);
+      channel.off('song_skipped', skippedRef);
+      channel.off('song_played', playedRef);
+      channel.off('song_paused', pausedRef);
     };
   }, [channel, dispatch]);
 
@@ -44,6 +48,14 @@ export default function RoomChannelProvider(props) {
       nextSong: () => {
         dispatch({ type: 'nextSong' });
         channel.emit('next_song');
+      },
+      playSong: () => {
+        dispatch({ type: 'playSong' });
+        channel.emit('play_song');
+      },
+      pauseSong: () => {
+        dispatch({ type: 'pauseSong' });
+        channel.emit('pasue_song');
       },
     }),
     [channel, dispatch],

@@ -5,7 +5,7 @@ import MusicControl from 'react-native-music-control';
 import { useRoomChannel } from 'Components/RoomChannelProvider';
 
 export default function useMusicControls() {
-  const { playSong, pauseSong, nextSong } = useRoomChannel();
+  const { nextSong, playSong, pauseSong } = useRoomChannel();
   const currentSong = useSelector(s => s.songs.current);
 
   useEffect(() => {
