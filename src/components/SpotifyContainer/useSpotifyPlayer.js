@@ -1,62 +1,61 @@
-import { useState, useEffect, useCallback, useRef } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Spotify from 'rn-spotify-sdk';
-
-const timeElapsed = async setElapsed => {
-  const { position } = await Spotify.getPlaybackStateAsync();
-  setElapsed(position * 1000);
-};
+import { useInterval, useEventCallback } from 'Hooks';
+import { useSelector } from 'jamstate';
 
 /**
  * useSpotifyPlayer : State hook for playing songs and listening for when a song is over
  * @author [Zach Banducci](https://github.com/zchbndcc9)
  */
-export default function useSpotifyPlayer(uri, nextSong) {
-  const timerRef = useRef(null);
-  const nextSongCB = useCallback(() => nextSong(), [nextSong]);
-  // Play status
-  const [play, setPlay] = useState(false);
-  // Playback status of song (in ms)
+
+export default function useSpotifyPlayer(nextSong) {
+  const nextSongCB = useEventCallback(nextSong);
+  const currentSongUri = useSelector(s => s.songs.current.uri);
+  const [isPlaying, setIsPlaying] = useState(false);
   const [elapsed, setElapsed] = useState(0);
 
-  // Event listener to see if the track has finished and if it has it changes to the next song
-  useEffect(
-    function init() {
-      Spotify.on('audioDeliveryDone', () => {
-        nextSongCB();
-      });
-    },
-    [nextSongCB],
-  );
+  const [start, stop] = useInterval(() => {
+    async function getElapsedTime() {
+      const { position } = await Spotify.getPlaybackStateAsync();
+      setElapsed(position * 1000);
+    }
 
-  useEffect(
-    function playNewSong() {
-      if (uri) {
-        Spotify.playURI(uri, 0, 0);
-        setPlay(true);
-      }
-      return function stopSong() {
-        Spotify.setPlaying(false);
-        clearInterval(timerRef.current);
-      };
-    },
-    [uri],
-  );
+    getElapsedTime();
+  }, 500);
 
-  useEffect(
-    function playSong() {
-      Spotify.setPlaying(play).catch(() => null);
-    },
-    [play],
-  );
+  const pauseInternal = useCallback(() => {
+    setIsPlaying(false);
+    stop();
+  }, [stop]);
 
-  const handleInterval = useCallback(() => timeElapsed(setElapsed), []);
+  const playInternal = useCallback(() => {
+    setIsPlaying(true);
+    start();
+  }, [start]);
 
-  useEffect(function songTimer() {
-    timerRef.current = setInterval(handleInterval, 100);
-    return function unMount() {
-      clearInterval(timerRef.current);
+  useEffect(() => {
+    if (currentSongUri) {
+      Spotify.playURI(currentSongUri, 0, 0);
+    }
+
+    return () => {
+      Spotify.setPlaying(false);
     };
-  });
+  }, [currentSongUri, pause, play]);
 
-  return [play, setPlay, elapsed];
+  // Event listener to see if the track has finished and if it has it changes to the next song
+  useEffect(() => {
+    Spotify.on('audioDeliveryDone', nextSongCB);
+    Spotify.on('pause', pauseInternal);
+    Spotify.on('play', playInternal);
+    return () => {
+      Spotify.removeListener('audioDeliveryDone', nextSongCB);
+      Spotify.removeListener('pause', pauseInternal);
+      Spotify.removeListener('play', playInternal);
+    };
+  }, [nextSongCB, pauseInternal, playInternal]);
+
+  const play = useCallback(() => Spotify.setPlaying(true), []);
+  const pause = useCallback(() => Spotify.setPlaying(false), []);
+  return { play, pause, isPlaying, elapsed };
 }
