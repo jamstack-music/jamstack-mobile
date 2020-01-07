@@ -1,14 +1,12 @@
-import { useEffect, useCallback } from 'react';
-import { useDispatch, useSelector } from 'jamstate';
+import { useEffect } from 'react';
+import { useSelector } from 'jamstate';
 import MusicControl from 'react-native-music-control';
 
-export default function useMusicControls() {
-  const dispatch = useDispatch();
-  const currentSong = useSelector(s => s.songs.current);
+import { useRoomChannel } from 'Components/RoomChannelProvider';
 
-  const play = useCallback(() => dispatch({ type: 'playSong' }), [dispatch]);
-  const pause = useCallback(() => dispatch({ type: 'pauseSong' }), [dispatch]);
-  const next = useCallback(() => dispatch({ type: 'nextSong' }), [dispatch]);
+export default function useMusicControls() {
+  const { playSong, pauseSong, nextSong } = useRoomChannel();
+  const currentSong = useSelector(s => s.songs.current);
 
   useEffect(() => {
     MusicControl.enableBackgroundMode(true);
@@ -19,16 +17,16 @@ export default function useMusicControls() {
     MusicControl.enableControl('nextTrack', true);
     MusicControl.enableControl('prevTrack', false);
 
-    MusicControl.on('play', play);
-    MusicControl.on('pause', pause);
-    MusicControl.on('nexTrack', next);
+    MusicControl.on('play', playSong);
+    MusicControl.on('pause', pauseSong);
+    MusicControl.on('nexTrack', nextSong);
 
     return () => {
-      MusicControl.off('play', play);
-      MusicControl.off('pause', pause);
-      MusicControl.off('nexTrack', next);
+      MusicControl.off('play', playSong);
+      MusicControl.off('pause', pauseSong);
+      MusicControl.off('nexTrack', nextSong);
     };
-  }, [next, pause, play]);
+  }, [nextSong, pauseSong, playSong]);
 
   useEffect(() => {
     if (currentSong) {

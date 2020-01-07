@@ -1,7 +1,9 @@
 import { useState, useEffect, useCallback } from 'react';
 import Spotify from 'rn-spotify-sdk';
 import { useInterval } from 'Hooks';
-import { useDispatch, useSelector } from 'jamstate';
+import { useSelector } from 'jamstate';
+
+import { useRoomChannel } from 'Compoents/RoomChannelProvider';
 
 /**
  * useSpotifyPlayer : State hook for playing songs and listening for when a song is over
@@ -9,7 +11,7 @@ import { useDispatch, useSelector } from 'jamstate';
  */
 
 export default function useSpotifyPlayer() {
-  const dispatch = useDispatch();
+  const { nextSong } = useRoomChannel();
   const currentSongUri = useSelector(s => s.songs.current.uri);
   const [isPlaying, setIsPlaying] = useState(false);
   const [elapsed, setElapsed] = useState(0);
@@ -42,8 +44,6 @@ export default function useSpotifyPlayer() {
       Spotify.setPlaying(false);
     };
   }, [currentSongUri, pause, play]);
-
-  const nextSong = useCallback(() => dispatch({ type: 'nextSong' }), [dispatch]);
 
   // Event listener to see if the track has finished and if it has it changes to the next song
   useEffect(() => {
