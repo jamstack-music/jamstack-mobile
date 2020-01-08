@@ -39,23 +39,23 @@ export default function RoomChannelContainer(props) {
     () => ({
       addSong: song => {
         dispatch({ type: 'addSong', payload: song });
-        channel.emit('add_song', { data: song });
+        channel.push('add_song', { data: song });
       },
       bumpSong: songId => {
         dispatch({ type: 'bumpSong', payload: songId });
-        channel.emit('bump_song', { data: songId });
+        channel.push('bump_song', { data: songId });
       },
       nextSong: () => {
         dispatch({ type: 'nextSong' });
-        channel.emit('next_song');
+        channel.push('next_song');
       },
       playSong: () => {
         dispatch({ type: 'playSong' });
-        channel.emit('play_song');
+        channel.push('play_song');
       },
       pauseSong: () => {
         dispatch({ type: 'pauseSong' });
-        channel.emit('pause_song');
+        channel.push('pause_song');
       },
     }),
     [channel, dispatch],
