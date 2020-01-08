@@ -1,120 +1,73 @@
-import React, { useMemo, useEffect, useReducer, createContext, useContext } from 'react';
+import React, { useMemo, useEffect, useState, useCallback, createContext, useContext } from 'react';
 import { Alert } from 'react-native';
-import AsyncStorage from '@react-native-community/async-storage';
-import Loading from 'Screens/Loading';
 import Spotify from 'rn-spotify-sdk';
+import Loading from 'Screens/Loading';
 
 import { useInfiniteInterval } from 'Hooks';
 
 const AuthContext = createContext(null);
 
-const reducer = (state, action) => {
-  switch (action.type) {
-    case 'init':
-      return {
-        ...action.payload,
-        isLoading: false,
-      };
-    case 'beginLoading':
-      return {
-        ...state,
-        isLoading: true,
-      };
-    case 'reset':
-      return INIT_STATE;
-    default:
-      return state;
-  }
-};
-
-const INIT_STATE = {
-  refreshToken: null,
-  spotifyToken: null,
-  expireTime: null,
-  isLoading: false,
-};
-
 export default function AuthContainer(props) {
   const { children } = props;
 
-  const [state, dispatch] = useReducer(reducer, INIT_STATE);
+  const [state, setState] = useState({ isLoggedIn: false, isLoading: true });
 
   useEffect(() => {
-    async function initAuthStore() {
-      const [[, refreshToken], [, spotifyToken], [, expireTime]] = await AsyncStorage.multiGet([
-        '@RefreshToken',
-        '@SpotifyToken',
-        '@ExpireTime',
-      ]);
+    async function initSession() {
+      const isInitialized = Spotify.initialize({
+        clientID: '0a31a2abfc5945bb9e3b3507e6f8361c',
+        sessionUserDefaultsKey: 'SpotifySession',
+        redirectURL: 'jamstack://auth',
+        scopes: ['streaming'],
+        tokenSwapURL: 'http://localhost:4000/v1/spotify/tokens/swap',
+        tokenRefreshURL: 'http://localhost:4000/v1/spotify/tokens/refresh',
+      });
 
-      const newState = {
-        refreshToken,
-        spotifyToken,
-        expireTime: +expireTime,
-      };
-
-      dispatch({ type: 'init', payload: newState });
-    }
-
-    dispatch({ type: 'beginLoading' });
-    initAuthStore();
-  }, [dispatch]);
-
-  // Poll session to ensure that token is still valid
-  useInfiniteInterval(() => {
-    async function session() {
-      const { expireTime } = state;
-      if (Date.now() >= expireTime) {
-        Spotify.renewSession();
+      if (isInitialized) {
+        setState({ isLoggedIn: true, isLoading: false });
+      } else {
+        setState(s => ({ ...s, isLoading: false }));
       }
     }
 
-    session();
-  }, 60000);
+    initSession();
+  }, []);
+
+  const checkSession = useCallback(async () => {
+    const { expireTime } = await Spotify.getSessionAsync();
+    if (Date.now() >= expireTime) {
+      await Spotify.renewSession();
+    }
+  }, []);
+
+  // Poll session to ensure that token is still valid
+  // TODO: Add this as a background task on the device itself
+  useInfiniteInterval(() => checkSession(), 400000);
 
   const contextState = useMemo(
     () => ({
       async login() {
-        const session = await Spotify.getSessionAsync();
-        if (session) {
-          Spotify.loginWithSession({
-            accessToken: state.accessToken,
-            expireTime: state.expireTime,
-            refreshToken: state.refreshToken,
-          });
+        const loggedIn = await Spotify.login();
+        if (loggedIn) {
+          setState(s => ({ ...s, isLoggedIn: true }));
         } else {
-          const loggedIn = await Spotify.login();
-          if (loggedIn) {
-            const newSession = await Spotify.getSessionAsync();
-            const { expireTime, accessToken: spotifyToken, refreshToken } = newSession;
-
-            AsyncStorage.multiSet([
-              ['@ExpireTime', expireTime.toString()],
-              ['@SpotifyToken', spotifyToken],
-              ['@RefreshToken', refreshToken],
-            ]);
-
-            dispatch({ type: 'init', payload: { expireTime, spotifyToken, refreshToken } });
-          } else {
-            Alert.alert('Unable to login');
-          }
+          Alert.alert('You have to login');
         }
       },
       async logout() {
         await Spotify.logout();
-        await AsyncStorage.multiRemove(['@SpotifyToken', '@RefreshToken', '@ExpireTime']);
-        dispatch({ type: 'reset' });
+        setState(s => ({ ...s, isLoggedIn: false }));
       },
-      state,
+      isLoggedIn: state.isLoggedIn,
     }),
-    [state, dispatch],
+    [state.isLoggedIn],
   );
 
-  const renderedChildren = useMemo(() => {
-    return state.isLoading ? <Loading /> : children;
-  }, [children, state.isLoading]);
-
-  return <AuthContext.Provider value={contextState}>{renderedChildren}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={contextState}>
+      {state.isLoading ? <Loading /> : children}
+    </AuthContext.Provider>
+  );
 }
 
 export function useAuth() {

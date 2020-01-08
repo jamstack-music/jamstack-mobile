@@ -9,19 +9,18 @@ import RoomNavigator from './Room';
 const Stack = createStackNavigator();
 
 const AppNavigator = () => {
-  const { state } = useAuth();
+  const { isLoggedIn } = useAuth();
 
   return useMemo(() => {
-    if (!state.spotifyToken) {
-      return (
-        <Stack.Navigator>
-          <Stack.Screen name="Login" component={Login} />
-        </Stack.Navigator>
-      );
+    if (isLoggedIn) {
+      return <RoomNavigator />;
     }
-
-    return <RoomNavigator />;
-  }, [state.spotifyToken]);
+    return (
+      <Stack.Navigator>
+        <Stack.Screen name="Login" component={Login} />
+      </Stack.Navigator>
+    );
+  }, [isLoggedIn]);
 };
 
 export default AppNavigator;
