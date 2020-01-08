@@ -42,7 +42,7 @@ export default function AuthContainer(props) {
 
   // Poll session to ensure that token is still valid
   // TODO: Add this as a background task on the device itself
-  useInfiniteInterval(() => checkSession(), 400000);
+  useInfiniteInterval(() => checkSession(), 900000);
 
   const contextState = useMemo(
     () => ({
