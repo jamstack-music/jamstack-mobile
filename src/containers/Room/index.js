@@ -35,7 +35,7 @@ export default function RoomChannelContainer(props) {
     };
   }, [channel, dispatch]);
 
-  const channelContext = useMemo(
+  const roomFunctions = useMemo(
     () => ({
       addSong: song => {
         dispatch({ type: 'addSong', payload: song });
@@ -61,9 +61,7 @@ export default function RoomChannelContainer(props) {
     [channel, dispatch],
   );
 
-  return (
-    <RoomChannelContext.Provider value={channelContext}>{children}</RoomChannelContext.Provider>
-  );
+  return roomFunctions;
 }
 
 export function useRoomChannel() {
