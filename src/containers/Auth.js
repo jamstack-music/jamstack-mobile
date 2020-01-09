@@ -1,9 +1,7 @@
-import React, { useMemo, useEffect, useState, useCallback, createContext, useContext } from 'react';
+import React, { useMemo, useEffect, useState, createContext, useContext } from 'react';
 import { Alert } from 'react-native';
 import Spotify from 'rn-spotify-sdk';
 import Loading from 'Screens/Loading';
-
-import { useInfiniteInterval } from 'Hooks';
 
 const AuthContext = createContext(null);
 
@@ -32,17 +30,6 @@ export default function AuthContainer(props) {
 
     initSession();
   }, []);
-
-  const checkSession = useCallback(async () => {
-    const { expireTime } = await Spotify.getSessionAsync();
-    if (Date.now() >= expireTime) {
-      await Spotify.renewSession();
-    }
-  }, []);
-
-  // Poll session to ensure that token is still valid
-  // TODO: Add this as a background task on the device itself
-  useInfiniteInterval(() => checkSession(), 900000);
 
   const contextState = useMemo(
     () => ({
