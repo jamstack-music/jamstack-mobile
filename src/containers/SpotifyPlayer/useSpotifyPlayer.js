@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import Spotify from 'rn-spotify-sdk';
 import { useInterval } from 'Hooks';
 import { useSelector } from 'jamstate';
@@ -12,9 +12,8 @@ import { useRoomChannel } from 'Containers/RoomChannel';
 
 export default function useSpotifyPlayer() {
   const { nextSong } = useRoomChannel();
-  const currentSongUri = useSelector(s => s.songs.current.uri);
+  const currentSong = useSelector(s => s.songs.current);
   const isPlaying = useSelector(s => s.songs.isPlaying);
-  const [isActiveDevice, setIsActiveDevice] = useState(false);
   const [elapsed, setElapsed] = useState(0);
 
   const [startTimer, stopTimer] = useInterval(() => {
@@ -27,41 +26,30 @@ export default function useSpotifyPlayer() {
   }, 500);
 
   useEffect(() => {
-    if (isActiveDevice && currentSongUri) {
-      Spotify.playURI(currentSongUri, 0, 0);
+    if (currentSong) {
+      Spotify.playURI(currentSong.uri, 0, 0);
     }
 
     return () => {
-      if (isActiveDevice) {
-        Spotify.setPlaying(false);
-      }
+      Spotify.setPlaying(false);
     };
-  }, [currentSongUri, isActiveDevice]);
+  }, [currentSong]);
 
   useEffect(() => {
-    if (isActiveDevice) {
-      Spotify.setPlaying(isPlaying);
-    }
-  }, [isActiveDevice, isPlaying]);
-
-  const activateDevice = useCallback(() => setIsActiveDevice(true), []);
-  const deactivateDevice = useCallback(() => setIsActiveDevice(false), []);
+    Spotify.setPlaying(isPlaying);
+  }, [isPlaying]);
 
   // Event listener to see if the track has finished and if it has it changes to the next song
   useEffect(() => {
     Spotify.on('audioDeliveryDone', nextSong);
     Spotify.on('pause', stopTimer);
     Spotify.on('play', startTimer);
-    Spotify.on('active', activateDevice);
-    Spotify.on('inactive', deactivateDevice);
     return () => {
       Spotify.removeListener('audioDeliveryDone', nextSong);
       Spotify.removeListener('pause', stopTimer);
       Spotify.removeListener('play', startTimer);
-      Spotify.removeListener('active', activateDevice);
-      Spotify.removeListener('inactive', deactivateDevice);
     };
-  }, [activateDevice, deactivateDevice, nextSong, startTimer, stopTimer]);
+  }, [nextSong, startTimer, stopTimer]);
 
   return { elapsed };
 }
