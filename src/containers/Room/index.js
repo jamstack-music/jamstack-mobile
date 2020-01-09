@@ -1,18 +1,24 @@
-import React, { createContext, useContext, useEffect, useMemo } from 'react';
-import { useSelector, useDispatch } from 'jamstate';
-import { SOCKET_URL } from 'react-native-dotenv';
+import { useEffect, useMemo } from 'react';
+import { useDispatch, useSelector } from 'jamstate';
+import { joinRoom } from 'API/rooms';
+import { useFetch } from 'Hooks';
+import { createContainer } from 'Hooks/useContainer';
 
-import useChannel from './useChannel';
+import useRoomChannel from './useRoomChannel';
 
-const RoomChannelContext = createContext(null);
-
-export default function RoomChannelContainer(props) {
-  const { children } = props;
+function useRoom() {
   const dispatch = useDispatch();
+  const roomId = useSelector(s => s.room.current.code);
+  const channel = useRoomChannel(roomId);
+  const { fetch } = useFetch();
 
-  const roomId = useSelector(s => s.room.code);
-  const channel = useChannel(SOCKET_URL, `room:${roomId}`);
+  useEffect(() => {
+    fetch(joinRoom, roomId, {})
+      .then(data => dispatch({ type: 'initRoom', payload: data }))
+      .catch(e => console.log(e));
+  }, [dispatch, fetch, roomId]);
 
+  // Channel listeners
   useEffect(() => {
     const addedRef = channel.on('song_addded', song =>
       dispatch({ type: 'addSong', payload: song }),
@@ -64,6 +70,4 @@ export default function RoomChannelContainer(props) {
   return roomFunctions;
 }
 
-export function useRoomChannel() {
-  return useContext(RoomChannelContext);
-}
+export default createContainer(useRoom, 'RoomContainer');

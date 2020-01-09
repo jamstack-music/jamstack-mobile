@@ -1,7 +1,7 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import RoomChannelContainer from 'Containers/RoomChannel';
+import RoomContainer from 'Containers/Room';
 import SpotifyPlayerContainer from 'Containers/SpotifyPlayer';
 
 import CurrentPlaying from 'Screens/CurrentRoom/CurrentPlaying';
@@ -14,7 +14,7 @@ const Tab = createBottomTabNavigator();
 
 export default function CurrentRoomNavigator() {
   return (
-    <RoomChannelContainer>
+    <RoomContainer.Provider>
       <SpotifyPlayerContainer.Provider>
         <Tab.Navigator>
           <Tab.Screen name="Currently Playing" component={CurrentPlaying} />
@@ -23,6 +23,6 @@ export default function CurrentRoomNavigator() {
           <Tab.Screen name="Members" component={Members} />
         </Tab.Navigator>
       </SpotifyPlayerContainer.Provider>
-    </RoomChannelContainer>
+    </RoomContainer.Provider>
   );
 }
