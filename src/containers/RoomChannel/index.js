@@ -21,7 +21,7 @@ export default function RoomChannelContainer(props) {
     const memberRef = channel.on('member_added', member =>
       dispatch({ type: 'addMember', payload: member }),
     );
-    const skippedRef = channel.on('song_skipped', () => dispatch({ type: 'nextSong' }));
+    const nextRef = channel.on('next_song', () => dispatch({ type: 'nextSong' }));
     const playedRef = channel.on('song_played', () => dispatch({ type: 'playSong' }));
     const pausedRef = channel.on('song_paused', () => dispatch({ type: 'pauseSong' }));
 
@@ -29,7 +29,7 @@ export default function RoomChannelContainer(props) {
       channel.off('song_added', addedRef);
       channel.off('song_bumped', bumpedRef);
       channel.off('member_added', memberRef);
-      channel.off('song_skipped', skippedRef);
+      channel.off('next_song', nextRef);
       channel.off('song_played', playedRef);
       channel.off('song_paused', pausedRef);
     };
