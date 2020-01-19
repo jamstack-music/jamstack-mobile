@@ -10,6 +10,7 @@ module.exports = {
           Containers: './src/containers',
           Screens: './src/screens',
           Hooks: './src/hooks',
+          API: './src/data',
         },
       },
     ],
