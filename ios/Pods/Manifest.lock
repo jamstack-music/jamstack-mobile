@@ -229,11 +229,17 @@ PODS:
     - React
   - RNGestureHandler (1.5.3):
     - React
+  - RNSentry (1.2.1):
+    - React
+    - Sentry (~> 4.4.0)
   - RNSpotify (1.2.13):
     - React
     - RNEventEmitter
   - RNVectorIcons (6.6.0):
     - React
+  - Sentry (4.4.3):
+    - Sentry/Core (= 4.4.3)
+  - Sentry/Core (4.4.3)
   - Yoga (1.14.0)
 
 DEPENDENCIES:
@@ -270,6 +276,7 @@ DEPENDENCIES:
   - "RNCMaskedView (from `../node_modules/@react-native-community/masked-view`)"
   - RNEventEmitter (from `../node_modules/react-native-events`)
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
+  - "RNSentry (from `../node_modules/@sentry/react-native`)"
   - RNSpotify (from `../node_modules/rn-spotify-sdk`)
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
@@ -277,6 +284,7 @@ DEPENDENCIES:
 SPEC REPOS:
   trunk:
     - boost-for-react-native
+    - Sentry
 
 EXTERNAL SOURCES:
   DoubleConversion:
@@ -339,6 +347,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-events"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
+  RNSentry:
+    :path: "../node_modules/@sentry/react-native"
   RNSpotify:
     :path: "../node_modules/rn-spotify-sdk"
   RNVectorIcons:
@@ -378,8 +388,10 @@ SPEC CHECKSUMS:
   RNCMaskedView: dd13f9f7b146a9ad82f9b7eb6c9b5548fcf6e990
   RNEventEmitter: db22b54ae7d9be0bd5725613f79a51e2bc364a93
   RNGestureHandler: 02905abe54e1f6e59c081a10b4bd689721e17aa6
+  RNSentry: 9b1d983b2d5d1c215ba6490348fd2a4cc23a8a9d
   RNSpotify: 56a20358ebbae1dff52a8c4b3a933a0c0bc2eaf8
   RNVectorIcons: 0bb4def82230be1333ddaeee9fcba45f0b288ed4
+  Sentry: 14bdd673870e8cf64932b149fad5bbbf39a9b390
   Yoga: f2a7cd4280bfe2cca5a7aed98ba0eb3d1310f18b
 
 PODFILE CHECKSUM: 613469a47f05288de645a83bf70d4ad666ae7110
