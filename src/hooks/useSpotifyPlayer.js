@@ -1,5 +1,4 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
-import PropTypes from 'prop-types';
 import Spotify from 'rn-spotify-sdk';
 
 const timeElapsed = async setElapsed => {
@@ -61,10 +60,5 @@ function useSpotifyPlayer(uri, nextSong) {
 
   return [play, setPlay, elapsed];
 }
-
-useSpotifyPlayer.propTypes = {
-  uri: PropTypes.string.isRequired,
-  nextSong: PropTypes.func.isRequired,
-};
 
 export default useSpotifyPlayer;

@@ -1,20 +1,25 @@
 import React from 'react';
 import Spotify from 'rn-spotify-sdk';
-import FlashMessage from 'react-native-flash-message';
-import AppContainer from './src/navigation/AppNavigator';
-import { RoomProvider } from './src/store/room';
+import { NavigationNativeContainer } from '@react-navigation/native';
+import { ReduxContainer } from 'jamstate';
+
+import AppNavigation from './src/navigation';
 
 Spotify.initialize({
   clientID: '0a31a2abfc5945bb9e3b3507e6f8361c',
   sessionUserDefaultsKey: 'SpotifySession',
-  redirectURL: 'queuehubmobile://auth',
+  redirectURL: 'localhost:4000/authorize',
   scopes: ['streaming'],
 });
-const App = () => (
-  <RoomProvider>
-    <AppContainer />
-    <FlashMessage position="top" />
-  </RoomProvider>
-);
+
+const App = () => {
+  return (
+    <ReduxContainer>
+      <NavigationNativeContainer>
+        <AppNavigation />
+      </NavigationNativeContainer>
+    </ReduxContainer>
+  );
+};
 
 export default App;

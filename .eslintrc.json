@@ -28,11 +28,17 @@
     "react-hooks"
   ],
   "rules": {
+    "react/prop-types": 0,
     "object-property-newline": 1,
     "no-use-before-define": 0, 
     "react/jsx-filename-extension": ["error", { "extensions": [".js", ".jsx"] }],
     "prettier/prettier": ["error"],
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn"
+  },
+  "settings": {
+    "import/resolver": {
+      "babel-module": {}
+    }
   }
 }
