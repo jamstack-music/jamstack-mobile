@@ -2,10 +2,10 @@ import { useEffect } from 'react';
 import { useSelector } from 'jamstate';
 import MusicControl from 'react-native-music-control';
 
-import { useRoomChannel } from 'Containers/RoomChannel';
+import Room from 'Containers/Room';
 
 export default function useMusicControls() {
-  const { nextSong, playSong, pauseSong } = useRoomChannel();
+  const { nextSong, playSong, pauseSong } = Room.useContainer();
   const currentSong = useSelector(s => s.songs.current);
 
   useEffect(() => {

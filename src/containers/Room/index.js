@@ -1,22 +1,28 @@
 import { useEffect, useMemo } from 'react';
 import { useDispatch, useSelector } from 'jamstate';
-import { joinRoom } from 'API/rooms';
+import { rejoinRoom } from 'API/rooms';
 import { useFetch } from 'Hooks';
 import { createContainer } from 'Hooks/useContainer';
+import { useAuth } from 'Containers/Auth';
 
 import useRoomChannel from './useRoomChannel';
 
 function useRoom() {
   const dispatch = useDispatch();
-  const roomId = useSelector(s => s.room.current.code);
+  const { invalidateRoom } = useAuth();
+  const roomId = useSelector(s => s.room.code);
   const channel = useRoomChannel(roomId);
-  const { fetch } = useFetch();
+  const { error, data, fetch } = useFetch();
 
   useEffect(() => {
-    fetch(joinRoom, roomId, {})
-      .then(data => dispatch({ type: 'initRoom', payload: data }))
-      .catch(e => console.log(e));
+    fetch(rejoinRoom, roomId, {});
   }, [dispatch, fetch, roomId]);
+
+  if (data) dispatch({ type: 'initRoom', payload: data });
+
+  if (error && error.response.status === 400) {
+    invalidateRoom();
+  }
 
   // Channel listeners
   useEffect(() => {
