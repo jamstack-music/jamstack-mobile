@@ -1,13 +1,13 @@
 import React from 'react';
 import { SafeAreaView, View, Text } from 'react-native';
 import { useSelector } from 'jamstate';
-import { useRoomChannel } from 'Containers/RoomChannel';
+import Room from 'Containers/Room';
 
 import CurrentSong from 'Components/CurrentSong';
 import Queue from 'Components/Queue';
 
 export default function CurrentPlaying() {
-  const { bumpSong } = useRoomChannel();
+  const { bumpSong } = Room.useContainer();
   const currentSong = useSelector(s => s.songs.current);
   const queue = useSelector(s => s.songs.queue);
 
