@@ -15,6 +15,7 @@ const AppNavigator = () => {
     if (isLoggedIn) {
       return <RoomNavigator />;
     }
+
     return (
       <Stack.Navigator>
         <Stack.Screen name="Login" component={Login} />
