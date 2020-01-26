@@ -1,22 +1,14 @@
 import React from 'react';
-import { Button, SafeAreaView, Text, View, StyleSheet, Alert, Dimensions } from 'react-native';
+import { Button, SafeAreaView, Text, View, StyleSheet, Dimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
-import Spotify from 'rn-spotify-sdk';
 
-const Login = props => {
-  const { navigation } = props;
+import { useAuth } from 'Components/Auth';
+
+const Login = () => {
+  const { login } = useAuth();
 
   const { width } = Dimensions.get('window');
   const dim = width * 0.8;
-
-  const login = async () => {
-    const loggedIn = await Spotify.login();
-    if (loggedIn) {
-      navigation.navigate('Auth');
-    } else {
-      Alert.alert('You gotta log in');
-    }
-  };
 
   return (
     <SafeAreaView style={styles.container}>
@@ -29,7 +21,7 @@ const Login = props => {
           buttonStyle={{ width: dim, ...styles.button }}
           icon={<Icon name="spotify" color="white" size={30} />}
           titleStyle={styles.buttonTitle}
-          onPress={() => login()}
+          onPress={login}
         />
       </View>
     </SafeAreaView>
