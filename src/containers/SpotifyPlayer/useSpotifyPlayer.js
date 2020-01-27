@@ -3,7 +3,7 @@ import Spotify from 'rn-spotify-sdk';
 import { useInterval } from 'Hooks';
 import { useSelector } from 'jamstate';
 
-import { useRoomChannel } from 'Components/RoomChannelProvider';
+import { useRoomChannel } from 'Containers/RoomChannel';
 
 /**
  * useSpotifyPlayer : State hook for playing songs and listening for when a song is over
@@ -12,9 +12,10 @@ import { useRoomChannel } from 'Components/RoomChannelProvider';
 
 export default function useSpotifyPlayer() {
   const { nextSong } = useRoomChannel();
-  const currentSongUri = useSelector(s => s.songs.current.uri);
+  const currentSong = useSelector(s => s.songs.current);
   const isPlaying = useSelector(s => s.songs.isPlaying);
   const [elapsed, setElapsed] = useState(0);
+
   const [startTimer, stopTimer] = useInterval(() => {
     async function getElapsedTime() {
       const { position } = await Spotify.getPlaybackStateAsync();
@@ -25,14 +26,14 @@ export default function useSpotifyPlayer() {
   }, 500);
 
   useEffect(() => {
-    if (currentSongUri) {
-      Spotify.playURI(currentSongUri, 0, 0);
+    if (currentSong) {
+      Spotify.playURI(currentSong.uri, 0, 0);
     }
 
     return () => {
       Spotify.setPlaying(false);
     };
-  }, [currentSongUri]);
+  }, [currentSong]);
 
   useEffect(() => {
     Spotify.setPlaying(isPlaying);

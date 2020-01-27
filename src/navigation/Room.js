@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import { useRoomStatus } from 'Components/RoomStatusContainer';
+import { useRoomStatus } from 'Containers/RoomStatus';
 import CurrentRoomNavigator from './CurrentRoom';
 import RoomCreationNavigator from './RoomCreation';
 

@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { View, Text, Button } from 'react-native';
 import { useSelector } from 'jamstate';
-import { useRoomStatus } from 'Components/RoomStatusContainer';
+import { useRoomStatus } from 'Containers/RoomStatus';
 
 export default function RoomCode() {
   const { setRoomAsActive } = useRoomStatus();

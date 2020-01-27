@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, SafeAreaView, Text, View, StyleSheet, Dimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/Entypo';
 
-import { useAuth } from 'Components/Auth';
+import { useAuth } from 'Containers/Auth';
 
 const Login = () => {
   const { login } = useAuth();

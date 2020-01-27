@@ -3852,7 +3852,7 @@ istanbul-reports@^2.2.6:
 
 "jamstate@https://github.com/jamstack-music/jamstate":
   version "1.0.0"
-  resolved "https://github.com/jamstack-music/jamstate#58b875dbafbd5f91012f5bcad3b17246443aee99"
+  resolved "https://github.com/jamstack-music/jamstate#e0a4272ae711e2bf9f2fe77a383e4825240f15b8"
   dependencies:
     react "16.9.0"
     redux "^4.0.5"

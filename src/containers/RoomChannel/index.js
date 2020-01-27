@@ -6,7 +6,7 @@ import useChannel from './useChannel';
 
 const RoomChannelContext = createContext(null);
 
-export default function RoomChannelProvider(props) {
+export default function RoomChannelContainer(props) {
   const { children } = props;
   const dispatch = useDispatch();
 
@@ -21,7 +21,7 @@ export default function RoomChannelProvider(props) {
     const memberRef = channel.on('member_added', member =>
       dispatch({ type: 'addMember', payload: member }),
     );
-    const skippedRef = channel.on('song_skipped', () => dispatch({ type: 'nextSong' }));
+    const nextRef = channel.on('next_song', () => dispatch({ type: 'nextSong' }));
     const playedRef = channel.on('song_played', () => dispatch({ type: 'playSong' }));
     const pausedRef = channel.on('song_paused', () => dispatch({ type: 'pauseSong' }));
 
@@ -29,7 +29,7 @@ export default function RoomChannelProvider(props) {
       channel.off('song_added', addedRef);
       channel.off('song_bumped', bumpedRef);
       channel.off('member_added', memberRef);
-      channel.off('song_skipped', skippedRef);
+      channel.off('next_song', nextRef);
       channel.off('song_played', playedRef);
       channel.off('song_paused', pausedRef);
     };
@@ -39,23 +39,23 @@ export default function RoomChannelProvider(props) {
     () => ({
       addSong: song => {
         dispatch({ type: 'addSong', payload: song });
-        channel.emit('add_song', { data: song });
+        channel.push('add_song', { data: song });
       },
       bumpSong: songId => {
         dispatch({ type: 'bumpSong', payload: songId });
-        channel.emit('bump_song', { data: songId });
+        channel.push('bump_song', { data: songId });
       },
       nextSong: () => {
         dispatch({ type: 'nextSong' });
-        channel.emit('next_song');
+        channel.push('next_song');
       },
       playSong: () => {
         dispatch({ type: 'playSong' });
-        channel.emit('play_song');
+        channel.push('play_song');
       },
       pauseSong: () => {
         dispatch({ type: 'pauseSong' });
-        channel.emit('pause_song');
+        channel.push('pause_song');
       },
     }),
     [channel, dispatch],
