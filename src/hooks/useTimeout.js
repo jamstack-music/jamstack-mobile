@@ -1,11 +1,14 @@
-import { useEffect } from 'react';
-import useEventCallback from './useEventCallback';
+import { useRef, useEffect } from 'react';
 
 export default function useTimeout(callback, delay) {
-  const savedCallback = useEventCallback(callback);
+  const savedCallback = useRef();
 
   useEffect(() => {
-    const timerRef = setTimeout(savedCallback, delay);
+    savedCallback.current = callback;
+  });
+
+  useEffect(() => {
+    const timerRef = setTimeout(savedCallback.current, delay);
 
     return () => clearTimeout(timerRef);
   }, [savedCallback, delay]);
