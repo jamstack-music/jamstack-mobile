@@ -7,7 +7,7 @@ import useSpotifyPlayer from './useSpotifyPlayer';
  * useMusicPlayer: Generic music player hook that updates currently playing information
  * @author [Zach Banducci](https://github.com/zchbndcc9)
  */
-function useMusicPlayer(song, nextSong) {
+export default function useMusicPlayer(song, nextSong) {
   const { title, artist, images, uri, duration } = song;
   const [play, setPlay, elapsed] = useSpotifyPlayer(uri, nextSong);
 
@@ -41,5 +41,3 @@ function useMusicPlayer(song, nextSong) {
 
   return [play, setPlay, elapsed];
 }
-
-export default useMusicPlayer;

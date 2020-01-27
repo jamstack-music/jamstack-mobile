@@ -1,14 +1,5 @@
-import { useRef, useEffect, useCallback } from 'react';
-
-function useEventCallback(fn) {
-  const ref = useRef(fn);
-
-  useEffect(() => {
-    ref.current = fn;
-  });
-
-  return useCallback((...args) => ref.current.apply(void 0, args), []);
-}
+import { useEffect } from 'react';
+import useEventCallback from './useEventCallback';
 
 export default function useInterval(callback, delay) {
   const savedCallback = useEventCallback(callback);

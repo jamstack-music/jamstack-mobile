@@ -4,7 +4,7 @@ import AsyncStorage from '@react-native-community/async-storage';
 import Loading from 'Screens/Loading';
 import Spotify from 'rn-spotify-sdk';
 
-import useInterval from '../../hooks/useInterval';
+import { useInterval } from 'Hooks';
 
 const AuthContext = createContext(null);
 
@@ -110,11 +110,11 @@ export default function AuthProvider(props) {
     [state, dispatch],
   );
 
-  return (
-    <AuthContext.Provider value={contextState}>
-      {state.isLoading ? <Loading /> : children}
-    </AuthContext.Provider>
-  );
+  const renderedChildren = useMemo(() => {
+    return state.isLoading ? <Loading /> : children;
+  }, [children, state.isLoading]);
+
+  return <AuthContext.Provider value={contextState}>{renderedChildren}</AuthContext.Provider>;
 }
 
 export function useAuth() {

@@ -12,7 +12,7 @@ export default function useChannel(socketURL, channelId) {
     return newChannel;
   }, [channelId, socketURL]);
 
-  useEffect(() => () => channel.leave(), []);
+  useEffect(() => () => channel.leave(), [channel]);
 
   return channel;
 }
