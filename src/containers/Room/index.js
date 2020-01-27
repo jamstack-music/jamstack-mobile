@@ -1,18 +1,30 @@
-import React, { createContext, useContext, useEffect, useMemo } from 'react';
-import { useSelector, useDispatch } from 'jamstate';
-import { SOCKET_URL } from 'react-native-dotenv';
+import { useEffect, useMemo } from 'react';
+import { useDispatch, useSelector } from 'jamstate';
+import { rejoinRoom } from 'API/rooms';
+import { useFetch } from 'Hooks';
+import { createContainer } from 'Hooks/useContainer';
+import { useAuth } from 'Containers/Auth';
 
-import useChannel from './useChannel';
+import useRoomChannel from './useRoomChannel';
 
-const RoomChannelContext = createContext(null);
-
-export default function RoomChannelContainer(props) {
-  const { children } = props;
+function useRoom() {
   const dispatch = useDispatch();
-
+  const { invalidateRoom } = useAuth();
   const roomId = useSelector(s => s.room.code);
-  const channel = useChannel(SOCKET_URL, `room:${roomId}`);
+  const channel = useRoomChannel(roomId);
+  const { error, data, fetch } = useFetch();
 
+  useEffect(() => {
+    fetch(rejoinRoom, roomId, {});
+  }, [dispatch, fetch, roomId]);
+
+  if (data) dispatch({ type: 'initRoom', payload: data });
+
+  if (error && error.response.status === 400) {
+    invalidateRoom();
+  }
+
+  // Channel listeners
   useEffect(() => {
     const addedRef = channel.on('song_addded', song =>
       dispatch({ type: 'addSong', payload: song }),
@@ -35,7 +47,7 @@ export default function RoomChannelContainer(props) {
     };
   }, [channel, dispatch]);
 
-  const channelContext = useMemo(
+  const roomFunctions = useMemo(
     () => ({
       addSong: song => {
         dispatch({ type: 'addSong', payload: song });
@@ -61,11 +73,7 @@ export default function RoomChannelContainer(props) {
     [channel, dispatch],
   );
 
-  return (
-    <RoomChannelContext.Provider value={channelContext}>{children}</RoomChannelContext.Provider>
-  );
+  return roomFunctions;
 }
 
-export function useRoomChannel() {
-  return useContext(RoomChannelContext);
-}
+export default createContainer(useRoom, 'RoomContainer');

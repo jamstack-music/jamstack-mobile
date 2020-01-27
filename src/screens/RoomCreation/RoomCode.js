@@ -1,14 +1,14 @@
 import React, { useCallback } from 'react';
 import { View, Text, Button } from 'react-native';
 import { useSelector } from 'jamstate';
-import { useRoomStatus } from 'Containers/RoomStatus';
+import { useAuth } from 'Containers/Auth';
 
 export default function RoomCode() {
-  const { setRoomAsActive } = useRoomStatus();
+  const { validateRoom } = useAuth();
   const roomCode = useSelector(s => s.room.code);
   const name = useSelector(s => s.room.name);
 
-  const handlePress = useCallback(() => setRoomAsActive(), [setRoomAsActive]);
+  const handlePress = useCallback(() => validateRoom(), [validateRoom]);
 
   return (
     <View>

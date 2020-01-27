@@ -1,14 +1,17 @@
-import { useState } from 'react';
-import useTimeout from './useTimeout';
+import { useState, useEffect } from 'react';
 
 export default function useDebounce(value, delay) {
   // This works since useState init is only called on the initial
   // render
+
   const [debouncedValue, setDebouncedValue] = useState(value);
 
-  useTimeout(() => {
-    setDebouncedValue(value);
-  }, delay);
+  useEffect(() => {
+    const timer = setTimeout(() => setDebouncedValue(value), delay);
 
+    return () => clearTimeout(timer);
+  }, [value, delay]);
+
+  console.log(debouncedValue)
   return debouncedValue;
 }
