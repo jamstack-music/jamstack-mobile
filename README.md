@@ -2,15 +2,38 @@
 Mobile application for the QueueHub service
 
 # Requirements
+- Cocoapods
 - XCode (iOS)
 - Android Studio (Android)
+- React Native Debugger
+
+# Setup
+1) Make sure that you have XCode and Android Studio installed. If not here are some links: 
+2) Install cocoapods on your device (Mac Only)
+```
+brew update && brew install cocoapods
+```
+3) Navigate to the project directory and run
+```
+cd ios
+pod install
+```
+   - This will install all native dependencies for iOS.
+
+4) Install React Native Debugger (Optional but highly recommended)
+```
+brew update && brew cask install react-native-debugger
+```
 
 # How to Run
+## Running the Javascript bundler
 Open up one terminal and run
 ```
 yarn
 yarn start
 ```
+## Running the simulator or on your device
+
 Then, in the respective environment IDE, build the application and run it on a simulator. Or run 
 ```
 react-scripts run-ios
