@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { View, Text, Picker, Button } from 'react-native';
-import { useDispatch, useSelector } from 'jamstate';
+import { useDispatch, useSelector } from 'AppState';
 import { useNavigation } from '@react-navigation/native';
 
 export default function RoomType() {

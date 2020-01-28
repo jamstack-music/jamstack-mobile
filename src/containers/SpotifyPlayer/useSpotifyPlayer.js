@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import Spotify from 'rn-spotify-sdk';
 import { useInterval } from 'Hooks';
-import { useSelector } from 'jamstate';
+import { useSelector } from 'AppState';
 
 import RoomContainer from 'Containers/Room';
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import { SafeAreaView, View, Text } from 'react-native';
-import { useSelector } from 'jamstate';
+import { useSelector } from 'AppState';
 import Room from 'Containers/Room';
 
 import CurrentSong from 'Components/CurrentSong';

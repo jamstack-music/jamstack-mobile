@@ -11,6 +11,7 @@ module.exports = {
           Screens: './src/screens',
           Hooks: './src/hooks',
           API: './src/data',
+          AppState: './src/state',
         },
       },
     ],

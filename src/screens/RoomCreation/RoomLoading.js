@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-import { useDispatch, useSelector } from 'jamstate';
+import { useDispatch, useSelector } from 'AppState';
 import { useNavigation } from '@react-navigation/native';
 import { useDebounce } from 'Hooks';
 

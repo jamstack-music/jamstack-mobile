@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { useSelector } from 'jamstate';
+import { useSelector } from 'AppState';
 import MusicControl from 'react-native-music-control';
 
 import Room from 'Containers/Room';

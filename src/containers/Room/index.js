@@ -1,5 +1,5 @@
 import { useEffect, useMemo } from 'react';
-import { useDispatch, useSelector } from 'jamstate';
+import { useDispatch, useSelector } from 'AppState';
 import { rejoinRoom } from 'API/rooms';
 import { useFetch } from 'Hooks';
 import { createContainer } from 'Hooks/useContainer';

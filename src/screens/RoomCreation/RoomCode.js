@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
 import { View, Text, Button } from 'react-native';
-import { useSelector } from 'jamstate';
+import { useSelector } from 'AppState';
 import { useAuth } from 'Containers/Auth';
 
 export default function RoomCode() {
