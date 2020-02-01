@@ -1,5 +1,6 @@
 export default {
-  current: null,
+  currentId: null,
+  allById: {},
   queue: [],
   superBumpEnabled: true,
   isPlaying: false,

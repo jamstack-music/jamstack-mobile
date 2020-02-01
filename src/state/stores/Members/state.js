@@ -1,4 +1,4 @@
 export default {
-  current: {},
-  all: [],
+  currentId: null,
+  allById: {},
 };

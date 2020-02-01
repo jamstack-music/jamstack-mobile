@@ -2,7 +2,7 @@ import { wrapReducer } from '../../lib';
 
 import INIT_STATE from './state';
 
-const superBump = (queue) => {
+const superBump = queue => {
   queue.sort((a, b) => b.bumps - a.bumps);
 };
 
@@ -10,53 +10,61 @@ const songsReducer = {
   addSong: (state, song) => {
     const newSong = {
       ...song,
-      bumps: 0,
       alreadyBumped: false,
+      bumps: 0,
     };
 
-    if (state.current) {
-      return { ...state, queue: [...state.queue, newSong] };
+    const stateWithNewSong = {
+      ...state,
+      allById: {
+        ...state.allById,
+        [current]: newSong,
+      },
+    };
+
+    if (state.currentId) {
+      return {
+        ...stateWithNewSong,
+        queue: [...state.queue, newSong.id],
+      };
     }
 
-    return { ...state, current: newSong };
+    return {
+      ...stateWithNewSong,
+      currentId: newSong.id,
+    };
   },
-  nextSong: (state) => {
+  nextSong: state => {
     if (state.queue.length === 0) {
       return {
         ...state,
-        current: null,
+        currentId: null,
       };
     }
 
     return {
       ...state,
-      current: state.queue[0],
+      currentId: state.queue[0],
       queue: state.queue.slice(1, state.queue.length),
     };
   },
-  bumpSong: (state, songId) => {
-    const queue = state.queue.map((song) => {
-      if (song.id !== songId) return song;
+  bumpSong: (state, bumpedSongId) => {
+    const songIndex = state.queue.findIndex(songId => songId === bumpedSongId);
 
-      return {
-        ...song,
-        bumps: song.bumps + 1,
-        alreadyBumped: true,
-      };
-    });
+    const newQueue = [...state.queue];
 
-    if (state.superBumpEnabled) {
-      superBump(queue);
-    } else {
-      // TODO: Implement regular bumping
-    }
-    return { ...state, queue };
+    [newQueue[songIndex], newQueue[songIndex - 1]] = [newQueue[songIndex - 1], newQueue[songIndex]];
+
+    return {
+      ...state,
+      queue: newQueue,
+    };
   },
-  playSong: (state) => ({
+  playSong: state => ({
     ...state,
     isPlaying: true,
   }),
-  pauseSong: (state) => ({
+  pauseSong: state => ({
     ...state,
     isPlaying: false,
   }),
@@ -64,7 +72,7 @@ const songsReducer = {
     ...state,
     superBumpEnabled: room.superBumpEnabled || state.superBumpEnabled,
     queue: room.queue || state.queue,
-    current: room.currentSong || state.current,
+    currentId: room.currentSong || state.currentId,
   }),
 };
 
