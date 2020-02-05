@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 import Spotify from 'rn-spotify-sdk';
-import { useInterval } from 'Hooks';
-import { useSelector } from 'jamstate';
+import { useInterval } from '~/hooks';
+import { useSelector } from '~/state';
 
-import RoomContainer from 'Containers/Room';
+import RoomContainer from '~/containers/Room';
 
 /**
  * useSpotifyPlayer : State hook for playing songs and listening for when a song is over

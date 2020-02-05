@@ -1,9 +1,10 @@
 import { useEffect, useMemo } from 'react';
-import { useDispatch, useSelector } from 'jamstate';
-import { rejoinRoom } from 'API/rooms';
-import { useFetch } from 'Hooks';
-import { createContainer } from 'Hooks/useContainer';
-import { useAuth } from 'Containers/Auth';
+
+import { useDispatch, useSelector } from '~/state';
+import { rejoinRoom } from '~/data/rooms';
+import { useFetch } from '~/hooks';
+import { createContainer } from '~/hooks/useContainer';
+import { useAuth } from '~/containers/Auth';
 
 import useRoomChannel from './useRoomChannel';
 
@@ -18,7 +19,7 @@ function useRoom() {
     fetch(rejoinRoom, roomId, {});
   }, [dispatch, fetch, roomId]);
 
-  if (data) dispatch({ type: 'initRoom', payload: data });
+  if (data) dispatch({ type: 'initRoom', payload: data.room });
 
   if (error && error.response.status === 400) {
     invalidateRoom();

@@ -36,7 +36,7 @@ export default function useFetch() {
   const fetch = useCallback((api, ...args) => {
     dispatch({ type: 'LOAD' });
     return api(...args)
-      .then(result => dispatch({ type: 'DATA', payload: result }))
+      .then(({ data }) => dispatch({ type: 'DATA', payload: data }))
       .catch(e => dispatch({ type: 'ERROR', payload: e }));
   }, []);
 

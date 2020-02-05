@@ -2,8 +2,8 @@ import React from 'react';
 import { View, Text } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import MenuScreen from 'Screens/Menu';
-import RoomCreation from './RoomCreation';
+import MenuScreen from '~/screens/Menu';
+import RoomCreation from './Create';
 
 const Stack = createStackNavigator();
 

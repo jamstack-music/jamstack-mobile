@@ -1,7 +1,8 @@
 import React, { useCallback } from 'react';
 import { View, Text, Button } from 'react-native';
-import { useSelector } from 'jamstate';
 import { useNavigation } from '@react-navigation/native';
+
+import { useSelector } from '~/state';
 
 export default function Confirmation() {
   const state = useSelector(s => s.room);

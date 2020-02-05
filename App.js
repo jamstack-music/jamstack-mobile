@@ -1,8 +1,8 @@
 import React from 'react';
 import { NavigationNativeContainer } from '@react-navigation/native';
-import { ReduxContainer } from 'jamstate';
-import AuthContainer from 'Containers/Auth';
 
+import { ReduxContainer } from './src/state';
+import AuthContainer from './src/containers/Auth';
 import AppNavigation from './src/navigation';
 
 const App = () => (

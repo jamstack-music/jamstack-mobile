@@ -3850,14 +3850,6 @@ istanbul-reports@^2.2.6:
   dependencies:
     handlebars "^4.1.2"
 
-"jamstate@https://github.com/jamstack-music/jamstate":
-  version "1.0.0"
-  resolved "https://github.com/jamstack-music/jamstate#e0a4272ae711e2bf9f2fe77a383e4825240f15b8"
-  dependencies:
-    react "16.9.0"
-    redux "^4.0.5"
-    reselect "^4.0.0"
-
 jest-changed-files@^24.9.0:
   version "24.9.0"
   resolved "https://registry.yarnpkg.com/jest-changed-files/-/jest-changed-files-24.9.0.tgz#08d8c15eb79a7fa3fc98269bc14b451ee82f8039"

@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 import { View, Text, Button } from 'react-native';
-import { useSelector } from 'jamstate';
-import { useAuth } from 'Containers/Auth';
+import { useSelector } from '~/state';
+import { useAuth } from '~/containers/Auth';
 
 export default function RoomCode() {
   const { validateRoom } = useAuth();
