@@ -18,7 +18,7 @@ const songsReducer = {
       ...state,
       allById: {
         ...state.allById,
-        [current]: newSong,
+        [newSong.id]: newSong,
       },
     };
 
