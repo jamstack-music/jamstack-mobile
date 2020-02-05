@@ -19,7 +19,7 @@ function useRoom() {
     fetch(rejoinRoom, roomId, {});
   }, [dispatch, fetch, roomId]);
 
-  if (data) dispatch({ type: 'initRoom', payload: data });
+  if (data) dispatch({ type: 'initRoom', payload: data.room });
 
   if (error && error.response.status === 400) {
     invalidateRoom();
