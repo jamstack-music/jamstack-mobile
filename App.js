@@ -1,7 +1,7 @@
 import React from 'react';
 import { NavigationNativeContainer } from '@react-navigation/native';
-import { ReduxContainer } from 'AppState';
-import AuthContainer from 'Containers/Auth';
+import { ReduxContainer } from '~/state';
+import AuthContainer from '~/containers/Auth';
 
 import AppNavigation from './src/navigation';
 

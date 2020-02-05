@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
-import { useDispatch, useSelector } from 'AppState';
 import { useNavigation } from '@react-navigation/native';
-import { useDebounce } from 'Hooks';
 
-import { createRoom } from '../../data/rooms';
+import { useDispatch, useSelector } from '~/state';
+import { useDebounce } from '~/hooks';
+import { createRoom } from '~/data/rooms';
 
 export default function RoomLoading() {
   const dispatch = useDispatch();

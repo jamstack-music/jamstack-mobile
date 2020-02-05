@@ -1,11 +1,11 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import Browse from 'Screens/Browse';
-import Playlists from 'Screens/Playlists';
-import Playlist from 'Screens/Playlist';
-import Album from 'Screens/Album';
-import Albums from 'Screens/Albums';
+import Browse from '~/screens/Browse';
+import Playlists from '~/screens/Playlists';
+import Playlist from '~/screens/Playlist';
+import Album from '~/screens/Album';
+import Albums from '~/screens/Albums';
 
 const Stack = createStackNavigator();
 

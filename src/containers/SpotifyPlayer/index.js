@@ -1,4 +1,4 @@
-import { createContainer } from 'Hooks/useContainer';
+import { createContainer } from '~/hooks/useContainer';
 import useSpotifyPlayer from './useSpotifyPlayer';
 import useMusicControls from './useMusicControls'
 

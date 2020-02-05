@@ -1,9 +1,10 @@
 import React, { useMemo, useEffect, useReducer, createContext, useContext } from 'react';
 import { Alert } from 'react-native';
-import { useDispatch } from 'AppState';
 import AsyncStorage from '@react-native-community/async-storage';
 import Spotify from 'rn-spotify-sdk';
-import Loading from 'Screens/Loading';
+
+import { useDispatch } from '~/state';
+import Loading from '~/screens/Loading';
 
 const DEFAULT_STATE = {
   hasValidRoomCode: false,

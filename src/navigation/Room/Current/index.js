@@ -1,12 +1,12 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import RoomContainer from 'Containers/Room';
-import SpotifyPlayerContainer from 'Containers/SpotifyPlayer';
+import RoomContainer from '~/containers/Room';
+import SpotifyPlayerContainer from '~/containers/SpotifyPlayer';
 
-import CurrentPlaying from 'Screens/CurrentRoom/CurrentPlaying';
-import Search from 'Screens/CurrentRoom/Search';
-import Members from 'Screens/CurrentRoom/Members';
+import CurrentPlaying from '~/screens/CurrentRoom/CurrentPlaying';
+import Search from '~/screens/CurrentRoom/Search';
+import Members from '~/screens/CurrentRoom/Members';
 
 import BrowseStack from './Browse';
 

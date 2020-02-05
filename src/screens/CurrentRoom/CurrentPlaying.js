@@ -1,10 +1,10 @@
 import React from 'react';
 import { SafeAreaView, View, Text } from 'react-native';
-import { useSelector } from 'AppState';
-import Room from 'Containers/Room';
+import { useSelector } from '~/state';
+import Room from '~/containers/Room';
 
-import CurrentSong from 'Components/CurrentSong';
-import Queue from 'Components/Queue';
+import CurrentSong from '~/components/CurrentSong';
+import Queue from '~/components/Queue';
 
 export default function CurrentPlaying() {
   const { bumpSong } = Room.useContainer();

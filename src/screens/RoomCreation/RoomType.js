@@ -1,7 +1,8 @@
 import React, { useCallback } from 'react';
 import { View, Text, Picker, Button } from 'react-native';
-import { useDispatch, useSelector } from 'AppState';
 import { useNavigation } from '@react-navigation/native';
+
+import { useDispatch, useSelector } from '~/state';
 
 export default function RoomType() {
   const navigation = useNavigation();

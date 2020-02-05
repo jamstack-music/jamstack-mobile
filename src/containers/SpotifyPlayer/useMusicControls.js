@@ -1,8 +1,8 @@
 import { useEffect } from 'react';
-import { useSelector } from 'AppState';
 import MusicControl from 'react-native-music-control';
 
-import Room from 'Containers/Room';
+import { useSelector } from '~/state';
+import Room from '~/containers/Room';
 
 export default function useMusicControls() {
   const { nextSong, playSong, pauseSong } = Room.useContainer();

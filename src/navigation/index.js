@@ -1,8 +1,8 @@
 import React, { useMemo } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import { useAuth } from 'Containers/Auth';
-import Login from 'Screens/Login';
+import { useAuth } from '~/containers/Auth';
+import Login from '~/screens/Login';
 
 import RoomNavigator from './Room';
 

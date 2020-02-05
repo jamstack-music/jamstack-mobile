@@ -1,11 +1,11 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 
-import RoomName from 'Screens/RoomCreation/RoomName';
-import RoomType from 'Screens/RoomCreation/RoomType';
-import Confirmation from 'Screens/RoomCreation/Confirmation';
-import RoomLoading from 'Screens/RoomCreation/RoomLoading';
-import RoomCode from 'Screens/RoomCreation/RoomCode';
+import RoomName from '~/screens/RoomCreation/RoomName';
+import RoomType from '~/screens/RoomCreation/RoomType';
+import Confirmation from '~/screens/RoomCreation/Confirmation';
+import RoomLoading from '~/screens/RoomCreation/RoomLoading';
+import RoomCode from '~/screens/RoomCreation/RoomCode';
 
 const Stack = createStackNavigator();
 
