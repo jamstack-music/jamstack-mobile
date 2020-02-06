@@ -1,21 +1,28 @@
+/*
+ * Since getPlayListTracks offers the ability to supply fields to the request in order to
+ * offer graphQL life capabilities, this will replicate the response object of a track returned
+ * by a playlist request
+ */
 const extractSong = song => {
   const {
-    name: title,
+    name,
     id,
     uri,
-    duration_ms: duration,
-    artists: [{ name: artist }],
-    album: { name: album, images },
+    duration_ms,
+    artists,
+    album: { name: albumName, images },
   } = song;
 
   return {
-    title,
-    duration,
+    name,
+    duration_ms,
     id,
     uri,
-    artist,
-    album,
-    images,
+    artists: artists.map(({ name: artistName }) => ({ name: artistName })),
+    album: {
+      name: albumName,
+      images,
+    },
   };
 };
 
