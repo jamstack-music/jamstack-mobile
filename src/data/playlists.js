@@ -46,6 +46,6 @@ export const getPlaylistTracks = async (id, limit = 100, offset = 0) => {
   // useFetch expects the data to be returned as an object which is why this
   // is like this. We may want to make a better useFetch function to handle such cases
   return {
-    data: items.map(({ track }) => track);
+    data: items.map(({ track }) => track),
   }
 };
