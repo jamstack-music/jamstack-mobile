@@ -4,15 +4,22 @@ import extractPlaylist from './extractors/playlist';
 
 export const getMyPlaylists = async (limit = 20, offset = 0) => {
   const res = await Spotify.sendRequest(
-    `v1/me/playlists?$limit=${limit}&offset=${offset}`,
+    'v1/me/playlists',
     'GET',
-    {},
-    true,
+    {
+      offset,
+      limit,
+    },
+    false,
   );
 
   const { items } = res;
 
-  return items.map(playlist => extractPlaylist(playlist));
+  // useFetch expects the data to be returned as an object which is why this
+  // is like this. We may want to make a better useFetch function to handle such cases
+  return { 
+    data: items.map(playlist => extractPlaylist(playlist)),
+  };
 };
 
 /**
@@ -24,13 +31,21 @@ const FIELDS = 'items(track(is_local,name,id,uri,duration_ms,album(images,name),
 
 export const getPlaylistTracks = async (id, limit = 100, offset = 0) => {
   const res = await Spotify.sendRequest(
-    `v1/me/playlists/${id}/tracks?$fields=${FIELDS}&limit=${limit}&offset=${offset}`,
+    `v1/me/playlists/${id}/tracks`,
     'GET',
-    {},
-    true,
+    {
+      fields: FIELDS,
+      limit,
+      offset,
+    },
+    false,
   );
 
   const { items } = res;
 
-  return items.map(({ track }) => track);
+  // useFetch expects the data to be returned as an object which is why this
+  // is like this. We may want to make a better useFetch function to handle such cases
+  return {
+    data: items.map(({ track }) => track);
+  }
 };

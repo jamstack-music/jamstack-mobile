@@ -8,13 +8,20 @@ import extractAlbum from './extractors/album';
 
 export const getMyAlbums = async (limit = 20, offset = 0) => {
   const res = await Spotify.sendRequest(
-    `v1/me/albums?$limit=${limit}&offset=${offset}`,
+    'v1/me/albums',
     'GET',
-    {},
-    true,
+    {
+      offset,
+      limit,
+    },
+    false,
   );
 
   const { items } = res;
 
-  return items.map(album => extractAlbum(album));
+  // useFetch expects the data to be returned as an object which is why this
+  // is like this. We may want to make a better useFetch function to handle such cases
+  return {
+    data: items.map(({ album }) => extractAlbum(album)),
+  }
 };

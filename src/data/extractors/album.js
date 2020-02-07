@@ -3,7 +3,7 @@ import extractSong from './song';
 const extractAlbum = album => {
   const {
     id,
-    artists: [{ name: artist }],
+    artists,
     images,
     name,
     tracks: { items },
@@ -21,7 +21,7 @@ const extractAlbum = album => {
 
   return {
     id,
-    artist,
+    artists: artists.map(({ name }) => ({ name })),
     images,
     name,
     songs,
